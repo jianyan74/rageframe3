@@ -1,0 +1,32 @@
+.layui-layer-title {
+    height: 52px;
+    line-height: 52px;
+    background-color: #ffffff;
+}
+
+.layui-layer-btn .layui-layer-btn0{
+    color: #fff;
+    background-color: #2d8cf0;
+    border-color: #2d8cf0;
+}
+
+.layui-layer-btn a {
+    height: 28px;
+    margin: 5px 5px 0;
+    padding: 15px 12px;
+    line-height: 0;
+    border: 1px solid #dedede;
+    border-radius: 3px;
+    font-weight: 400;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.layui-layer-btn a{
+    color: #76838f;
+}
+
+
+.layui-layer-setwin {
+    top: 20px;
+}

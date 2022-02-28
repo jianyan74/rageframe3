@@ -1,0 +1,106 @@
+{
+    "name": "yiisoft/yii2-app-advanced",
+    "description": "Yii 2 Advanced Project Template",
+    "keywords": ["yii2", "framework", "advanced", "project template"],
+    "homepage": "http://www.yiiframework.com/",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "http://www.yiiframework.com/wiki/",
+        "irc": "irc://irc.freenode.net/yii",
+        "source": "https://github.com/yiisoft/yii2"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.4.0",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-bootstrap4": "~2.0.0",
+        "yiisoft/yii2-imagine": "~2.0.0",
+        "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
+        "yiisoft/yii2-elasticsearch": "2.1.x-dev",
+        "yiisoft/yii2-redis": "^2.0",
+        "yiisoft/yii2-queue": "dev-master",
+        "almasaeed2010/adminlte": "~3.2.0",
+        "kartik-v/yii2-widget-datepicker": "@dev",
+        "kartik-v/yii2-widget-timepicker": "*",
+        "kartik-v/yii2-widget-colorinput": "*",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-date-range": "*",
+        "kartik-v/yii2-widget-datetimepicker": "dev-master",
+        "linslin/yii2-curl": "*",
+        "2amigos/qrcode-library": "^1.1",
+        "aliyuncs/oss-sdk-php": "~2.0",
+        "overtrue/pinyin": "~3.0",
+        "overtrue/easy-sms": "^1.0",
+        "overtrue/flysystem-qiniu": "^1.0",
+        "xj/yii2-oauth": "~2.0.0",
+        "ramsey/uuid": "^3.7",
+        "moontoast/math": "^1.1",
+        "jianyan74/yii2-easy-wechat": "^2.0",
+        "jianyan74/yii2-treegrid": "^1.0",
+        "jianyan74/yii2-console-migration": "^1.0",
+        "unclead/yii2-multiple-input": "~2.0",
+        "zhuzhichao/ip-location-zh": "^2.4",
+        "phpoffice/phpspreadsheet": "^1.3",
+        "jpush/jpush": "*",
+        "omnilight/yii2-scheduling": "*",
+        "league/flysystem": "^1.0",
+        "xxtime/flysystem-aliyun-oss": "^1.2",
+        "hashids/hashids": "^3.0",
+        "league/oauth2-server": "^8.0",
+        "overtrue/flysystem-cos": "^2.0",
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "jaeger/querylist": "^4.1",
+        "finecho/logistics": "^3.0",
+        "tencentcloud/tencentcloud-sdk-php": "~3.0.94",
+        "ext-bcmath": "*",
+        "fastgoo/getui-php": "^1.0",
+        "dueros/bot-sdk": "^2.2",
+        "griffinledingham/php-apple-signin": "^1.1",
+        "firebase/php-jwt": "^5.2",
+        "yly-openapi/yly-openapi-sdk": "v1.0.1",
+        "league/omnipay": "^3.0",
+        "omnipay/stripe": "^3.1",
+        "omnipay/common": "^3.0",
+        "lokielse/omnipay-alipay": "^3.0",
+        "lokielse/omnipay-wechatpay": "^3.0",
+        "lokielse/omnipay-unionpay": "^3.0",
+        "96qbhy/tt-microapp": "^2.2",
+        "select2/select2": "@dev",
+        "workerman/workerman": "^4.0",
+        "workerman/mysql": "^1.0"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.1.0",
+        "yiisoft/yii2-gii": "~2.2.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "codeception/codeception": "^4.0",
+        "codeception/module-asserts": "^1.0",
+        "codeception/module-yii2": "^1.0",
+        "codeception/module-filesystem": "^1.0",
+        "codeception/verify": "~0.5.0 || ~1.1.0",
+        "symfony/browser-kit": ">=2.7 <=4.2.4"
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        },
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "easywechat-composer/easywechat-composer": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ]
+}

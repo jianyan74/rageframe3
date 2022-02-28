@@ -19,7 +19,7 @@ RageFrame 创建于 2016 年 4 月 16 日，一个基于 Yii2 高级框架的快
 - 极完善的 RBAC 权限控制管理、无限父子级权限分组、可自由分配子级权限，且按钮/链接/自定义内容/插件等都可加入权限控制。
 - 只做基础底层内容，不会在上面开发过多的业务内容，满足绝大多数的系统二次开发。
 - 多入口模式，多入口分为 Backend (后台)、Merchant (商户端)、Frontend (PC前端)、Html5 (手机端)、Console (控制台)、Api (对内接口)、OAuth2 Server (对外接口)、Storage (静态资源)，不同的业务，不同的设备，进入不同的入口。
-- 对接微信公众号且支持小程序，使用了一款优秀的微信非官方 SDK Easywechat 4.x，开箱即用，预置了绝大部分功能，大幅度的提升了微信开发效率。
+- 对接微信公众号且支持小程序，使用了一款优秀的微信非官方 SDK EasyWechat 5.x，开箱即用，预置了绝大部分功能，大幅度的提升了微信开发效率。
 - 整合了第三方登录，目前有 QQ、微信、微博、GitHub 等等。
 - 整合了第三方支付，目前有微信支付、支付宝支付、银联支付，二次封装为网关多个支付一个入口一个出口。
 - 整合了 RESTful API，支持前后端分离接口开发和 App 接口开发，可直接上手开发业务。
@@ -88,7 +88,7 @@ http://www.rageframe.com
 QQ群1：[655084090](https://jq.qq.com/?_wv=1027&k=4BeVA2r) (2000人快满)  
 QQ群2：[1148015133](https://jq.qq.com/?_wv=1027&k=Wk663e9N) (新群)
 
-GitHub：https://github.com/jianyan74/rageframe2/issues
+GitHub：https://github.com/jianyan74/rageframe3/issues
 
 ### 特别鸣谢
 

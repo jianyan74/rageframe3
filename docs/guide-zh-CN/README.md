@@ -86,6 +86,7 @@
 - [安全防范](php-safety.md)
 - [SearchModel](component-search-model.md)
 - [应用配置独立域名](independent-app-domain-name.md)
+- [RageFrame 2.x 插件升级到 3.x](addon-version-upgrade.md)
 - [代码模板](system-code-template.md)
 - [线上性能优化](system-optimize.md)
 - [团队编辑器代码规范](php-by-team.md)

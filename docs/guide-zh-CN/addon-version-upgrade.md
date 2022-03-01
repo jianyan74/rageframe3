@@ -40,6 +40,15 @@
 </div>
 ```
 
+为
+
+```
+<div class="modal-header">
+    <h4 class="modal-title">基本信息</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+</div>
+```
+
 7. 替换布局
 
 如果单独使用了 `col-*` 这种布局出现页面失调的，需要在 `col-*` 外层加上 `<div class='row'></div>`。
@@ -54,15 +63,6 @@
     <div class="col-6">
         
     </div>
-</div>
-```
-
-为
-
-```
-<div class="modal-header">
-    <h4 class="modal-title">基本信息</h4>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 </div>
 ```
 

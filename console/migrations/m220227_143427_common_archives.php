@@ -22,7 +22,7 @@ class m220227_143427_common_archives extends Migration
             'business_license' => "varchar(255) NULL DEFAULT '' COMMENT '营业执照'",
             'business_scope' => "varchar(3000) NULL COMMENT '经营范围'",
             'practice_qualification_certificate' => "varchar(255) NULL DEFAULT '' COMMENT '执业资格证'",
-            'establish_year' => "date NULL DEFAULT '0000-00-00' COMMENT '成立年份'",
+            'establish_year' => "date NULL COMMENT '成立年份'",
             'floor_space' => "double(10,2) NULL DEFAULT '0' COMMENT '占地面积'",
             'content' => "text NULL COMMENT '详情'",
             'corporate_realname' => "varchar(100) NULL DEFAULT '' COMMENT '法人真实姓名'",

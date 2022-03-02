@@ -3,6 +3,7 @@
 目录
 
 - 路由替换
+- 配置移除
 - UI 替换
 - Icons 替换
 - 表单组件 替换
@@ -16,6 +17,22 @@
 
 2. 替换 `route` 为 `name`
 
+### 配置移除
+
+1. 查找 `插件/AddonConfig` 文件
+
+2. 找到 `appsConfig` 变量的 `merapi` 删除掉，移除掉以后的配置
+
+```
+public $appsConfig = [
+   'backend' => 'common/config/backend.php',
+   'frontend' => 'common/config/frontend.php',
+   'merchant' => 'common/config/merchant.php',
+   'html5' => 'common/config/html5.php',
+   'api' => 'common/config/api.php',
+   'oauth2' => 'common/config/oauth2.php',
+];
+```
 
 ### UI 替换
 

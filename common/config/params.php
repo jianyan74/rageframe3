@@ -30,6 +30,29 @@ return [
     ],
     // 真实 app id
     'realAppId' => '',
+    // 判断默认是否在插件内
+    'inAddon' => false,
+
+    /** ------ websocket (建议本地配置) ------ **/
+    'websocket' => [
+        // 守护进程
+        'daemonize' => true,
+        // 端口
+        'port' => 9503,
+        // 进程数量
+        'count' => 1,
+        // ws: false; wss: true
+        'ssl' => false,
+        // 更多ssl选项请参考手册 http://php.net/manual/zh/context.ssl.php
+        'sslConfig' => [
+            // 请使用绝对路径
+            'local_cert' => 'path/server.pem', // 也可以是crt文件
+            'local_pk' => 'path/server.key',
+            'verify_peer' => false,
+            'allow_self_signed' => false, // 如果是自签名证书需要开启此选项
+        ],
+    ],
+
     // 百度编辑器默认上传驱动
     'UEditorUploadDrive' => 'local',
     // 全局上传配置

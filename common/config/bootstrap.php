@@ -14,7 +14,7 @@ Yii::setAlias('@console', dirname(dirname(__DIR__)) . '/console');
 Yii::setAlias('@services', dirname(dirname(__DIR__)) . '/services');
 Yii::setAlias('@addons', dirname(dirname(__DIR__)) . '/addons');
 // 资源
-Yii::$app->id !== AppEnum::CONSOLE && Yii::setAlias('@baseResources', Yii::$app->request->baseUrl . '/resources');
+Yii::setAlias('@baseResources', '/resources');
 Yii::setAlias('@attachment', dirname(dirname(__DIR__)) . '/web/attachment'); // 本地资源目录绝对路径
 Yii::setAlias('@attachurl', '/attachment'); // 资源目前相对路径，可以带独立域名，例如 https://attachment.rageframe.com
 Yii::setAlias('@backendUrl', '');

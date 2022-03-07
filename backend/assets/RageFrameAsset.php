@@ -43,7 +43,7 @@ class RageFrameAsset extends AssetBundle
 
     public function init()
     {
-        if (!Yii::$app->params['notRequireVue']) {
+        if (empty(Yii::$app->params['notRequireVue'])) {
             $this->js[] = ['js/vue.js', 'position'=>\yii\web\View::POS_HEAD];
         }
 

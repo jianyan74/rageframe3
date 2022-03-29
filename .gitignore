@@ -20,6 +20,9 @@ nbproject
 # windows thumbnail cache
 Thumbs.db
 
+# websocket
+start.bat
+
 # composer vendor dir
 /vendor
 

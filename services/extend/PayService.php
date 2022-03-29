@@ -401,18 +401,7 @@ class PayService
                     'map_id' => $log['id'],
                 ]));
 
-                // 赠送
-                if (($money = Yii::$app->services->memberRechargeConfig->getGiveMoney($payFee)) > 0) {
-                    Yii::$app->services->memberCreditsLog->incrMoney(new CreditsLogForm([
-                        'member' => $member,
-                        'pay_type' => $log['pay_type'],
-                        'num' => $money,
-                        'group' => 'rechargeGive',
-                        'is_give' => true,
-                        'remark' => "充值赠送",
-                        'map_id' => $log['id'],
-                    ]));
-                }
+                // TODO 赠送
 
                 break;
         }

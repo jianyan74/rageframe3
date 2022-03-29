@@ -93,7 +93,7 @@ class AuthController extends UserAuthController
     {
         $oauthClient = Yii::$app->request->post('oauth_client');
 
-        $model = Yii::$app->services->memberAuth->findOauthClientByMemberId($oauthClient, Yii::$app->user->identity->member_id);
+        $model = Yii::$app->services->memberAuth->findByMemberIdOauthClient($oauthClient, Yii::$app->user->identity->member_id);
         if ($model) {
             return [
                 'openid' => $model['oauth_client_user_id']

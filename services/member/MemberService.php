@@ -4,17 +4,19 @@ namespace services\member;
 
 use Yii;
 use common\models\base\User;
+use common\components\Service;
 use common\enums\AppEnum;
 use common\enums\StatusEnum;
 use common\models\member\Member;
 use common\enums\MemberTypeEnum;
 use common\helpers\EchantsHelper;
+use common\enums\MemberLevelBuyTypeEnum;
 
 /**
  * Class MemberService
  * @package services\member
  */
-class MemberService
+class MemberService extends Service
 {
     /**
      * 用户
@@ -64,6 +66,37 @@ class MemberService
         }
 
         return Yii::$app->user->id ?? 0;
+    }
+
+
+    /**
+     * 购买等级
+     *
+     * @param Member $member
+     * @param $validity
+     * @param $level
+     * @param int $buy_type
+     */
+    public function buyLevel(Member $member, $validity, $level, $buy_type = MemberLevelBuyTypeEnum::BUY)
+    {
+        $time = time();
+        if ($member->level_expiration_time > time()) {
+            $time = $member->level_expiration_time;
+        }
+
+        // 修改会员到期时间
+        if ($member->current_level < $level) {
+            Member::updateAll([
+                'level_expiration_time' => $time + $validity,
+                'current_level' => $level,
+                'level_buy_type' => $buy_type
+            ], ['id' => $member->id]);
+        } else {
+            Member::updateAll([
+                'level_expiration_time' => $time + $validity,
+                'level_buy_type' => $buy_type
+            ], ['id' => $member->id]);
+        }
     }
 
     /**
@@ -176,6 +209,21 @@ class MemberService
             ->where(['id' => $id])
             ->andWhere(['>=', 'status', StatusEnum::DISABLED])
             ->one();
+    }
+
+    /**
+     * @param $ids
+     * @param $type
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function findByIds($ids = [], $type = MemberTypeEnum::MEMBER)
+    {
+        return Member::find()
+            ->filterWhere(['in', 'id', $ids])
+            ->andWhere(['type' => $type])
+            ->andWhere(['>=', 'status', StatusEnum::DISABLED])
+            ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+            ->all();
     }
 
     /**

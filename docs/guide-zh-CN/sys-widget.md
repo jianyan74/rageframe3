@@ -423,11 +423,25 @@ $(document).on('emoji-select-emoji', function (e, emoji) {
 > 注意 ajax 这边会传递 pid 过来，只需要根据 pid 返回所有数据即可
 
 ```
-<?= $form->field($model, 'cate_id')->widget(\common\widgets\selectlinkage\Linkage::class, [
-    'url' => Url::to(['cate/select']), // ajax数据 要求返回数据必须是带 id 和 title 的 二维数组 json 格式
-    'level' => 3, // 联动级别
-    'item' => $cate, // 当前数据
-    'allItem' => $cates, // 所有的数据
+<?= \common\widgets\linkage\Linkage::widget([
+        'form' => $form,
+        'model' => $model,
+        'template' => 'short',
+        'one' => [
+            'name' => 'receiver_province_id', // 字段名称
+            'title' => '请选择省', // 字段名称
+            'list' => Yii::$app->services->provinces->getCityMapByPid(), // 字段名称
+        ],
+        'two' => [
+            'name' => 'receiver_city_id', // 字段名称
+            'title' => '请选择市', // 字段名称
+            'list' => Yii::$app->services->provinces->getCityMapByPid($model->receiver_province_id, 2), // 字段名称
+        ],
+        'three' => [
+            'name' => 'receiver_area_id', // 字段名称
+            'title' => '请选择区', // 字段名称
+            'list' => Yii::$app->services->provinces->getCityMapByPid($model->receiver_city_id, 3), // 字段名称
+        ],
 ]); ?>
 ```
 
@@ -438,7 +452,7 @@ $(document).on('emoji-select-emoji', function (e, emoji) {
 ```
 <?= $form->field($model, 'cate_id')->widget(\common\widgets\cascader\Cascader::class, [
     'multiple' => false, // 多选
-    'changeOnSelect' => false, // 当前数据
+    'changeOnSelect' => false, // 开启选择任意级
     'data' => [], // 所有的数据
 ]); ?>
 ```

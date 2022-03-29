@@ -891,8 +891,8 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
 }
 
 .rf-img-md {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     float: left;
 }
 

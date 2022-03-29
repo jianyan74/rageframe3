@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             <?php $form = ActiveForm::begin([
                 'fieldConfig' => [
-                    'template' => "<div class='col-sm-2 text-right'>{label}</div><div class='col-sm-10'>{input}{hint}{error}</div>",
+                    'template' => "<div class='row'><div class='col-sm-2 text-right'>{label}</div><div class='col-sm-10'>{input}{hint}{error}</div></div>",
                 ]
             ]); ?>
             <div class="box-body">

@@ -98,7 +98,7 @@ class MessageHistoryService
                         return '通过二维码关注公众号 : ' . str_replace('qrscene_', '', $messgae['EventKey']);
                         break;
                     case WechatEnum::EVENT_LOCATION :
-                        return '被动发送位置 : 经纬度【' . $messgae['Latitude'] . ',' . $messgae['Longitude'] . "】精度:" . $messgae['Precision'];
+                        return '被动发送位置: 经纬度【' . $messgae['Latitude'] . ',' . $messgae['Longitude'] . "】精度:" . $messgae['Precision'];
                         break;
                     case WechatEnum::EVENT_VIEW :
                         return "单击菜单访问 : " . $messgae['EventKey'];
@@ -111,11 +111,11 @@ class MessageHistoryService
                         break;
                     case 'location_select' :
                         $sendLocationInfo = $messgae['SendLocationInfo'];
-                        return "主动发送位置 : " . '经纬度【' . $sendLocationInfo['Location_X'] . ',' . $sendLocationInfo['Location_Y'] . "】地址:" . $sendLocationInfo['Label'];
+                        return "主动发送位置: " . '经纬度【' . $sendLocationInfo['Location_X'] . ',' . $sendLocationInfo['Location_Y'] . "】地址:" . $sendLocationInfo['Label'];
                         break;
                     case 'scancode_waitmsg' :
                         $scanCodeInfo = $messgae['ScanCodeInfo'];
-                        return "调用二维码扫描等待返回地址 : " . $scanCodeInfo['ScanResult'];
+                        return "调用二维码扫描等待返回地址: " . $scanCodeInfo['ScanResult'];
                         break;
                     case 'pic_sysphoto' :
                         return "调用拍照发图";
@@ -125,16 +125,22 @@ class MessageHistoryService
                         break;
                     case 'scancode_push' :
                         $scanCodeInfo = $messgae['ScanCodeInfo'];
-                        return "调用二维码直接扫描返回地址 : " . $scanCodeInfo['ScanResult'];
+                        return "调用二维码直接扫描返回地址: " . $scanCodeInfo['ScanResult'];
                         break;
                     case 'MASSSENDJOBFINISH' :
-                        return "点击图文MsgID为 : " . $messgae['MsgID'];
+                        return "点击图文MsgID为: " . $messgae['MsgID'];
                         break;
                     case 'view_miniprogram' :
                         return "浏览小程序";
                         break;
                     case 'annual_renew' :
                         return "微信认证事件推送";
+                        break;
+                    case 'wx_verify_dispatch' :
+                        return "微信认证公司: "  . $messgae['Provider'] . '<br>' . $messgae['Contact'];
+                        break;
+                    case 'wx_verify_pay_succ' :
+                        return "微信认证支付订单: " . $messgae['OrderId'];
                         break;
                     default :
                         return Json::encode($messgae);

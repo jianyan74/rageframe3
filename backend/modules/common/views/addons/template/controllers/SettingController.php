@@ -7,7 +7,7 @@ namespace addons\<?= $model->name;?>\<?= $appID;?>\controllers;
 
 use Yii;
 use common\helpers\ArrayHelper;
-use addons\<?= $model->name;?>\common\models\SettingForm;
+use addons\<?= $model->name;?>\common\forms\SettingForm;
 
 /**
  * 参数设置

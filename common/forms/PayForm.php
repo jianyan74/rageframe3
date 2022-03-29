@@ -88,8 +88,8 @@ class PayForm extends PayLog
                     }
 
                     if ($this->trade_type == PayTradeTypeEnum::WECHAT_JS) {
-                        $user = Yii::$app->wechat->app->oauth->user();
-                        $this->openid = $user['id'];
+                        $user = Yii::$app->wechat->app->oauth->userFromCode($this->code);
+                        $this->openid = $user->getId();
                     }
                 }
 
@@ -159,12 +159,12 @@ class PayForm extends PayLog
         }
 
         // 系统内支付
-        if (in_array($model->pay_type, [PayTypeEnum::USER_MONEY, PayTypeEnum::PAY_ON_DELIVERY])) {
+        if (in_array($this->pay_type, [PayTypeEnum::USER_MONEY, PayTypeEnum::PAY_ON_DELIVERY])) {
             return [];
         }
 
         $log = new PayLog();
-        if ($model->isQueryOrderSn() == true && ($history = Yii::$app->services->pay->findByOrderSn($model->getOrderSn()))) {
+        if ($model->isQueryOrderSn() == true && ($history = Yii::$app->services->extendPay->findByOrderSn($model->getOrderSn()))) {
             $log = $history;
         }
 

@@ -63,6 +63,20 @@ class AuthService extends Service
     }
 
     /**
+     * @param int $merchant_id
+     * @param int $memberType
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function findByMemberType($merchant_id = 0, $memberType = MemberTypeEnum::MEMBER)
+    {
+        return Auth::find()
+            ->where(['member_type' => $memberType])
+            ->andWhere(['status' => StatusEnum::ENABLED])
+            ->andFilterWhere(['merchant_id' => $merchant_id])
+            ->all();
+    }
+
+    /**
      * @param $oauthClient
      * @param $oauthClientUserId
      * @param int $memberType

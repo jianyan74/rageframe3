@@ -5,6 +5,7 @@ namespace services\common;
 use Yii;
 use yii\helpers\Console;
 use yii\web\NotFoundHttpException;
+use yii\web\UnprocessableEntityHttpException;
 use common\enums\StatusEnum;
 use common\helpers\ArrayHelper;
 use common\helpers\AddonHelper;
@@ -16,7 +17,6 @@ use common\enums\AppEnum;
 use common\enums\OfficialEnum;
 use common\interfaces\AddonWidget;
 use Overtrue\Pinyin\Pinyin;
-use yii\web\UnprocessableEntityHttpException;
 
 /**
  * Class AddonsService

@@ -42,6 +42,7 @@ use common\components\Service;
  * @property \services\extend\YiLianYunService $extendYiLianYun 易联云小票打印
  * @property \services\extend\FeiEYunService $extendFeiEYun 飞鹅云小票打印机
  * @property \services\extend\XpYunService $extendXpYun 芯烨云小票打印机
+ * @property \services\extend\HiPrintService $extendHiPrint 本地打印机
  * @property \services\extend\MapService $extendMap 地图
  * @property \services\extend\OpenPlatformService $extendOpenPlatform 开放平台
  * @property \services\extend\LogisticsService $extendLogistics 物流查询
@@ -167,6 +168,7 @@ class Application extends Service
         'extendYiLianYun' => 'services\extend\YiLianYunService',
         'extendFeiEYun' => 'services\extend\FeiEYunService',
         'extendXpYun' => 'services\extend\XpYunService',
+        'extendHiPrint' => 'services\extend\HiPrintService',
         // 短信发送
         'extendSms' => [
             'class' => 'services\extend\SmsService',

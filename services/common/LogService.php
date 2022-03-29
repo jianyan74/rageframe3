@@ -78,6 +78,7 @@ class LogService
         $errData = [];
         // 判断是否记录日志
         if (in_array($this->getLevel($response->statusCode), Yii::$app->params['user.log.level'])) {
+            $errorMessage = $response->statusText;
             // 检查是否报错
             if ($response->statusCode >= 300 && $exception = Yii::$app->getErrorHandler()->exception) {
                 $errData = [
@@ -88,6 +89,7 @@ class LogService
                     'stack-trace' => explode("\n", $exception->getTraceAsString()),
                 ];
 
+                $errorMessage = $exception->getMessage();
                 $showReqId && $response->data['req_id'] = Yii::$app->params['uuid'];
             }
 
@@ -96,7 +98,7 @@ class LogService
                 Yii::$app->params['user.log'] &&
                 !in_array($response->statusCode, ArrayHelper::merge($this->exceptCode, Yii::$app->params['user.log.except.code']))
             ) {
-                $this->push($response->statusCode, $response->statusText, $errData);
+                $this->push($response->statusCode, $errorMessage, $errData);
             }
         }
 

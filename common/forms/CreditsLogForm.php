@@ -33,14 +33,14 @@ class CreditsLogForm extends Model
      *
      * @var bool
      */
-    public $is_consumer = false;
+    public $is_consume = false;
 
     /**
      * 是否累计
      *
      * @var bool
      */
-    public $is_consume = true;
+    public $is_accumulate = true;
 
     /**
      * 是否赠送

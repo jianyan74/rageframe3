@@ -37,10 +37,8 @@ return [
     'websocket' => [
         // 守护进程
         'daemonize' => true,
-        // 端口
+        // ws 端口
         'port' => 9503,
-        // 进程数量
-        'count' => 1,
         // ws: false; wss: true
         'ssl' => false,
         // 更多ssl选项请参考手册 http://php.net/manual/zh/context.ssl.php
@@ -50,6 +48,21 @@ return [
             'local_pk' => 'path/server.key',
             'verify_peer' => false,
             'allow_self_signed' => false, // 如果是自签名证书需要开启此选项
+        ],
+        // ---------------- gateway worker ----------------
+        // 负责网络 IO 进程数量; 最好设置为 CPU 核数
+        'gatewayCount' => 2,
+        // 业务处理进程数量; 根据业务是否有阻塞式 IO 设置进程数为CPU核数的 1倍 - 3倍
+        'businessWorkerCount' => 4,
+        // 集群启动状态 true: 开启; false: 关闭
+        'cluster' => false,
+        // 集群配置 (gateway-worker 方式启动默认引用)
+        'clusterConfig' => [
+            'master' => true, // 主服务器 true: 是; false: 否; 一台为主服务器(register 和 gateway 服务)即可
+            'registerIp' => '127.0.0.1', // 主服务器 IP
+            'registerPort' => 1238,  // 主服务器端口
+            'gatewayLanIp' => '127.0.0.1', // 分布式时候请使用内网 IP (一般不需要改)
+            'secretKey' => '', // 秘钥, 分布式部署必须设置
         ],
     ],
 
@@ -104,7 +117,7 @@ return [
             'path' => 'voice/',// 创建路径
             'subName' => 'Y/m/d',// 上传子目录规则
             'prefix' => 'voice_',// 名称前缀
-            'mimeTypes' => 'image/*', // 媒体类型
+            'mimeTypes' => 'audio/*', // 媒体类型
         ],
         // 文件
         'files' => [

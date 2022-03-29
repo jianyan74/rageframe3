@@ -69,13 +69,13 @@ class Wechat extends \jianyan\easywechat\Wechat
                     // 测试环境
                     'dev' => [
                         'driver' => 'single',
-                        'path' => $this->createLogPath('wechat-dev'),
+                        'path' => $this->createLogPath('dev'),
                         'level' => 'debug',
                     ],
                     // 生产环境
                     'prod' => [
                         'driver' => 'daily',
-                        'path' => $this->createLogPath('wechat-prod'),
+                        'path' => $this->createLogPath('prod'),
                         'level' => 'info',
                     ],
                 ],
@@ -120,6 +120,23 @@ class Wechat extends \jianyan\easywechat\Wechat
             // 支付回调地址
             'notify_url' => $notifyUrl,
             'sandbox' => false, // 设置为 false 或注释则关闭沙箱模式
+            'log' => [
+                'default' => YII_DEBUG ? 'dev' : 'prod', // 默认使用的 channel，生产环境可以改为下面的 prod
+                'channels' => [
+                    // 测试环境
+                    'dev' => [
+                        'driver' => 'single',
+                        'path' => $this->createLogPath('payment-dev'),
+                        'level' => 'debug',
+                    ],
+                    // 生产环境
+                    'prod' => [
+                        'driver' => 'daily',
+                        'path' => $this->createLogPath('payment-prod'),
+                        'level' => 'info',
+                    ],
+                ],
+            ],
         ], Yii::$app->params['wechatPaymentConfig']);
 
         // 小程序
@@ -130,8 +147,21 @@ class Wechat extends \jianyan\easywechat\Wechat
             // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
             'response_type' => 'array',
             'log' => [
-                'level' => 'debug',
-                'file' => $this->createLogPath('miniProgram'),
+                'default' => YII_DEBUG ? 'dev' : 'prod', // 默认使用的 channel，生产环境可以改为下面的 prod
+                'channels' => [
+                    // 测试环境
+                    'dev' => [
+                        'driver' => 'single',
+                        'path' => $this->createLogPath('miniProgram-dev'),
+                        'level' => 'debug',
+                    ],
+                    // 生产环境
+                    'prod' => [
+                        'driver' => 'daily',
+                        'path' => $this->createLogPath('miniProgram-prod'),
+                        'level' => 'info',
+                    ],
+                ],
             ],
         ], Yii::$app->params['wechatMiniProgramConfig']);
 

@@ -19,7 +19,7 @@
 
 ### 配置移除
 
-1. 查找 `插件/AddonConfig` 文件
+1. 查找 `插件/AddonConfig.php` 文件
 
 2. 找到 `appsConfig` 变量的 `merapi` 删除掉，移除掉以后的配置
 
@@ -100,3 +100,5 @@ Icons 找不到请使用最新的 Icons 库 https://fontawesome.com/v5/search?s=
  - `col-xs-12` 为 `col-12`
  - `col-lg-12` 为 `col-12`
  - `col-sm-12` 为 `col-12`
+
+> 个别报错找不到的组件需要自己替换修复

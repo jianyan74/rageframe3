@@ -105,6 +105,28 @@ class MerchantService extends Service
     }
 
     /**
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function findBaseById($id)
+    {
+        return Merchant::find()
+            ->select([
+                'id',
+                'title',
+                'cover',
+                'address_name',
+                'address_details',
+                'longitude',
+                'latitude',
+                'collect_num',
+            ])
+            ->where(['id' => $id])
+            ->andWhere(['status' => StatusEnum::ENABLED])
+            ->asArray()
+            ->one();
+    }
+
+    /**
      * @param $id
      * @return array|\yii\db\ActiveRecord|null|Merchant
      */

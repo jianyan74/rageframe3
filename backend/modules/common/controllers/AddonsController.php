@@ -280,6 +280,7 @@ class AddonsController extends BaseController
             $files[] = "{$addonDir}common/components/";
             $files[] = "{$addonDir}common/components/Bootstrap.php";
             $files[] = "{$addonDir}common/models/";
+            $files[] = "{$addonDir}common/forms/";
             $files[] = "{$addonDir}common/models/DefaultModel.php";
             // 生成目录和空文件
             foreach ($app as $item) {
@@ -400,7 +401,7 @@ class AddonsController extends BaseController
                 'template/controllers/SettingController',
                 ['model' => $model, 'appID' => 'merchant']
             ));
-            file_put_contents("{$addonDir}common/models/SettingForm.php", $this->renderPartial('template/models/SettingFormModel', ['model' => $model, 'appID' => 'common']));
+            file_put_contents("{$addonDir}common/forms/SettingForm.php", $this->renderPartial('template/forms/SettingFormModel', ['model' => $model, 'appID' => 'common']));
             file_put_contents("{$addonDir}merchant/views/setting/display.php", $this->renderPartial('template/view/display', ['model' => $model]));
 
             // 写入配置

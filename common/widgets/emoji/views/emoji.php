@@ -18,8 +18,8 @@ use common\helpers\ArrayHelper;
         <div class="modal-content">
             <div class="modal-content">
                 <div class="modal-header">
-                    <a class="close" data-dismiss="modal">×</a>
-                    <h4>表情</h4>
+                    <h4 class="modal-title">表情</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body emoji-body"></div>
             </div>

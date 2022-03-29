@@ -2,6 +2,7 @@
 
 namespace api\modules\v1\controllers\member;
 
+use Yii;
 use common\models\member\Invoice;
 use api\controllers\UserAuthController;
 
@@ -18,4 +19,12 @@ class InvoiceController extends UserAuthController
      * @var Invoice
      */
     public $modelClass = Invoice::class;
+
+    /**
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function actionDefault()
+    {
+        return Yii::$app->services->memberInvoice->findDefaultByMemberId(Yii::$app->user->identity->member_id);
+    }
 }

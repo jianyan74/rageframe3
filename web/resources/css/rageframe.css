@@ -547,7 +547,7 @@ a.desc:after {
 }
 
 .secondary {
-    color: #6c757d !important;
+    color: #808695 !important;
 }
 
 .yellow {
@@ -973,7 +973,13 @@ select.form-control {
 
 .help-block,
 .hint-block {
-    font-size: 13px;
+    font-size: 12px;
+    padding-top: 3px;
+}
+
+.hint-block,
+.hint-block a {
+    color: #b2b2b2 !important;
 }
 
 dt {

@@ -23,7 +23,7 @@ class AddonConfig extends BaseAddonConfig
         'brief_introduction' => 'RageFrame 官方在线升级工具',
         'description' => '',
         'author' => '简言',
-        'version' => '3.0.0',
+        'version' => '3.0.3',
     ];
 
     /**
@@ -102,14 +102,14 @@ class AddonConfig extends BaseAddonConfig
      * @var string
      */
     public $install = 'Install';
-    
+
     /**
      * 卸载SQL类
      *
      * @var string
      */
     public $uninstall = 'UnInstall';
-    
+
     /**
      * 更新SQL类
      *
@@ -117,4 +117,3 @@ class AddonConfig extends BaseAddonConfig
      */
     public $upgrade = 'Upgrade';
 }
-            

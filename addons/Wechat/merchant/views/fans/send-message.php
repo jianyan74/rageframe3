@@ -25,7 +25,7 @@ $form = ActiveForm::begin([
                 <td class="float-right">
                     <?= Html::img(ImageHelper::defaultHeaderPortrait(Html::encode($model->auth->head_portrait ?? '')),
                         [
-                            'class' => 'img-circle rf-img-md img-bordered-sm',
+                            'class' => 'img-circle rf-img-md elevation-1',
                         ])?>
                 </td>
                 <td><?= Html::encode($model->auth->nickname ?? '') ?></td>

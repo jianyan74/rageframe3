@@ -75,6 +75,8 @@ class NotifyConfigService
                         break;
                     case NotifyConfigTypeEnum::DING_TALK :
                         break;
+                    case NotifyConfigTypeEnum::SYS :
+                        break;
                 }
             }
         } catch (\Exception $e) {

@@ -56,7 +56,7 @@ trait WechatLogin
 
         // 插入微信关联表
         if (!($memberAuthInfo = Yii::$app->services->memberAuth->findOauthClient(MemberAuthOauthClientEnum::WECHAT, $this->openid))) {
-            $original = Yii::$app->params['wechatMember']['original'];
+            $original = Yii::$app->params['wechatMember']['raw'];
             Yii::$app->services->memberAuth->create([
                 'oauth_client' => MemberAuthOauthClientEnum::WECHAT,
                 'oauth_client_user_id' => $original['openid'],

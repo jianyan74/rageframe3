@@ -234,7 +234,7 @@ class CreditsLogService extends Service
             // 增加积分赠送
             $creditsLogForm->is_give && $counters['give_integral'] = $creditsLogForm->num;
             // 减少消费数量
-            $creditsLogForm->is_consumer && $counters['consume_integral'] = -$creditsLogForm->num;
+            $creditsLogForm->is_consume && $counters['consume_integral'] = -$creditsLogForm->num;
             // 增加
             $status = Account::updateAllCounters($counters, ['id' => $account->id]);
 
@@ -250,7 +250,7 @@ class CreditsLogService extends Service
             // 减少积分赠送
             $creditsLogForm->is_give && $counters['give_integral'] = $creditsLogForm->num;
             // 增加消费数量
-            $creditsLogForm->is_consumer && $counters['consume_integral'] = abs($creditsLogForm->num);
+            $creditsLogForm->is_consume && $counters['consume_integral'] = abs($creditsLogForm->num);
 
             $status = Account::updateAllCounters($counters,
                 [
@@ -294,11 +294,11 @@ class CreditsLogService extends Service
         if ($creditsLogForm->num > 0) {
             $counters = ['user_money' => $creditsLogForm->num];
             // 增加累计
-            $creditsLogForm->is_consume && $counters['accumulate_money'] = $creditsLogForm->num;
+            $creditsLogForm->is_accumulate && $counters['accumulate_money'] = $creditsLogForm->num;
             // 增加金额赠送
             $creditsLogForm->is_give && $counters['give_money'] = $creditsLogForm->num;
             // 去掉消费
-            $creditsLogForm->is_consumer && $counters['consume_money'] = -abs($creditsLogForm->num);
+            $creditsLogForm->is_consume && $counters['consume_money'] = -abs($creditsLogForm->num);
             // 增加
             $status = Account::updateAllCounters($counters, ['id' => $account->id]);
         } else {
@@ -307,7 +307,7 @@ class CreditsLogService extends Service
             // 减少积分赠送
             $creditsLogForm->is_give && $counters['give_money'] = $creditsLogForm->num;
             // 增加消费数量
-            $creditsLogForm->is_consumer && $counters['consume_money'] = abs($creditsLogForm->num);
+            $creditsLogForm->is_consume && $counters['consume_money'] = abs($creditsLogForm->num);
 
             $status = Account::updateAllCounters(
                 $counters,

@@ -42,14 +42,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                         ],
                         [
                             'attribute' => 'id',
-                            'headerOptions' => ['class' => 'col-md-1'],
                         ],
                         [
                             'attribute' => 'head_portrait',
+                            'headerOptions' => ['style' => 'width: 100px'],
                             'value' => function ($model) {
                                 return Html::img(ImageHelper::defaultHeaderPortrait(Html::encode($model->head_portrait)),
                                     [
-                                        'class' => 'img-circle rf-img-md img-bordered-sm',
+                                        'class' => 'img-circle rf-img-md elevation-1',
                                     ]);
                             },
                             'filter' => false,

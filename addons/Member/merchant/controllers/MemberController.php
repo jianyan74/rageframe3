@@ -117,6 +117,17 @@ class MemberController extends BaseController
     }
 
     /**
+     * @param $id
+     * @return string
+     */
+    public function actionView($id)
+    {
+        return $this->render($this->action->id, [
+            'member' => $this->findModel($id),
+        ]);
+    }
+
+    /**
      * 修改等级
      *
      * @return mixed|string|\yii\web\Response

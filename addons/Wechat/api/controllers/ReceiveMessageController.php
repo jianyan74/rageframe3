@@ -86,6 +86,11 @@ class ReceiveMessageController extends OnAuthController
 
                         return $reply;
                     } catch (\Exception $e) {
+                        // 全局接收通知
+                        if ($e->getCode() === 200) {
+                            return $e->getMessage();
+                        }
+
                         // 记录行为日志
                         Yii::$app->services->log->push(500, 'wechatApiReply', Yii::$app->services->base->getErrorInfo($e));
 

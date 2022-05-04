@@ -81,13 +81,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         }
 
         // 当前高度
-        let menuYloc = $("#explain").offset().top;
         $(window).scroll(function () {
             let offsetTop = $(window).scrollTop() - 40 + "px";
-            $("#explain").animate({top: offsetTop}, {duration: 600, queue: false});
-
+            $("#explain").animate({'padding-top': offsetTop}, {duration: 600, queue: false});
             if ($(window).scrollTop() < 60) {
-                $("#explain").animate({top: 0}, {duration: 600, queue: false});
+                $("#explain").animate({'padding-top': 0}, {duration: 600, queue: false});
             }
         });
     });

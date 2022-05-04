@@ -4,6 +4,7 @@ namespace common\traits;
 
 use Yii;
 use yii\base\Model;
+use yii\web\Response;
 use yii\web\UnprocessableEntityHttpException;
 use common\enums\AppEnum;
 
@@ -104,7 +105,7 @@ trait BaseAction
      * 错误提示信息
      *
      * @param string $msgText 错误内容
-     * @param string $skipUrl 跳转链接
+     * @param string|array|Response $skipUrl 跳转链接
      * @param string $msgType 提示类型 [success/error/info/warning]
      * @return mixed
      */

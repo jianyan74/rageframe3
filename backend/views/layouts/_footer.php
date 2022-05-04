@@ -108,68 +108,22 @@ $this->registerJs($script);
 ?>
 
 <script>
-    // 小模拟框清除
-    $('#ajaxModal').on('hidden.bs.modal', function (e) {
+    $('#ajaxModal,#ajaxModalLg,#ajaxModalMax').on('hidden.bs.modal',  function (e) {
         if (e.target == this) {
             $(this).removeData("bs.modal");
-            $('#ajaxModal').find('.modal-content').html($('#rfModalBody').html());
+            $(this).find('.modal-content').html($('#rfModalBody').html());
         }
-    });
-
-    // 大模拟框清除
-    $('#ajaxModalLg').on('hidden.bs.modal', function (e) {
-        if (e.target == this) {
-            $(this).removeData("bs.modal");
-            $('#ajaxModalLg').find('.modal-content').html($('#rfModalBody').html());
-        }
-    });
-    // 最大模拟框清除
-    $('#ajaxModalMax').on('hidden.bs.modal', function (e) {
-        if (e.target == this) {
-            $(this).removeData("bs.modal");
-            $('#ajaxModalMax').find('.modal-content').html($('#rfModalBody').html());
-        }
-    });
-
-    // 小模拟框加载完成
-    $('#ajaxModal').on('shown.bs.modal', function (e) {
+    }).on('shown.bs.modal', function (e) {
         var thatModalContent = $(this).find('.modal-body');
         $.ajax({
             type: "get",
             url: $(e.relatedTarget).attr('href'),
             success: function (data) {
-                thatModalContent.html(data)
+                thatModalContent.html(data);
+                autoFontColor();
             }
         });
-
-        autoFontColor()
-    });
-
-    // 大模拟框加载完成
-    $('#ajaxModalLg').on('shown.bs.modal', function (e) {
-        var thatModalContent = $(this).find('.modal-body');
-        $.ajax({
-            type: "get",
-            url: $(e.relatedTarget).attr('href'),
-            success: function (data) {
-                thatModalContent.html(data)
-            }
-        });
-
-        autoFontColor()
-    });
-
-    // 最大模拟框加载完成
-    $('#ajaxModalMax').on('shown.bs.modal', function (e) {
-        var thatModalContent = $(this).find('.modal-body');
-        $.ajax({
-            type: "get",
-            url: $(e.relatedTarget).attr('href'),
-            success: function (data) {
-                thatModalContent.html(data)
-            }
-        });
-
-        autoFontColor()
+        autoFontColor();
     });
 </script>
+

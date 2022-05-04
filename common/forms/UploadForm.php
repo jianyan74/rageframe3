@@ -309,8 +309,8 @@ class UploadForm extends \common\models\common\Attachment
                 $this->uploadDrive = new QiniuAdapter(
                     $config['storage_qiniu_accesskey'],
                     $config['storage_qiniu_secrectkey'],
-                    $config['storage_qiniu_domain'],
-                    $config['storage_qiniu_bucket']
+                    $config['storage_qiniu_bucket'],
+                    $config['storage_qiniu_domain']
                 );
                 break;
             // 本地
@@ -345,6 +345,7 @@ class UploadForm extends \common\models\common\Attachment
         $this->ip = Yii::$app->services->base->getUserIp();
         $this->req_id = Yii::$app->params['uuid'];
         $this->format_size = Yii::$app->formatter->asShortSize($this->size, 2);
+
         // 如果是图片且内容是文字类型
         if (
             in_array($this->extension, Yii::$app->params['uploadConfig']['images']['extensions']) &&
@@ -399,7 +400,7 @@ class UploadForm extends \common\models\common\Attachment
             case AttachmentDriveEnum::QINIU :
                 $this->fileSystem->addPlugin(new FileUrl());
 
-                return $this->filesystem->getUrl($this->path);
+                return $this->fileSystem->getUrl($this->path);
             // 本地
             default :
                 $hostInfo = Yii::$app->request->hostInfo ?? '';

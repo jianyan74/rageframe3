@@ -41,6 +41,8 @@ use common\traits\HasOneMerchant;
  * @property float|null $service_charge_single 手续费单笔
  * @property float|null $service_charge_total 总手续费
  * @property string|null $refusal_cause 拒绝原因
+ * @property string|null $addon_name 插件名称
+ * @property int|null $is_addon 是否插件
  * @property int|null $status 状态[-1:删除;0:禁用;1启用]
  * @property int|null $created_at 创建时间
  * @property int|null $updated_at 修改时间
@@ -63,9 +65,9 @@ class WithdrawDeposit extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'member_id', 'member_type', 'account_type', 'transfer_type', 'transfer_status', 'transfer_time', 'payment_time', 'audit_time', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'member_id', 'member_type', 'account_type', 'transfer_type', 'transfer_status', 'transfer_time', 'payment_time', 'audit_time', 'is_addon', 'status', 'created_at', 'updated_at'], 'integer'],
             [['cash', 'transfer_money', 'service_charge', 'service_charge_rate', 'service_charge_single', 'service_charge_total'], 'number', 'min' => 0],
-            [['withdraw_no', 'bank_name', 'transfer_no', 'transfer_account_no'], 'string', 'max' => 100],
+            [['withdraw_no', 'bank_name', 'transfer_no', 'transfer_account_no', 'addon_name'], 'string', 'max' => 100],
             [['realname', 'account_number', 'transfer_name'], 'string', 'max' => 50],
             [['mobile', 'identity_card'], 'string', 'max' => 20],
             [['account_type_name'], 'string', 'max' => 30],
@@ -111,6 +113,8 @@ class WithdrawDeposit extends \common\models\base\BaseModel
             'service_charge_rate' => '手续费率',
             'service_charge_single' => '手续费单笔',
             'service_charge_total' => '总手续费',
+            'addon_name' => '插件名称',
+            'is_addon' => '是否插件',
             'status' => '状态[-1:删除;0:禁用;1启用]',
             'refusal_cause' => '拒绝原因',
             'created_at' => '创建时间',

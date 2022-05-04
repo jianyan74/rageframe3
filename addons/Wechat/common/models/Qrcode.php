@@ -3,7 +3,7 @@
 namespace addons\Wechat\common\models;
 
 use Yii;
-use common\behaviors\MerchantBehavior;
+use common\behaviors\MerchantShopBehavior;
 use common\models\base\BaseModel;
 use addons\Wechat\common\enums\QrcodeModelTypeEnum;
 
@@ -33,7 +33,7 @@ use addons\Wechat\common\enums\QrcodeModelTypeEnum;
  */
 class Qrcode extends BaseModel
 {
-    use MerchantBehavior;
+    use MerchantShopBehavior;
 
     /**
      * {@inheritdoc}

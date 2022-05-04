@@ -17,7 +17,7 @@ class RageFrameAsset extends AssetBundle
     public $baseUrl = '@baseResources';
 
     public $css = [
-        'https://at.alicdn.com/t/font_2524206_rapy37frme.css',
+        'https://at.alicdn.com/t/font_2524206_p9h2khogn8l.css',
         'plugins/bootstrap-table/bootstrap-table.min.css',
         'plugins/bootstrap-table/extensions/fixed-columns/bootstrap-table-fixed-columns.min.css',
         'css/rageframe3.css',

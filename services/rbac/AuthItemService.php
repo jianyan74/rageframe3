@@ -44,7 +44,7 @@ class AuthItemService
             ->asArray()
             ->all();
 
-        $list = ArrayHelper::removeByValue($list, 'id', $id);
+        $list = ArrayHelper::removeByValue($list, $id);
         $models = ArrayHelper::itemsMerge($list);
         $data = ArrayHelper::map(ArrayHelper::itemsMergeDropDown($models), 'id', 'title');
 

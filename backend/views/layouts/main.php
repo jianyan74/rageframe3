@@ -73,7 +73,9 @@ BaseAsset::register($this);
     };
 
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+        setTimeout(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        }, 50)
     })
 </script>
 <?php $this->endBody() ?>

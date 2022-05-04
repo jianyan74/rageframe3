@@ -314,7 +314,7 @@ class AddonsController extends BaseController
             }
 
             // 参数设置支持
-            $files[] = "{$addonDir}common/models/SettingForm.php";
+            $files[] = "{$addonDir}common/forms/SettingForm.php";
             $files[] = "{$addonDir}merchant/controllers/SettingController.php";
             $files[] = "{$addonDir}merchant/views/setting/";
             // 服务层支持

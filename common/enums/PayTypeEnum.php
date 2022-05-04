@@ -35,7 +35,7 @@ class PayTypeEnum extends BaseEnum
     public static function getMap(): array
     {
         return [
-            self::ON_LINE => '在线支付',
+            self::ON_LINE => '', // 在线支付
             self::WECHAT => '微信',
             self::ALI => '支付宝',
             self::UNION => '银联卡',

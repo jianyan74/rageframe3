@@ -168,7 +168,7 @@ class ArrayHelper extends BaseArrayHelper
     public static function removeByValue(array $array, $value, $key = 'id')
     {
         foreach ($array as $index => $item) {
-            if ($item[$key] == $value) {
+            if (isset($item[$key]) && $item[$key] == $value) {
                 unset($array[$index]);
             }
         }

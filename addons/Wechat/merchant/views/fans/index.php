@@ -30,11 +30,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="tabs-container">
             <div class="tabs-right">
                 <ul class="nav nav-tabs flex-column">
-                    <li class="nav-link <?php if ($tag_id == '') { ?>active<?php } ?>">
+                    <li class="nav-link <?php if ($tagId == '') { ?>active<?php } ?>">
                         <a href="<?= Url::to(['index']) ?>"> 全部粉丝(<strong class="text-danger"><?= $fansCount ?></strong>)</a>
                     </li>
                     <?php foreach ($fansTags as $k => $tag) { ?>
-                        <li class="nav-link <?php if ($tag['id'] == $tag_id) { ?>active<?php } ?>">
+                        <li class="nav-link <?php if ($tag['id'] == $tagId) { ?>active<?php } ?>">
                             <a href="<?= Url::to(['index', 'SearchModel[tags.tag_id]' => $tag['id']]) ?>"> <?= $tag['name'] ?>(<strong class="text-danger"><?= $tag['count'] ?></strong>)</a>
                         </li>
                     <?php } ?>

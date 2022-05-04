@@ -26,4 +26,16 @@ class InvoiceService extends Service
             ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
             ->one();
     }
+
+    /**
+     * @param $id
+     * @param $member_id
+     * @return array|null|\yii\db\ActiveRecord
+     */
+    public function findById($id, $member_id)
+    {
+        return Invoice::find()
+            ->where(['id' => $id, 'member_id' => $member_id, 'status' => StatusEnum::ENABLED])
+            ->one();
+    }
 }

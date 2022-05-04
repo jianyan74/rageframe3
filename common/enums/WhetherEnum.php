@@ -37,6 +37,17 @@ class WhetherEnum extends BaseEnum
     }
 
     /**
+     * @return array
+     */
+    public static function getShowMap(): array
+    {
+        return [
+            self::ENABLED => '显示',
+            self::DISABLED => '隐藏',
+        ];
+    }
+
+    /**
      * 是否标签
      *
      * @param int $status

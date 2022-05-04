@@ -32,4 +32,36 @@ class WithdrawTransferStatusEnum extends BaseEnum
             self::TRANSFER_ERROR => '转账失败',
         ];
     }
+
+    const AUDIT = 0;
+    const SUCCEED = 1;
+    const FAIL = -1;
+
+    /**
+     * @param $state
+     * @return int[]|void
+     */
+    public static function stateMap($state)
+    {
+        switch ($state) {
+            // 待转账
+            case self::AUDIT :
+                return [
+                    self::APPLY,
+                    self::APPLY_AGREE,
+                    self::TRANSFER_IN_PROGRESS,
+                ];
+            // 已转账
+            case self::SUCCEED :
+                return [
+                    self::TRANSFER_SUCCESS
+                ];
+            // 转账失败
+            case self::FAIL :
+                return [
+                    self::APPLY_REFUSE,
+                    self::TRANSFER_ERROR,
+                ];
+        }
+    }
 }

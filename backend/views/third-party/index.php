@@ -24,6 +24,7 @@ $this->title = '第三方授权';
                     <thead>
                     <tr>
                         <th>绑定类型</th>
+                        <th>绑定账号</th>
                         <th>绑定状态</th>
                         <th>操作</th>
                     </tr>
@@ -32,6 +33,7 @@ $this->title = '第三方授权';
                     <?php foreach ($thirdParty as $item) { ?>
                         <tr>
                             <td><?= $item['title'];?> </td>
+                            <td><?= Html::encode($item['client']) ?></td>
                             <td>
                                 <?php if($item['status'] == StatusEnum::DISABLED) { ?>
                                     <span class="label label-outline-danger">未绑定</span>

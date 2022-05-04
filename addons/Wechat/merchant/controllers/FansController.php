@@ -55,11 +55,12 @@ class FansController extends BaseController
             ->with(['auth']);
 
         $tags = Yii::$app->wechatService->fansTags->getList();
+        $params = Yii::$app->request->get('SearchModel');
 
         return $this->render($this->action->id, [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'tagId' => $tagId,
+            'tagId' => $params['tags.tag_id'] ?? 0,
             'fansCount' => Yii::$app->wechatService->fans->findFollowCount(),
             'fansTags' => $tags,
             'allTag' => ArrayHelper::map($tags, 'id', 'name'),

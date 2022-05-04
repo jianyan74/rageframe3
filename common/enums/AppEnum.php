@@ -25,9 +25,9 @@ class AppEnum extends BaseEnum
         return [
             self::BACKEND => '总后台',
             self::FRONTEND => '前台',
-            self::API => '接口',
+            self::API => '用户端', // 接口
             self::HTML5 => '手机',
-            self::MERCHANT => '商家',
+            self::MERCHANT => '商家后台',
             self::OAUTH2 => 'OAuth2',
             self::CONSOLE => '控制台',
         ];

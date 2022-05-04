@@ -96,6 +96,7 @@ class LogService
             // 排除状态码
             if (
                 Yii::$app->params['user.log'] &&
+                !Yii::$app->request->isOptions &&
                 !in_array($response->statusCode, ArrayHelper::merge($this->exceptCode, Yii::$app->params['user.log.except.code']))
             ) {
                 $this->push($response->statusCode, $errorMessage, $errData);

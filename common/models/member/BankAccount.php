@@ -49,6 +49,7 @@ class BankAccount extends \common\models\base\BaseModel
     {
         return [
             [['account_type', 'realname', 'mobile'], 'required'],
+            ['account_type', 'in', 'range' => AccountTypeEnum::getKeys()],
             [['merchant_id', 'member_id', 'member_type', 'account_type', 'is_default', 'audit_status', 'status', 'created_at', 'updated_at'], 'integer'],
             [['realname', 'account_number'], 'string', 'max' => 50],
             [['mobile', 'identity_card'], 'string', 'max' => 20],

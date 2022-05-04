@@ -8,6 +8,7 @@ use api\controllers\OnAuthController;
 use common\models\member\Member;
 use common\forms\MemberForm;
 use common\helpers\ResultHelper;
+use common\enums\StatusEnum;
 
 /**
  * 会员接口
@@ -68,6 +69,24 @@ class MemberController extends OnAuthController
         }
 
         return 'ok';
+    }
+
+    /**
+     * @param $id
+     * @return \yii\db\ActiveRecord
+     * @throws NotFoundHttpException
+     */
+    protected function findModel($id)
+    {
+        /* @var $model \yii\db\ActiveRecord */
+        if (empty($id) || !($model = $this->modelClass::find()->where([
+                'id' => Yii::$app->user->identity->member_id,
+                'status' => StatusEnum::ENABLED,
+            ])->andFilterWhere(['merchant_id' => $this->getMerchantId()])->one())) {
+            throw new NotFoundHttpException('请求的数据不存在');
+        }
+
+        return $model;
     }
 
     /**

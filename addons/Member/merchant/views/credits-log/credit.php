@@ -2,7 +2,7 @@
 
 use yii\grid\GridView;
 use common\helpers\Html;
-use common\helpers\ImageHelper;
+use common\helpers\MemberHelper;
 
 $this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -27,40 +27,33 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         [
                             'class' => 'yii\grid\SerialColumn',
                         ],
-                        [
-                            'label' => '关联用户',
-                            'attribute' => 'member_id',
-                            'filter' => Html::activeTextInput($searchModel, 'member_id', [
-                                    'class' => 'form-control',
-                                    'placeholder' => '用户ID'
-                                ]
-                            ),
-                            'value' => function ($model) {
-                                return "用户ID：" . $model->member->id . '<br>' .
-                                    "昵称：" . Html::encode($model->member->nickname) . '<br>' .
-                                    "账号：" . Html::encode($model->member->username) . '<br>' .
-                                    "手机：" . Html::encode($model->member->mobile) . '<br>';
-                            },
-                            'format' => 'raw',
-                        ],
+                        MemberHelper::gridView($searchModel),
                         [
                             'label' => '变动数量',
                             'attribute' => 'num',
+                            'format' => 'raw',
+                            'headerOptions' => ['class' => 'text-align-center'],
+                            'contentOptions' => ['class' => 'text-align-center'],
+                            'value' => function ($model) {
+                                return $model->num > 0 ? "<span class='green'>$model->num</span>" : "<span class='red'>$model->num</span>";
+                            },
                         ],
-                        'remark',
                         [
-                            'label' => '变动记录',
+                            'label' => '变动后数量',
                             'attribute' => 'new_num',
+                            'headerOptions' => ['class' => 'text-align-center'],
+                            'contentOptions' => ['class' => 'text-align-center'],
                             'filter' => Html::activeTextInput($searchModel, 'new_num', [
                                     'class' => 'form-control',
-                                    'placeholder' => '最终数量'
+                                    'placeholder' => '变动后数量'
                                 ]
                             ),
                             'value' => function ($model) {
-                                $operational = $model->num < 0 ? '-' : '+';
-                                return $model->old_num . $operational . abs($model->num) . '=' . $model->new_num;
+                                // return $model->old_num . $operational . abs($model->num) . '=' . $model->new_num;
+                                return $model->new_num;
                             },
                         ],
+                        'remark',
                         [
                             'attribute' => 'created_at',
                             'filter' => false, //不显示搜索框

@@ -57,7 +57,7 @@ class AuthService extends Service
     {
         return Auth::find()
             ->where(['member_id' => $memberId])
-            ->andWhere(['>=', 'status', StatusEnum::DISABLED])
+            ->andWhere(['status' => StatusEnum::ENABLED])
             ->asArray()
             ->all();
     }

@@ -12,9 +12,9 @@ $menuCates = Yii::$app->services->menuCate->findAllInAuth(Yii::$app->id)
 
 ?>
 
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light rf-navbar-nav">
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
+    <ul class="navbar-nav rf-navbar-nav-left">
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
@@ -29,6 +29,13 @@ $menuCates = Yii::$app->services->menuCate->findAllInAuth(Yii::$app->id)
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
+        <!-- 自动隐藏菜单 -->
+        <li class="nav-item dropdown hide-menu hide">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="fas fa-outdent"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu"></div>
+        </li>
         <!-- 通知公告 -->
         <?= Notify::widget(); ?>
         <li class="nav-item dropdown">

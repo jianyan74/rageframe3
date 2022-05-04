@@ -4,6 +4,7 @@ use yii\grid\GridView;
 use common\helpers\Html;
 use common\enums\StatusEnum;
 use common\enums\PayTypeEnum;
+use common\helpers\MemberHelper;
 
 $this->title = '支付日志';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
@@ -23,21 +24,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                     'tableOptions' => ['class' => 'table table-hover'],
                     'columns' => [
                         'id',
-                        [
-                            'attribute' => 'member_id',
-                            'label' => '用户ID',
-                            'value' => function ($model) {
-                                if (empty($model->member)) {
-                                    return '---';
-                                }
-
-                                $str = 'ID：' . $model->member->id . '<br>';
-                                $str .= '昵称：' . $model->member->nickname . '<br>';
-                                $str .= '手机号码：' . $model->member->mobile;
-                                return $str;
-                            },
-                            'format' => 'raw',
-                        ],
+                        MemberHelper::gridView($searchModel),
                         'out_trade_no',
                         [
                             'label' => '支付金额',

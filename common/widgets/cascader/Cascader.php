@@ -62,10 +62,7 @@ class Cascader extends InputWidget
     /**
      * @var array
      */
-    public $options = [
-        'style' => 'width:420px',
-        'placeholder' => '搜索或点击下拉选择',
-    ];
+    public $options = [];
 
     /**
      * 盒子ID
@@ -95,6 +92,10 @@ class Cascader extends InputWidget
         }
 
         $this->items = ArrayHelper::itemsMerge($this->items, $this->pid, 'value', 'pid', 'children');
+        $this->options = ArrayHelper::merge([
+            'style' => 'width:420px',
+            'placeholder' => '搜索或点击下拉选择'
+        ], $this->options);
         $this->boxId = md5($this->name) . StringHelper::uuid('uniqid');
     }
 

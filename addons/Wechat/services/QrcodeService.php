@@ -36,7 +36,7 @@ class QrcodeService extends Service
     {
         $qrCode = Qrcode::find()
             ->where(['model_type' => QrcodeModelTypeEnum::TEM])
-            ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+            ->andWhere(['merchant_id' => Yii::$app->services->merchant->getAutoId()])
             ->orderBy('created_at desc')
             ->one();
 

@@ -450,25 +450,36 @@ class StringHelper extends BaseStringHelper
      */
     public static function textNewLine($string, $num = 26, $cycle_index = 2)
     {
-        $letter = [];
-        for ($i = 0; $i < mb_strlen($string, 'UTF-8'); $i++) {
-            $letter[] = mb_substr($string, $i, 1, 'UTF-8');
-        }
-
+        // 中文字符串长度
+        $num = $num * 3;
         $data = [];
-        for ($j = 1; $j <= $cycle_index; $j++) {
-            $str = implode('', array_slice($letter, ($j - 1) * $num, $j * $num));
-            if ($j + 1 > $cycle_index && count($letter) > $cycle_index * $num) {
-                $str .= '...';
+        $letterLength = 0;
+        $j = 0;
+        for ($i = 0; $i < mb_strlen($string, 'UTF-8'); $i++) {
+            $name = mb_substr($string, $i, 1, 'UTF-8');
+            $length = strlen($name);
+            if ($letterLength >= $num) {
+                $letterLength = 0;
+                $j++;
             }
 
-            $data[] = $str;
+            !isset($data[$j]) && $data[$j] = '';
+            $data[$j] .= $name;
+            $letterLength += $length;
+        }
+
+        if (count($data) > $cycle_index) {
+            $data[$cycle_index - 1] .= '...';
         }
 
         foreach ($data as $key => $datum) {
-            if (empty($datum)) {
+            if (empty($datum) || $key > $cycle_index - 1) {
                 unset($data[$key]);
             }
+        }
+
+        if (empty($data)) {
+            $data[] = $string;
         }
 
         return $data;

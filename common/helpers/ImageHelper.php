@@ -42,7 +42,7 @@ class ImageHelper
      * @param int $width 宽度 默认45px
      * @param int $height 高度 默认45px
      */
-    public static function fancyBox($imgSrc, $width = 45, $height = 45)
+    public static function fancyBox($imgSrc, $width = 40, $height = 40)
     {
         $image = Html::img($imgSrc, [
             'width' => $width,

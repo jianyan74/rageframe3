@@ -13,7 +13,7 @@ return [
             'nickname' => '简言',
             'name' => '简言',
             'avatar' => 'http://wx.qlogo.cn/mmopen/Q3auHgzwzM4eoQGHDIsK05kWV5deHKK99ka7d65eecJZ7CRZGTlicuaoH7YzcbzYXo1pDR6N77bdLTwA6F2mZA1cFw7icJxwwSWbVgqk3l6gU/0',
-            'original' => [
+            'raw' => [
                 'openid' => 'oW6qtS0fitZTWHudEX-7ik',
                 'nickname' => '简言',
                 'sex' => 1,

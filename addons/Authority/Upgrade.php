@@ -18,8 +18,8 @@ class Upgrade extends Migration implements AddonWidget
      * @var array
      */
     public $versions = [
-        '3.0.0',
-        '3.0.3', // 默认版本
+        '3.0.0', // 默认版本
+        '3.0.3', '3.0.10',
     ];
 
     /**
@@ -30,6 +30,8 @@ class Upgrade extends Migration implements AddonWidget
     public function run($addon)
     {
         switch ($addon->version) {
+            case '3.0.10' :
+                break;
             case '3.0.3' :
                 break;
             case '3.0.0' :

@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use yii\web\Response;
+use common\helpers\ArrayHelper;
 use common\enums\StatusEnum;
 use common\enums\MemberAuthOauthClientEnum;
 
@@ -32,10 +33,20 @@ class ThirdPartyController extends BaseController
         $thirdParty = [
             MemberAuthOauthClientEnum::WECHAT => [
                 'name' => MemberAuthOauthClientEnum::WECHAT,
+                'client' => '无',
                 'title' => MemberAuthOauthClientEnum::getValue(MemberAuthOauthClientEnum::WECHAT),
                 'status' => StatusEnum::DISABLED
             ]
         ];
+
+        $auth = Yii::$app->services->memberAuth->findByMemberId($this->member_id);
+        $auth = ArrayHelper::arrayKey($auth, 'oauth_client');
+        foreach ($thirdParty as &$item) {
+            if (isset($auth[$item['name']])) {
+                $item['status'] = StatusEnum::ENABLED;
+                $item['client'] = $auth[$item['name']]['oauth_client_user_id'];
+            }
+        }
 
         return $this->render($this->action->id, [
             'thirdParty' => $thirdParty,
@@ -84,6 +95,6 @@ class ThirdPartyController extends BaseController
     {
         Yii::$app->services->memberAuth->unBind($type, $member_id);
 
-        return $this->message("解绑成功", $this->redirect(['index']));
+        return $this->message("解绑成功", $this->redirect(['index', 'member_id' => $member_id]));
     }
 }

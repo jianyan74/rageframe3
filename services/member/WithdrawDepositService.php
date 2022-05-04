@@ -5,6 +5,7 @@ namespace services\member;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\web\UnprocessableEntityHttpException;
+use common\components\Service;
 use common\enums\StatusEnum;
 use common\enums\TransferTypeEnum;
 use common\enums\WithdrawTransferStatusEnum;
@@ -15,7 +16,7 @@ use common\models\member\WithdrawDeposit;
  * Class WithdrawDepositService
  * @package services\member
  */
-class WithdrawDepositService
+class WithdrawDepositService extends Service
 {
     /**
      * 转账
@@ -226,6 +227,36 @@ class WithdrawDepositService
         }
 
         throw new UnprocessableEntityHttpException('无效的记录');
+    }
+
+    /**
+     * @return int|string
+     */
+    public function getWithdrawalSuccessSum($addon_name = '', $member_id = '')
+    {
+        return WithdrawDeposit::find()
+                ->where(['status' => StatusEnum::ENABLED])
+                ->andWhere(['is_addon' => !empty($addon_name) ? StatusEnum::ENABLED : StatusEnum::DISABLED])
+                ->andWhere(['transfer_status' => WithdrawTransferStatusEnum::TRANSFER_SUCCESS])
+                ->andFilterWhere(['addon_name' => $addon_name])
+                ->andFilterWhere(['member_id' => $member_id])
+                ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+                ->sum('cash') ?? 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWithdrawalCashApplySum($addon_name = '', $member_id = '')
+    {
+        return WithdrawDeposit::find()
+                ->where(['status' => StatusEnum::DISABLED])
+                ->andWhere(['is_addon' => !empty($addon_name) ? StatusEnum::ENABLED : StatusEnum::DISABLED])
+                ->andWhere(['transfer_status' => WithdrawTransferStatusEnum::TRANSFER_SUCCESS])
+                ->andFilterWhere(['addon_name' => $addon_name])
+                ->andFilterWhere(['member_id' => $member_id])
+                ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+                ->sum('cash') ?? 0;
     }
 
     /**

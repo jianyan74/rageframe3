@@ -23,9 +23,9 @@ use common\behaviors\MerchantBehavior;
  * @property int|null $unfollow_time 取消关注时间
  * @property int|null $group_id 分组id
  * @property string|null $tag 标签
- * @property string|null $last_longitude 最后一次经纬度上报
- * @property string|null $last_latitude 最后一次经纬度上报
- * @property string|null $last_address 最后一次经纬度上报地址
+ * @property string|null $last_longitude 最近经纬度上报
+ * @property string|null $last_latitude 最近经纬度上报
+ * @property string|null $last_address 最近经纬度上报地址
  * @property int|null $last_updated 最后更新时间
  * @property string|null $remark 粉丝备注
  * @property string|null $subscribe_scene 关注来源
@@ -99,9 +99,9 @@ class Fans extends \yii\db\ActiveRecord
             'unfollow_time' => '取消关注时间',
             'group_id' => '分组id',
             'tag' => '标签',
-            'last_longitude' => '最后一次经纬度上报',
-            'last_latitude' => '最后一次经纬度上报',
-            'last_address' => '最后一次经纬度上报地址',
+            'last_longitude' => '最近经纬度上报',
+            'last_latitude' => '最近经纬度上报',
+            'last_address' => '最近经纬度上报地址',
             'last_updated' => '最后更新时间',
             'remark' => '粉丝备注',
             'subscribe_scene' => '关注来源',

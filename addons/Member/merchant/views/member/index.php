@@ -2,9 +2,9 @@
 
 use common\helpers\Url;
 use yii\grid\GridView;
-use common\helpers\ArrayHelper;
 use common\helpers\Html;
 use common\helpers\ImageHelper;
+use common\helpers\MemberHelper;
 use yii\web\JsExpression;
 use kartik\select2\Select2;
 
@@ -47,8 +47,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                             'attribute' => 'head_portrait',
                             'headerOptions' => ['style' => 'width: 100px'],
                             'value' => function ($model) {
-                                return Html::img(ImageHelper::defaultHeaderPortrait(Html::encode($model->head_portrait)),
-                                    [
+                                return Html::img(ImageHelper::defaultHeaderPortrait(Html::encode($model->head_portrait)), [
                                         'class' => 'img-circle rf-img-md elevation-1',
                                     ]);
                             },
@@ -57,11 +56,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                         ],
                         [
                             'attribute' => 'nickname',
-                            'value' => function ($model) {
-                                $html = $model->nickname;
-
-                                return $html;
-                            },
                             'format' => 'raw',
                         ],
                         [
@@ -79,44 +73,23 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                             'format' => 'raw',
                         ],
                         [
-                            'label' => '上级会员',
+                            'label' => '邀请人',
                             'attribute' => 'pid',
-                            'filter' => Select2::widget([
-                                'name' => 'SearchModel[pid]',
-                                'initValueText' => '', // set the initial display text
-                                'options' => ['placeholder' => '手机号码查询'],
-                                'pluginOptions' => [
-                                    'allowClear' => true,
-                                    'minimumInputLength' => 3,
-                                    'language' => [
-                                        'errorLoading' => new JsExpression("function () { return '等待中...'; }"),
-                                    ],
-                                    'ajax' => [
-                                        'url' => Url::to(['mobile-select']),
-                                        'dataType' => 'json',
-                                        'data' => new JsExpression('function(params) { 
-                                                return {q:params.term}; 
-                                        }'),
-                                    ],
-                                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                                    'templateResult' => new JsExpression('function(city) { return city.text; }'),
-                                    'templateSelection' => new JsExpression('function (city) { return city.text; }'),
-                                ],
-                            ]),
+                            'headerOptions' => ['class' => 'col-md-1 text-align-center'],
+                            'contentOptions' => ['class' => 'text-align-center'],
+                            'filter' => Html::activeTextInput($searchModel, 'pid', [
+                                    'class' => 'form-control',
+                                    'placeholder' => '邀请用户 ID'
+                                ]
+                            ),
                             'format' => 'raw',
                             'value' => function ($model) {
-                                if ($model->pid === 0) {
+                                if ($model->pid === 0 || empty($model->parent)) {
                                     return '---';
                                 }
 
-                                $str = [];
-                                $str[] = 'ID：' . $model->parent->id ?? '';
-                                $str[] = '姓名：' . Html::encode($model->parent->nickname ?? '');
-                                $str[] = '昵称：' . Html::encode($model->parent->nickname ?? '');
-                                $str[] = '手机：' . Html::encode($model->parent->mobile ?? '');
-
-                                return implode('<br>', $str);
-                            },
+                                return MemberHelper::html($model->parent);
+                                },
                         ],
                         [
                             'label' => '账户金额',

@@ -29,7 +29,7 @@ class Yii
  * @property \addons\Merchants\services\Application $merchantsService 商家
  * @property \addons\TinyShop\services\Application $tinyShopService 微商城
  * @property \addons\TinyStore\services\Application $tinyStoreService 门店(社区团购)
- * @property \addons\TinyDistribute\services\Application $tinyDistributionService 微分销
+ * @property \addons\TinyDistribute\services\Application $tinyDistributeService 微分销
  * @property \addons\Wechat\services\Application $wechatService 微信公众号
  * @property \addons\TinyDoc\services\Application $tinyDocService 文档
  * @property \addons\TinyChat\services\Application $tinyChatService 微客服

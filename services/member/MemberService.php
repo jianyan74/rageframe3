@@ -9,6 +9,7 @@ use common\enums\AppEnum;
 use common\enums\StatusEnum;
 use common\models\member\Member;
 use common\enums\MemberTypeEnum;
+use common\helpers\TreeHelper;
 use common\helpers\EchantsHelper;
 use common\enums\MemberLevelBuyTypeEnum;
 
@@ -68,7 +69,6 @@ class MemberService extends Service
         return Yii::$app->user->id ?? 0;
     }
 
-
     /**
      * 购买等级
      *
@@ -97,6 +97,26 @@ class MemberService extends Service
                 'level_buy_type' => $buy_type
             ], ['id' => $member->id]);
         }
+    }
+
+    /**
+     * 获取所有下级id
+     *
+     * @param $id
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getChildById($id, $level = 3)
+    {
+        $member = $this->get($id);
+
+        return Member::find()
+            ->select(['id', 'level'])
+            ->where(['status' => StatusEnum::ENABLED])
+            ->andWhere(['<=', 'level', $member->level + $level])
+            ->andWhere(['like', 'tree', $member->tree . TreeHelper::prefixTreeKey($member->id) . '%', false])
+            ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+            ->asArray()
+            ->all();
     }
 
     /**
@@ -146,7 +166,7 @@ class MemberService extends Service
      * @param bool $saveAction
      * @throws \yii\base\InvalidConfigException
      */
-    public function lastLogin(User $member)
+    public function lastLogin($member)
     {
         // 记录访问次数
         $member->visit_count += 1;
@@ -203,9 +223,10 @@ class MemberService extends Service
      * @param $id
      * @return array|\yii\db\ActiveRecord|null|Member
      */
-    public function findById($id)
+    public function findById($id, $select = ['*'])
     {
         return Member::find()
+            ->select($select)
             ->where(['id' => $id])
             ->andWhere(['>=', 'status', StatusEnum::DISABLED])
             ->one();

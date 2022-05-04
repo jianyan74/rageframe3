@@ -31,20 +31,20 @@
         </div>
         <div class="row avatar-btns">
             <div class="col-md-3">
-                <span class="btn btn-white fa fa-undo" data-method="rotate" data-option="-90"
+                <span class="btn btn-white" data-method="rotate" data-option="-90"
                       title="向左旋转90°"> 左旋转</span>
-                <span class="btn btn-white fa fa-repeat" data-method="rotate" data-option="90"
+                <span class="btn btn-white" data-method="rotate" data-option="90"
                       title="向右旋转90°"> 右旋转</span>
             </div>
             <div class="col-md-6" style="text-align: right;">
-                <span class="btn btn-white fa fa-arrows" data-method="setDragMode" data-option="move"
+                <span class="btn btn-white" data-method="setDragMode" data-option="move"
                       title="移动"> 移动</span>
-                <div class="btn btn-white fa fa-exchange cropper-scaleX" title="换向"> 换向</div>
-                <span class="btn btn-white fa fa-search-plus" data-method="zoom" data-option="0.1"
+                <div class="btn btn-white cropper-scaleX" title="换向"> 换向</div>
+                <span class="btn btn-white" data-method="zoom" data-option="0.1"
                       title="放大图片"> 放大</span>
-                <span class="btn btn-white fa fa-search-minus" data-method="zoom" data-option="-0.1"
+                <span class="btn btn-white" data-method="zoom" data-option="-0.1"
                       title="缩小图片"> 缩小</span>
-                <span type="button" class="btn btn-white fa fa-refresh" data-method="reset" title="重置图片"> 重置</span>
+                <span type="button" class="btn btn-white" data-method="reset" title="重置图片"> 重置</span>
             </div>
         </div>
     </div>

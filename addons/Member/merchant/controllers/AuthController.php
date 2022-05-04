@@ -7,6 +7,7 @@ use common\enums\StatusEnum;
 use common\traits\MerchantCurd;
 use common\models\member\Auth;
 use common\models\base\SearchModel;
+use common\enums\MemberTypeEnum;
 
 /**
  * Class AuthController
@@ -43,8 +44,9 @@ class AuthController extends BaseController
         $dataProvider = $searchModel
             ->search(Yii::$app->request->queryParams);
         $dataProvider->query
-            ->andWhere(['>=', 'status', StatusEnum::DISABLED])
+            ->andWhere(['status' => StatusEnum::ENABLED])
             ->andWhere(['>', 'member_id', 0])
+            ->andWhere(['member_type' => MemberTypeEnum::MEMBER])
             ->andFilterWhere(['merchant_id' => $this->getMerchantId()]);
 
         return $this->render($this->action->id, [

@@ -8,7 +8,7 @@ class m220227_143427_common_menu extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%common_menu}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
@@ -33,14 +33,14 @@ class m220227_143427_common_menu extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='公用_菜单导航表'");
-        
+
         /* 索引设置 */
         $this->createIndex('url','{{%common_menu}}','url',0);
-        
-        
+
+
         /* 表数据 */
         $this->insert('{{%common_menu}}',['id'=>'1','title'=>'系统配置','name'=>'siteSettings','app_id'=>'backend','is_addon'=>'0','addon_name'=>'','addon_location'=>'','cate_id'=>'1','pid'=>'0','url'=>'siteSettings','icon'=>'fa-cog','level'=>'1','dev'=>'0','sort'=>'0','params'=>'[{"key": "", "value": ""}]','pattern'=>'""','tree'=>'0 ','status'=>'1','created_at'=>'1633681980','updated_at'=>'1633681980']);
-        $this->insert('{{%common_menu}}',['id'=>'2','title'=>'系统功能','name'=>'systemFunction','app_id'=>'backend','is_addon'=>'0','addon_name'=>'','addon_location'=>'','cate_id'=>'1','pid'=>'0','url'=>'systemFunction','icon'=>'fa-list-ul','level'=>'1','dev'=>'0','sort'=>'1','params'=>'[{"key": "", "value": ""}]','pattern'=>'""','tree'=>'0 ','status'=>'1','created_at'=>'1633682113','updated_at'=>'1633682113']);
+        $this->insert('{{%common_menu}}',['id'=>'2','title'=>'系统功能','name'=>'systemFunction','app_id'=>'backend','is_addon'=>'0','addon_name'=>'','addon_location'=>'','cate_id'=>'1','pid'=>'0','url'=>'systemFunction','icon'=>'fa-list-ul','level'=>'1','dev'=>'1','sort'=>'1','params'=>'[{"key": "", "value": ""}]','pattern'=>'""','tree'=>'0 ','status'=>'1','created_at'=>'1633682113','updated_at'=>'1633682113']);
         $this->insert('{{%common_menu}}',['id'=>'3','title'=>'菜单管理','name'=>'menu','app_id'=>'backend','is_addon'=>'0','addon_name'=>'','addon_location'=>'','cate_id'=>'1','pid'=>'2','url'=>'/common/menu/index','icon'=>'','level'=>'2','dev'=>'1','sort'=>'0','params'=>'[{"key": "", "value": ""}]','pattern'=>'""','tree'=>'0-2 ','status'=>'1','created_at'=>'1633682206','updated_at'=>'1633682206']);
         $this->insert('{{%common_menu}}',['id'=>'4','title'=>'配置管理','name'=>'config','app_id'=>'backend','is_addon'=>'0','addon_name'=>'','addon_location'=>'','cate_id'=>'1','pid'=>'2','url'=>'/common/config/index','icon'=>'','level'=>'2','dev'=>'1','sort'=>'0','params'=>'[{"key": "", "value": ""}]','pattern'=>'""','tree'=>'0-2 ','status'=>'1','created_at'=>'1633682206','updated_at'=>'1633682206']);
         $this->insert('{{%common_menu}}',['id'=>'5','title'=>'用户权限','name'=>'managerAuth','app_id'=>'backend','is_addon'=>'0','addon_name'=>'','addon_location'=>'','cate_id'=>'1','pid'=>'0','url'=>'managerAuth','icon'=>'fa-user-secret','level'=>'1','dev'=>'0','sort'=>'2','params'=>'[{"key": "", "value": ""}]','pattern'=>'""','tree'=>'0 ','status'=>'1','created_at'=>'1633682386','updated_at'=>'1633682386']);
@@ -63,7 +63,7 @@ class m220227_143427_common_menu extends Migration
         $this->insert('{{%common_menu}}',['id'=>'23','title'=>'公告消息','name'=>'notify','app_id'=>'backend','is_addon'=>'0','addon_name'=>'','addon_location'=>'','cate_id'=>'1','pid'=>'0','url'=>'','icon'=>'fa-comments','level'=>'1','dev'=>'0','sort'=>'5','params'=>'[{"key": "", "value": ""}]','pattern'=>'""','tree'=>'0','status'=>'1','created_at'=>'1640615837','updated_at'=>'1640676936']);
         $this->insert('{{%common_menu}}',['id'=>'24','title'=>'消息配置','name'=>'notifyConfig','app_id'=>'backend','is_addon'=>'0','addon_name'=>'','addon_location'=>'','cate_id'=>'1','pid'=>'23','url'=>'/common/notify-config/index','icon'=>'','level'=>'2','dev'=>'0','sort'=>'999','params'=>'[{"key": "", "value": ""}]','pattern'=>'""','tree'=>'0-26','status'=>'1','created_at'=>'1640615925','updated_at'=>'1640615941']);
         $this->insert('{{%common_menu}}',['id'=>'25','title'=>'公告管理','name'=>'notifyAnnounce','app_id'=>'backend','is_addon'=>'0','addon_name'=>'','addon_location'=>'','cate_id'=>'1','pid'=>'23','url'=>'/common/notify-announce/index','icon'=>'','level'=>'2','dev'=>'0','sort'=>'999','params'=>'[{"key": "", "value": ""}]','pattern'=>'""','tree'=>'0-26','status'=>'1','created_at'=>'1640615925','updated_at'=>'1640616155']);
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

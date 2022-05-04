@@ -2,12 +2,13 @@
 
 namespace services\common;
 
-use common\enums\StatusEnum;
 use Yii;
 use yii\helpers\Json;
 use common\enums\NotifyConfigTypeEnum;
 use common\helpers\ArrayHelper;
+use common\enums\StatusEnum;
 use common\models\common\NotifyConfig;
+use common\enums\MemberAuthOauthClientEnum;
 
 /**
  * Class NotifyConfigService
@@ -20,63 +21,54 @@ class NotifyConfigService
      * 发送消息
      *
      * @param $notifyConfigs
-     * @param $auth
+     * @param $auths
      * @param $targetId
      * @param $targetType
      * @param $data
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function send($notifyConfigs, $auth, $targetId, $targetType, $data)
+    public function send($notifyConfigs, $auths, $targetId, $targetType, $data)
     {
         try {
-            $auth = ArrayHelper::arrayKey($auth, 'oauth_client');
-
-            /** @var NotifyConfig $notifyConfig */
-            foreach ($notifyConfigs as $notifyConfig) {
-                switch ($notifyConfig->type) {
-                    case NotifyConfigTypeEnum::APP_PUSH :
-                        if (isset($auth['ios'])) {
-                            $this->appIosRemind(
-                                $notifyConfig,
-                                $auth['ios']['oauth_client_user_id'],
-                                $targetId,
-                                $targetType,
-                                $data
-                            );
-                        }
-
-                        if (isset($auth['android'])) {
-                            $this->appAndroidRemind(
-                                $notifyConfig,
-                                $auth['android']['oauth_client_user_id'],
-                                $targetId,
-                                $targetType,
-                                $data
-                            );
-                        }
-                        break;
-                    case NotifyConfigTypeEnum::WECHAT :
-                        if (isset($auth['wechat'])) {
-                            $this->wechatRemind(
-                                $notifyConfig,
-                                $auth['wechat']['oauth_client_user_id'],
-                                $data
-                            );
-                        }
-                        break;
-                    case NotifyConfigTypeEnum::WECHAT_MP :
-                        if (isset($auth['wechatMp'])) {
-                            $this->wechatMiniProgramRemind(
-                                $notifyConfig,
-                                $auth['wechatMp']['oauth_client_user_id'],
-                                $data
-                            );
-                        }
-                        break;
-                    case NotifyConfigTypeEnum::DING_TALK :
-                        break;
-                    case NotifyConfigTypeEnum::SYS :
-                        break;
+            foreach ($auths as $auth) {
+                /** @var NotifyConfig $notifyConfig */
+                foreach ($notifyConfigs as $notifyConfig) {
+                    // ios 推送
+                    if ($notifyConfig->type == NotifyConfigTypeEnum::APP_PUSH && $auth['oauth_client'] == MemberAuthOauthClientEnum::APP_IOS) {
+                        $this->appIosRemind(
+                            $notifyConfig,
+                            $auth['oauth_client_user_id'],
+                            $targetId,
+                            $targetType,
+                            $data
+                        );
+                    }
+                    // 安卓 推送
+                    if ($notifyConfig->type == NotifyConfigTypeEnum::APP_PUSH && $auth['oauth_client'] == MemberAuthOauthClientEnum::APP_ANDROID) {
+                        $this->appAndroidRemind(
+                            $notifyConfig,
+                            $auth['oauth_client_user_id'],
+                            $targetId,
+                            $targetType,
+                            $data
+                        );
+                    }
+                    // 微信推送
+                    if ($notifyConfig->type == NotifyConfigTypeEnum::WECHAT && $auth['oauth_client'] == MemberAuthOauthClientEnum::WECHAT) {
+                        $this->wechatRemind(
+                            $notifyConfig,
+                            $auth['oauth_client_user_id'],
+                            $data
+                        );
+                    }
+                    // 微信小程序推送
+                    if ($notifyConfig->type == NotifyConfigTypeEnum::WECHAT_MP && $auth['oauth_client'] == MemberAuthOauthClientEnum::WECHAT_MP) {
+                        $this->wechatMiniProgramRemind(
+                            $notifyConfig,
+                            $auth['oauth_client_user_id'],
+                            $data
+                        );
+                    }
                 }
             }
         } catch (\Exception $e) {
@@ -145,12 +137,14 @@ class NotifyConfigService
 
         $url = ArrayHelper::recursionGetVal($config->url, $data);
 
-        Yii::$app->wechat->app->template_message->send([
+        $result = Yii::$app->wechat->app->template_message->send([
             'touser' => $openid,
             'template_id' => $config->template_id,
             'url' => $url,
             'data' => $templateData,
         ]);
+
+        Yii::$app->services->base->getWechatError($result);
     }
 
     /**

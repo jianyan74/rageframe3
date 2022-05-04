@@ -49,6 +49,10 @@ trait MemberMobileSelect
                 ->all();
 
             $out['results'] = array_values($data);
+            $out['results'][] = [
+                'id' => 0,
+                'text' => '不选择'
+            ];
         } elseif ($id > 0) {
             $out['results'] = ['id' => $id, 'text' => Member::findOne($id)->mobile];
         }

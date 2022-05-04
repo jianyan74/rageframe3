@@ -2,6 +2,7 @@
 
 namespace services\member;
 
+use common\components\Service;
 use common\enums\AccountTypeEnum;
 use common\enums\StatusEnum;
 use common\models\member\BankAccount;
@@ -11,7 +12,7 @@ use common\models\member\BankAccount;
  * @package services\member
  * @author jianyan74 <751393839@qq.com>
  */
-class BankAccountService
+class BankAccountService extends Service
 {
     /**
      * 查询商家的提现账号
@@ -27,6 +28,24 @@ class BankAccountService
         ];
 
         return $this->findAllByCondition($condition);
+    }
+
+    /**
+     * 获取默认地址
+     *
+     * @param $member_id
+     * @return array|null|\yii\db\ActiveRecord|BankAccount
+     */
+    public function findDefaultByMemberId($member_id)
+    {
+        return BankAccount::find()
+            ->where([
+                'member_id' => $member_id,
+                'status' => StatusEnum::ENABLED,
+                'is_default' => StatusEnum::ENABLED
+            ])
+            ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+            ->one();
     }
 
     /**
@@ -105,12 +124,14 @@ class BankAccountService
 
     /**
      * @param $id
-     * @return array|\yii\db\ActiveRecord[]|BankAccount
+     * @param $member_id
+     * @return array|\yii\db\ActiveRecord|null
      */
-    public function findById($id)
+    public function findById($id, $member_id = '')
     {
         return BankAccount::find()
             ->where(['id' => $id, 'status' => StatusEnum::ENABLED])
+            ->andFilterWhere(['member_id' => $member_id])
             ->one();
     }
 

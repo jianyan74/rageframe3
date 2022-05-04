@@ -17,19 +17,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             <?php $form = ActiveForm::begin([
                 'fieldConfig' => [
-                    'template' => "<div class='row'><div class='col-sm-2 text-right'>{label}</div><div class='col-sm-10'>{input}{hint}{error}</div></div>",
+                    'template' => "<div class='row'><div class='col-sm-1 text-right'>{label}</div><div class='col-sm-11'>{input}{hint}{error}</div></div>",
                 ]
             ]); ?>
             <div class="box-body">
                 <?= $form->field($model, 'title')->textInput() ?>
-<!--                --><?//= $form->field($model, 'cover')->widget(Files::class, [
-//                    'config' => [
-//                        'pick' => [
-//                            'multiple' => false,
-//                        ]
-//                    ]
-//                ]); ?>
-<!--                --><?//= $form->field($model, 'synopsis')->textarea() ?>
                 <?= $form->field($model, 'content')->widget(\common\widgets\ueditor\UEditor::class) ?>
             </div>
             <!-- /.box-body -->

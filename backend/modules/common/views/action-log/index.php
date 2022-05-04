@@ -3,10 +3,12 @@
 use yii\grid\GridView;
 use common\helpers\Html;
 use common\enums\AppEnum;
+use common\helpers\MemberHelper;
 use common\helpers\DebrisHelper;
 
 $this->title = '行为日志';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
+
 ?>
 
 <div class="row">
@@ -23,17 +25,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                     'tableOptions' => ['class' => 'table table-hover'],
                     'columns' => [
                         'id',
-                        [
-                            'label' => '用户',
-                            'value' => function ($model) {
-                                $str = [];
-                                $str[] = 'ID: ' . $model->member_id;
-                                $str[] = '昵称: ' . $model->member->nickname ?? '';
-                                $str[] = '账号: ' . $model->member->username ?? '';
-                                return implode('</br>', $str);
-                            },
-                            'format' => 'raw',
-                        ],
+                        MemberHelper::gridView($searchModel),
                         [
                             'attribute' => 'app_id',
                             'filter' => Html::activeDropDownList($searchModel, 'app_id', AppEnum::getMap(), [

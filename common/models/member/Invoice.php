@@ -67,7 +67,7 @@ class Invoice extends \common\models\base\BaseModel
             'phone' => '公司电话',
             'remark' => '备注',
             'is_default' => '默认',
-            'type' => '类型', // 1企业 2个人
+            'type' => '类型', // 1:企业; 2:个人
             'status' => '状态',
             'created_at' => '创建时间',
             'updated_at' => '修改时间',

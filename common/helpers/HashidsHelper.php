@@ -19,17 +19,17 @@ class HashidsHelper
      *
      * @var int
      */
-    public static $lenght = 10;
+    public static $lenght = 6;
 
     /**
      * 为安全起见需要修改为自己的秘钥
      *
      * @var string
      */
-    public static $secretKey = 'AWBG9zgAEfgwVv3ghsj6n4vKS9gMtTbu';
+    public static $secretKey = 'ZKYmp1sgcjh5KENt96bd2eSdfXSoMLPBicQCQjrW5Ee';
 
     /**
-     * @var \Hashids\Hashids
+     * @var Hashids
      */
     protected static $hashids;
 

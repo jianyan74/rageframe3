@@ -4,6 +4,7 @@ use yii\grid\GridView;
 use common\helpers\Html;
 use common\enums\GenderEnum;
 use common\helpers\ImageHelper;
+use common\helpers\MemberHelper;
 
 $this->title = '第三方授权';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
@@ -51,17 +52,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                         ],
                         'oauth_client',
                         'oauth_client_user_id',
-                        [
-                            'label' => '关联用户',
-                            'filter' => false, //不显示搜索框
-                            'value' => function ($model) {
-                                return "用户ID：" . $model->member->id . '<br>' .
-                                    "昵称：" . $model->member->nickname . '<br>' .
-                                    "账号：" . $model->member->username . '<br>' .
-                                    "手机：" . $model->member->mobile . '<br>';
-                            },
-                            'format' => 'raw',
-                        ],
+                        MemberHelper::gridView($searchModel, '关联用户'),
                         [
                             'attribute' => 'province',
                             'filter' => false, //不显示搜索框

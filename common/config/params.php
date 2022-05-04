@@ -19,14 +19,12 @@ return [
     'multiShop' => false,
     // 请求全局唯一ID
     'uuid' => '',
-    // 全局缓存优化
-    'cacheSwitch ' => false,
     // 全局缓存过期时间 (建议用 redis 缓存)
     'cacheExpirationTime' => [
-        'default' => 0, // 常用数据缓存
-        'common' => 10, // 常用数据缓存
-        'ordinary' => 60, // 一般数据缓存
-        'rarely' => 60 * 6, // 不常用数据缓存
+        'default' => null, // 常用数据缓存
+        'common' => null, // 5s 常用数据缓存
+        'ordinary' => null, // 60s 一般数据缓存
+        'rarely' => null, // 360s 不常用数据缓存
     ],
     // 真实 app id
     'realAppId' => '',
@@ -193,7 +191,7 @@ return [
         ],
         'h5game' => [
             'name' => 'h5game',
-            'title' => 'H5游戏',
+            'title' => '小游戏',
             'icon' => 'fa fa-gamepad',
         ],
     ],

@@ -5,6 +5,7 @@ use common\enums\AppEnum;
 use common\helpers\Html;
 use common\helpers\Url;
 use common\helpers\DebrisHelper;
+use common\helpers\MemberHelper;
 use kartik\daterange\DateRangePicker;
 
 $this->title = '全局日志';
@@ -44,17 +45,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                                 },
                                 'headerOptions' => ['class' => 'col-md-1'],
                             ],
-                            [
-                                'label' => '用户',
-                                'value' => function ($model) {
-                                    $str = [];
-                                    $str[] = 'ID: ' . $model->member_id;
-                                    $str[] = '昵称: ' . $model->member->nickname ?? '';
-                                    $str[] = '账号: ' . $model->member->username ?? '';
-                                    return implode('</br>', $str);
-                                },
-                                'format' => 'raw',
-                            ],
+                            MemberHelper::gridView($searchModel),
                             'url',
                             [
                                 'label' => '位置信息',

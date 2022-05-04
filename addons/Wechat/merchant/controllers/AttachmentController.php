@@ -148,7 +148,12 @@ class AttachmentController extends BaseController
         $model = $this->findModel($attach_id);
         if ($model->delete()) {
             // 删除微信服务器数据
-            $result = Yii::$app->wechat->app->material->delete($model['media_id']);
+            if ($model->media_type == AttachmentTypeEnum::NEWS) {
+                $result = Yii::$app->wechat->app->draft->delete($model['media_id']);
+            } else {
+                $result = Yii::$app->wechat->app->material->delete($model['media_id']);
+            }
+
             if ($error = Yii::$app->services->base->getWechatError($result, false)) {
                 return $this->message($error, $this->redirect(['index', 'type' => $mediaType]), 'error');
             }

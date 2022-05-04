@@ -23,7 +23,7 @@ class AddonConfig extends BaseAddonConfig
         'brief_introduction' => '微信公众号基础功能管理',
         'description' => '',
         'author' => '简言',
-        'version' => '1.0.0',
+        'version' => '1.0.1',
     ];
 
     /**

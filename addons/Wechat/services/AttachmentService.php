@@ -2,6 +2,7 @@
 
 namespace addons\Wechat\services;
 
+use common\helpers\ArrayHelper;
 use Yii;
 use yii\data\Pagination;
 use common\helpers\StringHelper;
@@ -133,7 +134,12 @@ class AttachmentService extends Service
     public function sync($type, $offset, $count)
     {
         $app = Yii::$app->wechat->app;
-        $lists = $app->material->list($type, $offset, $count);
+        if ($type == AttachmentTypeEnum::NEWS) {
+            $lists = Yii::$app->wechat->app->draft->batchGet($offset, $count);
+        } else {
+            $lists = Yii::$app->wechat->app->material->list($type, $offset, $count);
+        }
+
         // 解析微信接口是否报错.报错则抛出错误信息
         Yii::$app->services->base->getWechatError($lists);
         if (empty($lists)) {
@@ -267,15 +273,7 @@ class AttachmentService extends Service
             $item['content'] = htmlspecialchars_decode($item['content']);
 
             // 默认微信返回值
-            $wechatArticleList[] = new Article([
-                'title' => $item['title'],
-                'thumb_media_id' => $item['thumb_media_id'],
-                'author' => $item['author'],
-                'content' => $item['content'],
-                'digest' => $item['digest'],
-                'source_url' => $item['content_source_url'],
-                'show_cover' => $item['show_cover_pic'],
-            ]);
+            $wechatArticleList[] = $item;
         }
 
         // 上传到微信
@@ -316,17 +314,17 @@ class AttachmentService extends Service
             if (!$isNewRecord) {
                 // 更新图文
                 foreach ($wechatArticleList as $k => $value) {
-                    $res = Yii::$app->wechat->app->material->updateArticle($model['media_id'], $value, $k);
+                    $res = Yii::$app->wechat->app->draft->update($model['media_id'], $k, $value);
                     Yii::$app->services->base->getWechatError($res);
                 }
             } else {
                 // 上传图文信息
-                $res = Yii::$app->wechat->app->material->uploadArticle($wechatArticleList);
+                $res = Yii::$app->wechat->app->draft->add(['articles' => $wechatArticleList]);
                 Yii::$app->services->base->getWechatError($res);
                 $model->media_id = $res['media_id'];
                 !$model->save() && $this->error($model);
 
-                $getNews = Yii::$app->wechat->app->material->get($res['media_id']);
+                $getNews = Yii::$app->wechat->app->draft->get($res['media_id']);
                 return $getNews['news_item'];
             }
         }

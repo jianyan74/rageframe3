@@ -231,11 +231,13 @@ class AddonsController extends BaseController
                         throw new UnprocessableEntityHttpException($e->getMessage());
                     }
 
+                    ob_clean();
                     return ResultHelper::json(422, $e->getMessage());
                 }
             }
         }
 
+        ob_clean();
         return ResultHelper::json(200, '升级数据库成功');
     }
 

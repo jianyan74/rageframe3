@@ -8,7 +8,7 @@ class m220227_151443_addon_wechat_attachment_news extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%addon_wechat_attachment_news}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
@@ -17,14 +17,14 @@ class m220227_151443_addon_wechat_attachment_news extends Migration
             'attachment_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '关联的资源id'",
             'title' => "varchar(50) NOT NULL DEFAULT '' COMMENT '标题'",
             'thumb_media_id' => "varchar(200) NULL DEFAULT '' COMMENT '图文消息的封面图片素材id（必须是永久mediaID）'",
-            'thumb_url' => "varchar(200) NULL DEFAULT '' COMMENT '缩略图Url'",
+            'thumb_url' => "varchar(500) NULL DEFAULT '' COMMENT '缩略图Url'",
             'author' => "varchar(64) NULL DEFAULT '' COMMENT '作者'",
             'digest' => "varchar(200) NULL DEFAULT '' COMMENT '简介'",
             'show_cover_pic' => "tinyint(4) NULL DEFAULT '0' COMMENT '0为false，即不显示，1为true，即显示'",
             'content' => "mediumtext NULL COMMENT '图文消息的具体内容，支持HTML标签，必须少于2万字符'",
             'content_source_url' => "varchar(200) NULL DEFAULT '' COMMENT '图文消息的原文地址，即点击“阅读原文”后的URL'",
-            'media_url' => "varchar(200) NULL DEFAULT '' COMMENT '资源Url'",
-            'need_open_comment' => "tinyint(4) NULL DEFAULT '1' COMMENT '是否打开评论 0不打开，1打开'",
+            'media_url' => "varchar(500) NULL DEFAULT '' COMMENT '资源Url'",
+            'need_open_comment' => "tinyint(4) NULL DEFAULT '0' COMMENT '是否打开评论 0不打开，1打开'",
             'only_fans_can_comment' => "tinyint(4) NULL DEFAULT '0' COMMENT '是否粉丝才可评论 0所有人可评论，1粉丝才可评论'",
             'sort' => "int(11) NULL DEFAULT '0' COMMENT '排序'",
             'year' => "int(10) unsigned NULL DEFAULT '0' COMMENT '年份'",
@@ -35,13 +35,13 @@ class m220227_151443_addon_wechat_attachment_news extends Migration
             'updated_at' => "int(10) NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='微信_文章表'");
-        
+
         /* 索引设置 */
         $this->createIndex('attachment_id','{{%addon_wechat_attachment_news}}','attachment_id',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

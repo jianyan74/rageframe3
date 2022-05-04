@@ -140,6 +140,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="borderBottomColorGray farPadding">
                                             <div class="separateFromNextBlock">摘要<span class="fontColorGray">(选填，如果不填写会默认抓取正文前54个字)</span></div>
                                             <textarea class="appTextarea fullWidth" rows="4" v-model="crtPost.digest"></textarea>
+                                            <div>
+                                                <input type="checkbox" v-model="crtPost.need_open_comment"/>
+                                                <label for="showCoverInTop">打开评论</label>
+                                            </div>
+                                            <div>
+                                                <input type="checkbox" v-model="crtPost.only_fans_can_comment"/>
+                                                <label for="showCoverInTop">粉丝才可评论</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -186,6 +194,8 @@ $this->params['breadcrumbs'][] = $this->title;
         this.digest = '';
         this.content_source_url = '';
         this.show_cover_pic = false;
+        this.need_open_comment = false;
+        this.only_fans_can_comment = false;
     }
 
     $(function(){
@@ -260,6 +270,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         var cloneAry = this.postList.concat();
                         for (var i=0; i<cloneAry.length; i++) {
                             cloneAry[i].show_cover_pic = cloneAry[i].show_cover_pic ? 1 : 0;
+                            cloneAry[i].need_open_comment = cloneAry[i].need_open_comment ? 1 : 0;
+                            cloneAry[i].only_fans_can_comment = cloneAry[i].only_fans_can_comment ? 1 : 0;
                         }
 
                         // ajax提交
@@ -309,6 +321,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         for (i=0;i< self.postList.length;i++){
                             var elem = self.postList[i];
                             elem.show_cover_pic = parseInt(elem.show_cover_pic) > 0
+                            elem.need_open_comment = parseInt(elem.need_open_comment) > 0
+                            elem.only_fans_can_comment = parseInt(elem.only_fans_can_comment) > 0
                         }
 
                         self.isEditMode = true;

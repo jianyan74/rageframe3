@@ -51,7 +51,8 @@ class AttachmentNews extends \common\models\base\BaseModel
             [['merchant_id', 'shop_id', 'attachment_id', 'show_cover_pic', 'need_open_comment', 'only_fans_can_comment', 'sort', 'year', 'month', 'day', 'status', 'created_at', 'updated_at'], 'integer'],
             [['content'], 'string'],
             [['title'], 'string', 'max' => 50],
-            [['thumb_url', 'digest', 'content_source_url', 'media_url', 'thumb_media_id'], 'string', 'max' => 200],
+            [['thumb_url', 'media_url'], 'string', 'max' => 500],
+            [['digest', 'content_source_url', 'thumb_media_id'], 'string', 'max' => 200],
             [['author'], 'string', 'max' => 64],
         ];
     }
@@ -75,8 +76,8 @@ class AttachmentNews extends \common\models\base\BaseModel
             'content' => '图文消息的具体内容，支持HTML标签，必须少于2万字符',
             'content_source_url' => '图文消息的原文地址，即点击“阅读原文”后的URL',
             'media_url' => '资源Url',
-            'need_open_comment' => '是否打开评论 0不打开，1打开',
-            'only_fans_can_comment' => '是否粉丝才可评论 0所有人可评论，1粉丝才可评论',
+            'need_open_comment' => '是否打开评论', //  0 不打开，1打开
+            'only_fans_can_comment' => '是否粉丝才可评论', //  0 所有人可评论，1粉丝才可评论
             'sort' => '排序',
             'year' => '年份',
             'month' => '月份',

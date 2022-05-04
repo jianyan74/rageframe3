@@ -7,6 +7,8 @@ $(document).ready(function () {
     autoChangeMenu(true);
     // 修改颜色
     autoFontColor();
+    // 初始化表格
+    initTable();
 
     // 判断默认显示
     var isDefaultShow = false;
@@ -42,6 +44,9 @@ $(window).resize(function () {
     } else {
         autoChangeMenu(true);
     }
+
+    // 初始化table
+    initTable();
 });
 
 function autoFontColor() {
@@ -108,28 +113,28 @@ function autoChangeMenu(leftAuto = false) {
 
     // 判断顶部菜单显示状态
     if (config.isMobile == false) {
+        var allNavWidth = $('.rf-navbar-nav').width();
+        if (allNavWidth === undefined) {
+            return false;
+        }
 
-        $('.navbar-static-top .pull-left ul li').removeClass('hide');
-        $('.hide-menu ul li ul').html('');
+        $('.rf-navbar-nav .rf-navbar-nav-left li').removeClass('hide');
+        $('.hide-menu div').html('');
 
-        var leftWidth = $('.navbar-static-top').width() - $('.navbar-static-top .top-right').width() - 70;
+        var leftWidth = allNavWidth - $('.rf-navbar-nav .ml-auto').width() - 70;
 
-        if (leftWidth < $('.navbar-static-top .pull-left').width()) {
+        if (leftWidth < $('.rf-navbar-nav-left').width()) {
             var tmpWith = 0;
-
             // 移动菜单显示
-            $('.navbar-static-top .pull-left ul li').each(function (i, item) {
-                tmpWith += $(item).width();
-
+            $('.rf-navbar-nav .rf-navbar-nav-left li').each(function (i, item) {
+                tmpWith += parseInt($(item).width());
                 if (tmpWith > leftWidth) {
                     $(item).addClass('hide');
                     $('.hide-menu').removeClass('hide');
                     // 增加一次的菜单
-                    $('.hide-menu ul li ul').append("<li class='rfTopMenu' data-type=" + $(item).data('type') + " data-addon_centre=" + $(item).data('addon_centre') + ">" + $(item).html() + "</li>")
+                    $('.hide-menu > div').append("<li class='rfTopMenu' data-type=" + $(item).data('type') + " data-id=" + $(item).data('id') + ">" + $(item).html() + "</li>")
+                    $('.hide-menu div li').find('a').css({"height": "35px", "line-height": "1.5"});
                 }
-
-                $('.hide-menu ul li ul').find('a').addClass("pointer");
-                $('.hide-menu ul li ul').find('i').addClass("rf-i m-l-sm");
             })
         } else {
             $('.hide-menu').addClass('hide');
@@ -158,14 +163,53 @@ function buildTable($el, fixedNumber, fixedRightNumber) {
     })
 }
 
-$(function() {
+function initTable() {
     var fixedNumber = $($table).attr('fixedNumber');
     var fixedRightNumber = $($table).attr('fixedRightNumber');
     buildTable($table, fixedNumber, fixedRightNumber);
-    $($table).find('thead tr').eq(1).remove();
-    $('.fixed-columns .fixed-table-body table thead input').attr('name', '');
-    $('.fixed-columns-right .fixed-table-body table thead input').attr('name', '');
-});
+
+    if ($('.fixed-table-container .fixed-table-body table thead').length > 1) {
+        $('.fixed-table-container .fixed-table-body table thead').each(function (index, row) {
+            var length = $(row).find('td').length;
+            console.log(index)
+
+            switch (index) {
+                // 内容
+                case 0 :
+                    $(row).find('td').each(function (key, val) {
+                        if (key < fixedNumber || key >= (length - fixedRightNumber)) {
+                            // 去掉input
+                            $(val).find('input').attr('name', '');
+                            $(val).find('select').attr('name', '');
+                        }
+                    });
+                    break;
+                // 头部
+                case 1 :
+                    $(row).find('td').each(function (key, val) {
+                        if (key >= fixedNumber) {
+                            // 去掉input
+                            $(val).find('input').attr('name', '');
+                            $(val).find('select').attr('name', '');
+                        }
+                    });
+                    break;
+                // 尾部
+                case 2 :
+                    $(row).find('td').each(function (key, val) {
+                        if (key < (length - fixedRightNumber - 1)) {
+                            // 去掉input
+                            $(val).find('input').attr('name', '');
+                            $(val).find('select').attr('name', '');
+                        }
+                    });
+                    break;
+            }
+        });
+    }
+
+    $('[data-toggle="tooltip"]').tooltip();
+}
 
 /* 导航标签切换 */
 $(document).on("click", ".rfTopMenu", function () {

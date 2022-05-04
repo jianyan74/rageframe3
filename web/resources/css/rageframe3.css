@@ -343,6 +343,103 @@
 }
 
 /*
+ * Component: 拖动
+ * ----------------
+ */
+
+.view-box {
+    flex: none;
+    margin: 0 20px;
+    width: 375px;
+    height: 667px;
+    border: 1px dashed #CCCCCC;
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: cover;
+}
+
+.view-box .drag {
+    position: absolute;
+    font-family: 'sans-serif';
+    color: #000000;
+    line-height: 1;
+    cursor: move;
+    border: 1px solid #31b0d5;
+}
+
+.view-box .drag img {
+    width: 100%;
+    height: 100%;
+}
+
+.view-box img.round {
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: left top;
+}
+
+.view-box .corner {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    font-size: 0;
+    background-color: #31b0d5;
+}
+
+.view-box .drag .dRightDown {
+    cursor: nw-resize;
+    right: -4px;
+    bottom: -4px;
+}
+
+.view-box .drag .dLeftDown {
+    cursor: ne-resize;
+    left: -4px;
+    bottom: -4px;
+}
+
+.view-box .drag .dRightUp {
+    cursor: ne-resize;
+    right: -4px;
+    top: -4px;
+}
+
+.view-box .drag .dLeftUp {
+    cursor: nw-resize;
+    left: -4px;
+    top: -4px;
+}
+
+.view-box .drag .dRight {
+    cursor: e-resize;
+    right: -4px;
+    top: 50%;
+    margin-top: -4px;
+}
+
+.view-box .drag .dLeft {
+    cursor: e-resize;
+    left: -4px;
+    top: 50%;
+    margin-top: -4px;
+}
+
+.view-box .drag .rUp {
+    cursor: n-resize;
+    top: -4px;
+    left: 50%;
+    margin-left: -4px;
+}
+
+.view-box .drag .rDown {
+    cursor: n-resize;
+    bottom: -4px;
+    left: 50%;
+    margin-left: -4px;
+}
+
+/*
  * Component: Label
  * ----------------
  */
@@ -745,6 +842,11 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     font-size: 12px;
 }
 
+.nav-sidebar .nav-link > .right,
+.nav-sidebar .nav-link > p > .right {
+    top: .8rem;
+}
+
 [class*="sidebar-dark"] .user-panel {
     border-bottom: 0;
 }
@@ -752,10 +854,12 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
 .layout-fixed .main-sidebar-custom .sidebar {
     height: 100%;
 }
+
 .main-header .nav-link {
     height: 57px;
     line-height: 2.8;
     position: relative;
+    white-space: nowrap;
 }
 
 .btn {
@@ -1244,7 +1348,7 @@ h5 {
 .label-outline-default {
     border: 1px solid #dddee1;
     background: #f8f8f9;
-    color: #657180;
+    color: #809399;
     font-size: 12px;
     margin: 2px 4px 2px 0;
     height: 22px;
@@ -1391,3 +1495,7 @@ h5 {
     color: #515a6e
 }
 
+
+.tooltip-inner{
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}

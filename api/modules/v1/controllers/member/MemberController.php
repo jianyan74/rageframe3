@@ -9,6 +9,7 @@ use common\models\member\Member;
 use common\forms\MemberForm;
 use common\helpers\ResultHelper;
 use common\enums\StatusEnum;
+use common\helpers\ArrayHelper;
 
 /**
  * 会员接口
@@ -53,14 +54,19 @@ class MemberController extends OnAuthController
     public function actionUpdate($id)
     {
         $data = Yii::$app->request->post();
-        unset(
-            $data['password_hash'],
-            $data['mobile'],
-            $data['username'],
-            $data['auth_key'],
-            $data['password_reset_token'],
-            $data['promo_code']
-        );
+        $data = ArrayHelper::filter($data, [
+            'nickname',
+            'head_portrait',
+            'realname',
+            'birthday',
+            'province_id',
+            'city_id',
+            'area_id',
+            'address',
+            'qq',
+            'email',
+            'gender',
+        ]);
 
         $model = $this->findModel($id);
         $model->attributes = $data;

@@ -96,6 +96,18 @@ class ActionLogService extends Service
     }
 
     /**
+     * @return int|string
+     */
+    public function getCount($merchant_id = '')
+    {
+        return ActionLog::find()
+                ->select('id')
+                ->andWhere(['status' => StatusEnum::ENABLED])
+                ->andFilterWhere(['merchant_id' => $merchant_id])
+                ->count() ?? 0;
+    }
+
+    /**
      * @param $behavior
      * @param $map_id
      * @param $addon_name

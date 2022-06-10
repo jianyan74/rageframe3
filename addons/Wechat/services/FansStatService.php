@@ -30,7 +30,7 @@ class FansStatService extends Service
         // 获取时间和格式化
         list($time, $format) = EchantsHelper::getFormatTime($type);
         // 获取数据
-        return EchantsHelper::lineOrBarInTime(function ($start_time, $end_time, $formatting) use ($credit_type) {
+        return EchantsHelper::lineOrBarInTime(function ($start_time, $end_time, $formatting) use ($type) {
             $data = FansStat::find()
                 ->select([
                     'sum(new_attention) as new_attention',

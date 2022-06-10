@@ -6,7 +6,7 @@ echo "<?php\n";
 namespace addons\<?= $model->name;?>\services;
 
 use common\components\BaseAddonConfigService;
-use addons\<?= $model->name;?>\common\models\SettingForm;
+use addons\<?= $model->name;?>\common\forms\SettingForm;
 
 /**
  * Class ConfigService

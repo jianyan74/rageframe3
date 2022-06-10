@@ -31,6 +31,13 @@ class Map extends InputWidget
     public $secret_key = '';
 
     /**
+     * 申请的安全密钥(高德)
+     *
+     * @var string
+     */
+    public $secret_code = '';
+
+    /**
      * 类型
      *
      * 默认高德
@@ -74,6 +81,7 @@ class Map extends InputWidget
             'value' => $defaultValue,
             'type' => $this->type,
             'secret_key' => $this->secret_key,
+            'secret_code' => $this->secret_code,
             'address' => $address,
             'defaultSearchAddress' => $this->defaultSearchAddress,
             'boxId' => StringHelper::uuid('uniqid')

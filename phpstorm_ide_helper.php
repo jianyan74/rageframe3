@@ -33,11 +33,11 @@ class Yii
  * @property \addons\Wechat\services\Application $wechatService 微信公众号
  * @property \addons\TinyDoc\services\Application $tinyDocService 文档
  * @property \addons\TinyChat\services\Application $tinyChatService 微客服
- * @property \addons\TinyErrand\services\Application $tinyErrandService 微配送
+ * @property \addons\TinyBlog\services\Application $tinyBlogService 博客文章
  * @property \addons\TinySign\services\Application $tinySignService 微签到
  * @property \addons\BigWheel\services\Application $bigWheelService 大转盘
- * @property \addons\LivingAliyun\services\Application $livingAliyunService
- * @property \addons\TinyForum\services\Application $tinyForumService 微社区
+ * @property \addons\TinyCircle\services\Application $tinyCircleService 种草社区
+ * @property \addons\TinyErrand\services\Application $tinyErrandService 微配送
  * @property \addons\ByteDanceThirdParty\services\Application $byteDanceThirdPartyService 字节跳动第三方平台
  * @property \addons\TikTokPlatform\services\Application $tikTokPlatformService 抖音开放平台
  * @property \addons\TikTokShop\services\Application $tikTokShopService 抖店

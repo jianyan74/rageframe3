@@ -182,6 +182,34 @@ class ConfigService
     }
 
     /**
+     * @param $name
+     * @param $app_id
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function findSaveByName($name, $app_id, $data = [])
+    {
+        $config = $this->findByName($name, $app_id);
+        if (empty($config)) {
+            $model = new Config();
+            $model = $model->loadDefaultValues();
+            $model->attributes = $data;
+            $model->save();
+        }
+    }
+
+    /**
+     * @param $name
+     * @param $app_id
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function findByName($name, $app_id)
+    {
+        return Config::find()
+            ->where(['name' => $name, 'app_id' => $app_id])
+            ->one();
+    }
+
+    /**
      * @param $app_id
      * @param $merchant_id
      * @param $names

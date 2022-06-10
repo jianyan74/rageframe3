@@ -35,7 +35,7 @@ class BankAccountForm extends BankAccount
 
         if ($this->account_type == AccountTypeEnum::UNION) {
             !$this->account_number && $this->addError($attribute, '请填写银行账号');
-            !$this->bank_name && $this->addError($attribute, '支行信息');
+            !$this->bank_name && $this->addError($attribute, '请填写支行信息');
         }
 
         if ($this->account_type == AccountTypeEnum::ALI) {

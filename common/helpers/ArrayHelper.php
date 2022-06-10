@@ -248,6 +248,77 @@ class ArrayHelper extends BaseArrayHelper
     }
 
     /**
+     * 获取配送时间
+     *
+     * @param $data
+     *     distribution_time 自提时间
+     *     interval_time 自提间隔时间
+     *     make_day 可预约天数
+     * @return array
+     */
+    public static function distributionTime($data, $isDistribution = true)
+    {
+        $data = self::toArray($data);
+        if (empty($data)) {
+            return [];
+        }
+
+        // 今日可配送时间
+        $todayTime = [];
+        // 配送时间
+        $distributionTime = $data['distribution_time'] ?? [];
+        $intervalTime = $data['interval_time'] ?? 0;
+        $makeDay = $data['make_day'] ?? 0;
+
+        // 用户只能选择多少时间后的上门时间
+        $intervalTime = time() + $intervalTime - strtotime(date('Y-m-d'));
+        foreach ($distributionTime as &$param) {
+            if ($intervalTime < $param['end_time']) {
+                // 默认选择
+                if (empty($todayTime)) {
+                    $explain = $isDistribution ? '尽快送达(' . DateHelper::formatHoursByInt($param['end_time']) . '前)' : DateHelper::formatHoursByInt($param['end_time']) . '前';
+                    $todayTime[] = [
+                        'start_time' => $param['start_time'],
+                        'end_time' => $param['end_time'],
+                        'explain' => $explain
+                    ];
+                }
+
+                $explain = DateHelper::formatHoursByInt($param['start_time']) . '-' . DateHelper::formatHoursByInt($param['end_time']);
+                $todayTime[] = [
+                    'start_time' => $param['start_time'],
+                    'end_time' => $param['end_time'],
+                    'explain' => $explain
+                ];
+            }
+
+            $param['explain'] = DateHelper::formatHoursByInt($param['start_time']) . '-' . DateHelper::formatHoursByInt($param['end_time']);
+        }
+
+        // 配送天数
+        $config = [];
+        for ($i = 0; $i < $makeDay; $i++) {
+            $dateTime = strtotime(date('Y-m-d')) + $i * 3600 * 24;
+
+            if ($i == 0) {
+                if (!empty($todayTime)) {
+                    $config[] = [
+                        'day' => date('m', $dateTime) . '月' . date('d', $dateTime) . '日',
+                        'time' => $todayTime
+                    ];
+                }
+            } else {
+                $config[] = [
+                    'day' => date('m', $dateTime) . '月' . date('d', $dateTime) . '日',
+                    'time' => $distributionTime
+                ];
+            }
+        }
+
+        return $config;
+    }
+
+    /**
      * 匹配ip在ip数组内支持通配符
      *
      * @param $ip

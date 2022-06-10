@@ -21,7 +21,7 @@ trait MemberMobileSelect
      * @param null $id
      * @return array
      */
-    public function actionMobileSelect($q = null, $id = null)
+    public function actionMobileSelect($q = null, $id = null, $field = 'mobile')
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
@@ -32,15 +32,19 @@ trait MemberMobileSelect
             ]
         ];
 
+        $defaultCondition = ['like', 'mobile', $q];
         $condition = ['merchant_id' => Yii::$app->services->merchant->getNotNullId()];
         if (Yii::$app->services->devPattern->isB2B2C()) {
             $condition = [];
         }
 
+        $field == 'id' && $defaultCondition = ['like', 'id', $q];
+        $field == 'nickname' && $defaultCondition = ['like', 'nickname', $q];
+
         if (!is_null($q)) {
             $data = Member::find()
-                ->select('id, mobile as text')
-                ->where(['like', 'mobile', $q])
+                ->select('id, nickname as text')
+                ->where($defaultCondition)
                 ->andWhere(['status' => StatusEnum::ENABLED])
                 ->andWhere(['type' => MemberTypeEnum::MEMBER])
                 ->andFilterWhere($condition)
@@ -49,10 +53,10 @@ trait MemberMobileSelect
                 ->all();
 
             $out['results'] = array_values($data);
-            $out['results'][] = [
+            array_unshift($out['results'], [
                 'id' => 0,
                 'text' => '不选择'
-            ];
+            ]);
         } elseif ($id > 0) {
             $out['results'] = ['id' => $id, 'text' => Member::findOne($id)->mobile];
         }

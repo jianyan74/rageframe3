@@ -35,6 +35,7 @@ class MainController extends BaseController
         return $this->render($this->action->id, [
             'memberCount' => Yii::$app->services->member->getCountByType(),
             'memberAccount' => Yii::$app->services->memberAccount->getSumByType(),
+            'actionLogCount' => Yii::$app->services->actionLog->getCount(),
         ]);
     }
 

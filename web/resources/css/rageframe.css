@@ -1017,7 +1017,7 @@ dt {
 }
 
 /* 必填项加星 */
-div.required label:before,
+div.required label.control-label:before,
 .symbol-required:before {
     content: "*";
     padding-right: 3px;

@@ -12,7 +12,7 @@ namespace common\helpers;
 class ArithmeticHelper
 {
     /**
-     * 生成红包算法
+     * 生成红包算法(随机金额)
      *
      * @param number $money 红包总金额
      * @param number $num 生成的红包数量
@@ -48,6 +48,40 @@ class ArithmeticHelper
             $money -= $k;
             $data[] = $k;
         }
+
+        shuffle($data);
+        return $data;
+    }
+
+    /**
+     * 生成红包算法(固定金额)
+     *
+     * @param number $money 红包总金额
+     * @param number $num 生成的红包数量
+     * @param number $min 红包最小金额
+     * @param number $max 红包最大金额
+     * @return array
+     */
+    public static function getFixationRedPackage($money, $num)
+    {
+        $data = [];
+        // 判断最小红包乘数量是否大于总金额
+        if (0.01 * $num > $money) {
+            return $data;
+        }
+
+        // 单个红包金额
+        $single = BcHelper::div($money, $num);
+        $remainder = 0;
+        if (($total = BcHelper::mul($single, $num)) < $money) {
+            $remainder = BcHelper::sub($money, $total);
+        }
+
+        for ($i = 0; $i < $num; $i++) {
+            $data[] = $single;
+        }
+
+        $data[0] = BcHelper::add($data[0], $remainder);
 
         shuffle($data);
         return $data;

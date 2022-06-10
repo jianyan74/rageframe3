@@ -31,6 +31,10 @@
 </div>
 
 <script type="text/javascript">
+    window._AMapSecurityConfig = {
+        securityJsCode:'<?= $mapAMapCode; ?>',
+    }
+
     $(function () {
         var as, x, y, address, map, lat, lng, geocoder;
         var init = function () {

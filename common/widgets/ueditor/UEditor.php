@@ -76,9 +76,14 @@ class UEditor extends InputWidget
         if (!empty($this->config['toolbars'])) {
             unset($config['toolbars']);
         }
+
+        // 切换上传驱动
+        $storageDefault = Yii::$app->services->config->backendConfig('storage_default');
+
         $this->config = ArrayHelper::merge($config, $this->config);
         $this->formData = ArrayHelper::merge([
-            'drive' => Yii::$app->params['UEditorUploadDrive'],
+            // 'drive' => Yii::$app->params['UEditorUploadDrive'],
+            'drive' => $storageDefault,
         ], $this->formData);
     }
 

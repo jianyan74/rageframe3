@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-md-2 col-sm-6 col-xs-12">
         <div class="info-box">
             <div class="info-box-content p-md">
-                <span class="info-box-number"><i class="icon ion-ios-paper-outline purple"></i> <?= $memberCount ?></span>
+                <span class="info-box-number"><i class="icon ion-ios-paper-outline purple"></i> <?= $actionLogCount ?></span>
                 <span class="info-box-text">行为日志(条)</span>
             </div>
             <!-- /.info-box-content -->

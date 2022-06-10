@@ -104,6 +104,10 @@ class DebrisHelper
     public static function long2ip($ip)
     {
         try {
+            if (!is_string($ip)) {
+                return $ip;
+            }
+
             return long2ip($ip);
         } catch (\Exception $e) {
             return $ip;

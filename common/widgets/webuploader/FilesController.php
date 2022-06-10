@@ -108,6 +108,17 @@ class FilesController extends Controller
             return ResultHelper::json(200, '获取成功', $models);
         }
 
+        // 装修
+        if (Yii::$app->request->get('decorate') == true) {
+            return ResultHelper::json(200, '获取成功', [
+                'list' => $models,
+                'pages' => [
+                    'totalCount' => $pages->totalCount,
+                    'pageSize' => $pages->pageSize,
+                ]
+            ]);
+        }
+
         return $this->render('@common/widgets/webuploader/views/selector', [
             'models' => $models,
             'pages' => $pages,

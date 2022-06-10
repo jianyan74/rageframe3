@@ -8,7 +8,7 @@ class m220227_143427_common_config extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%common_config}}', [
             'id' => "int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键'",
@@ -27,13 +27,13 @@ class m220227_143427_common_config extends Migration
             'updated_at' => "int(10) unsigned NOT NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='公用_配置表'");
-        
+
         /* 索引设置 */
         $this->createIndex('type','{{%common_config}}','type',0);
         $this->createIndex('group','{{%common_config}}','cate_id',0);
         $this->createIndex('uk_name','{{%common_config}}','name',0);
-        
-        
+
+
         /* 表数据 */
         $this->insert('{{%common_config}}',['id'=>'1','title'=>'版权所有','name'=>'web_copyright','app_id'=>'backend','type'=>'text','cate_id'=>'17','extra'=>'','remark'=>'','is_hide_remark'=>'1','default_value'=>'','sort'=>'9','status'=>'1','created_at'=>'1526199058','updated_at'=>'1572416677']);
         $this->insert('{{%common_config}}',['id'=>'2','title'=>'网站标题','name'=>'web_site_title','app_id'=>'backend','type'=>'text','cate_id'=>'17','extra'=>'','remark'=>'前台显示站点名称','is_hide_remark'=>'0','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1526372845','updated_at'=>'1574778793']);
@@ -122,7 +122,7 @@ class m220227_143427_common_config extends Migration
 template:模版ID,','remark'=>'默认组别：login、up-pwd、register、reset-mobile、binding-mobile、caballero-apply','is_hide_remark'=>'0','default_value'=>'','sort'=>'3','status'=>'1','created_at'=>'1559260837','updated_at'=>'1619938810']);
         $this->insert('{{%common_config}}',['id'=>'72','title'=>'ak','name'=>'map_baidu_ak','app_id'=>'backend','type'=>'text','cate_id'=>'30','extra'=>'','remark'=>'开发者中心：<a href=\"http://lbsyun.baidu.com/\" target=\"_blank\">立即申请</a>','is_hide_remark'=>'0','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1559402573','updated_at'=>'1589957865']);
         $this->insert('{{%common_config}}',['id'=>'73','title'=>'key','name'=>'map_tencent_key','app_id'=>'backend','type'=>'text','cate_id'=>'31','extra'=>'','remark'=>'开发者中心：<a href=\"https://lbs.qq.com/\" target=\"_blank\">立即申请</a>','is_hide_remark'=>'0','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1559402617','updated_at'=>'1589957846']);
-        $this->insert('{{%common_config}}',['id'=>'74','title'=>'Web端(Js Api) - key','name'=>'map_amap_key','app_id'=>'backend','type'=>'text','cate_id'=>'32','extra'=>'','remark'=>'地图选择，官网：https://lbs.amap.com/dev/key/app','is_hide_remark'=>'0','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1559402658','updated_at'=>'1594107724']);
+        $this->insert('{{%common_config}}',['id'=>'74','title'=>'Web端(Js Api)Key','name'=>'map_amap_key','app_id'=>'backend','type'=>'text','cate_id'=>'32','extra'=>'','remark'=>'地图选择，官网：https://lbs.amap.com/dev/key/app','is_hide_remark'=>'0','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1559402658','updated_at'=>'1594107724']);
         $this->insert('{{%common_config}}',['id'=>'75','title'=>'accessKeyId','name'=>'storage_cos_accesskey','app_id'=>'backend','type'=>'text','cate_id'=>'33','extra'=>'','remark'=>'','is_hide_remark'=>'1','default_value'=>'','sort'=>'1','status'=>'1','created_at'=>'1559528032','updated_at'=>'1559528076']);
         $this->insert('{{%common_config}}',['id'=>'76','title'=>'accessSecret','name'=>'storage_cos_secrectkey','app_id'=>'backend','type'=>'text','cate_id'=>'33','extra'=>'','remark'=>'','is_hide_remark'=>'1','default_value'=>'','sort'=>'2','status'=>'1','created_at'=>'1559528052','updated_at'=>'1559528071']);
         $this->insert('{{%common_config}}',['id'=>'77','title'=>'appID','name'=>'storage_cos_appid','app_id'=>'backend','type'=>'text','cate_id'=>'33','extra'=>'','remark'=>'域名中数字部分','is_hide_remark'=>'0','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1559528110','updated_at'=>'1559528110']);
@@ -171,7 +171,7 @@ https:https,','remark'=>'','is_hide_remark'=>'1','default_value'=>'http','sort'=
         $this->insert('{{%common_config}}',['id'=>'121','title'=>'Logo','name'=>'getui_logo_url','app_id'=>'backend','type'=>'image','cate_id'=>'52','extra'=>'','remark'=>'','is_hide_remark'=>'1','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1589642202','updated_at'=>'1589644938']);
         $this->insert('{{%common_config}}',['id'=>'128','title'=>'公钥','name'=>'stripe_publishable_key','app_id'=>'backend','type'=>'text','cate_id'=>'55','extra'=>'','remark'=>'','is_hide_remark'=>'1','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1594103346','updated_at'=>'1594103346']);
         $this->insert('{{%common_config}}',['id'=>'129','title'=>'私钥','name'=>'stripe_secret_key','app_id'=>'backend','type'=>'text','cate_id'=>'55','extra'=>'','remark'=>'','is_hide_remark'=>'1','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1594103360','updated_at'=>'1594103360']);
-        $this->insert('{{%common_config}}',['id'=>'132','title'=>'Web端- key','name'=>'map_amap_web_key','app_id'=>'backend','type'=>'text','cate_id'=>'32','extra'=>'','remark'=>'经纬度转换','is_hide_remark'=>'0','default_value'=>'','sort'=>'1','status'=>'1','created_at'=>'1594107642','updated_at'=>'1594107647']);
+        $this->insert('{{%common_config}}',['id'=>'132','title'=>'Web端Key','name'=>'map_amap_web_key','app_id'=>'backend','type'=>'text','cate_id'=>'32','extra'=>'','remark'=>'经纬度转换','is_hide_remark'=>'0','default_value'=>'','sort'=>'2','status'=>'1','created_at'=>'1594107642','updated_at'=>'1594107647']);
         $this->insert('{{%common_config}}',['id'=>'137','title'=>'App Secret','name'=>'byte_dance_app_secret','app_id'=>'backend','type'=>'text','cate_id'=>'60','extra'=>'','remark'=>'','is_hide_remark'=>'1','default_value'=>'','sort'=>'1','status'=>'1','created_at'=>'1619492808','updated_at'=>'1619493741']);
         $this->insert('{{%common_config}}',['id'=>'138','title'=>'App ID','name'=>'byte_dance_app_id','app_id'=>'backend','type'=>'text','cate_id'=>'60','extra'=>'','remark'=>'','is_hide_remark'=>'1','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1619493738','updated_at'=>'1619493738']);
         $this->insert('{{%common_config}}',['id'=>'139','title'=>'SALT','name'=>'byte_dance_app_salt','app_id'=>'backend','type'=>'text','cate_id'=>'61','extra'=>'','remark'=>'支付回调Url：https://域名/tiny-shop/notify/byte-dance','is_hide_remark'=>'0','default_value'=>'','sort'=>'0','status'=>'1','created_at'=>'1619493806','updated_at'=>'1619509335']);
@@ -251,7 +251,7 @@ num:限制访问次数,','remark'=>'路由 * 为总限流，其他的需配置�
 60:60秒;','remark'=>'比如在 6 秒内总共可访问对应路由次数','is_hide_remark'=>'1','default_value'=>'','sort'=>'1','status'=>'1','created_at'=>'1635566663','updated_at'=>'1635566914']);
         $this->insert('{{%common_config}}',['id'=>'192','title'=>'限流白名单','name'=>'current_limiting_white_list','app_id'=>'backend','type'=>'multipleInput','cate_id'=>'84','extra'=>'route:路由','remark'=>'白名单内的路由不受限流控制','is_hide_remark'=>'0','default_value'=>'','sort'=>'3','status'=>'1','created_at'=>'1638063900','updated_at'=>'1638063904']);
         $this->insert('{{%common_config}}',['id'=>'193','title'=>'IP黑名单','name'=>'sys_ip_blacklist','app_id'=>'backend','type'=>'textarea','cate_id'=>'18','extra'=>'','remark'=>'主要是接口请求使用，多个用换行/逗号/分号分隔，如果不配置表示允许所有IP访问','is_hide_remark'=>'0','default_value'=>'','sort'=>'5','status'=>'1','created_at'=>'1640574707','updated_at'=>'1640574806']);
-        
+        $this->insert('{{%common_config}}',['id'=>'194','title'=>'Web端(Js Api)安全秘钥','name'=>'map_amap_code','app_id'=>'backend','type'=>'text','cate_id'=>'32','extra'=>'','remark'=>'地图选择','is_hide_remark'=>'0','default_value'=>'','sort'=>'1','status'=>'1','created_at'=>'1559402658','updated_at'=>'1594107724']);
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

@@ -156,7 +156,7 @@ class UploadForm extends \common\models\common\Attachment
 
         $this->extension = $file->getExtension();
         $this->size = $file->size;
-        $this->name = $file->getBaseName();
+        !$this->name && $this->name = $file->getBaseName();
     }
 
     /**

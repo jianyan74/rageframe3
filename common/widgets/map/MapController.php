@@ -27,11 +27,15 @@ class MapController extends Controller
         // 注册js
         $this->registerViewJs($type, $secret_key);
 
+        // 高德 code
+        $mapAMapCode = Yii::$app->services->config->backendConfig('map_amap_code');
+
         return $this->render('@common/widgets/map/views/' . $type, [
             'lng' => $lng,
             'lat' => $lat,
             'zoom' => $zoom,
             'boxId' => $boxId,
+            'mapAMapCode' => $mapAMapCode,
             'defaultSearchAddress' => $defaultSearchAddress,
         ]);
     }

@@ -15,6 +15,7 @@ use kartik\date\DatePicker;
 $this->title = $model->isNewRecord ? '创建' : '编辑';
 $this->params['breadcrumbs'][] = ['label' => '增删改查', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
+
 ?>
 
 <div class="row">
@@ -71,7 +72,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 'type' => DatePicker::class,
                                 'title' => '日期',
                                 'value' => function ($data) {
-                                    return $data['day'];
+                                    return $data['day'] ?? '';
                                 },
                                 'items' => [
                                     '0' => 'Saturday',

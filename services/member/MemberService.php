@@ -237,9 +237,10 @@ class MemberService extends Service
      * @param $type
      * @return array|\yii\db\ActiveRecord[]
      */
-    public function findByIds($ids = [], $type = MemberTypeEnum::MEMBER)
+    public function findByIds($ids = [], $type = MemberTypeEnum::MEMBER, $select = ['*'])
     {
         return Member::find()
+            ->select($select)
             ->filterWhere(['in', 'id', $ids])
             ->andWhere(['type' => $type])
             ->andWhere(['>=', 'status', StatusEnum::DISABLED])
@@ -248,13 +249,13 @@ class MemberService extends Service
     }
 
     /**
-     * @param $promoCode
+     * @param $promoterCode
      * @return array|\yii\db\ActiveRecord|null
      */
-    public function findByPromoCode($promoCode)
+    public function findByPromoterCode($promoterCode)
     {
         return Member::find()
-            ->where(['promo_code' => $promoCode])
+            ->where(['promoter_code' => $promoterCode])
             ->andWhere(['>=', 'status', StatusEnum::DISABLED])
             ->one();
     }

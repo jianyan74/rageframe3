@@ -13,6 +13,7 @@ class MemberTypeEnum extends BaseEnum
     const MERCHANT = 3;
     const SHOP = 4;
     const STORE = 5;
+    const ROBOT = 100;
 
     /**
      * @return string[]
@@ -25,6 +26,7 @@ class MemberTypeEnum extends BaseEnum
             self::MERCHANT => '商家管理员',
             self::SHOP => '店铺管理员',
             self::STORE => '门店管理员',
+            self::ROBOT => '机器人',
         ];
     }
 }

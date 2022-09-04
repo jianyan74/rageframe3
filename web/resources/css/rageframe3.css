@@ -776,8 +776,20 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     }
 }
 
+@media (min-width: 992px) {
+    .sidebar-mini.sidebar-collapse .main-sidebar:not(.sidebar-no-expand).sidebar-focused,
+    .sidebar-mini.sidebar-collapse .main-sidebar:not(.sidebar-no-expand):hover {
+        width: 200px;
+    }
+}
+
+
 .content-wrapper > .content {
     padding: 0 .8rem;
+}
+
+.wrapper-content {
+    min-height: 650px;
 }
 
 .layout-fixed .brand-link {
@@ -1035,6 +1047,20 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
 .rf-i {
     min-width: 18px;
     font-size: 13px;
+}
+
+.rf-main-footer {
+    color: #869099;
+    padding: 1rem;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.rf-border-right {
+    border-right: 1px solid #e8eaec;
+    z-index: 1034;
 }
 
 .btn-w-m {

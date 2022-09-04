@@ -8,6 +8,7 @@ return [
         'menu' => [
             'location' => 'default', // default:系统顶部菜单;addons:应用中心菜单
             'icon' => 'fa fa-comments',
+            'sort' => 11, // 自定义排序
             'pattern' => ['b2c', 'b2b2c']
         ],
         // 子模块配置

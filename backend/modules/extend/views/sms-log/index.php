@@ -8,6 +8,7 @@ use common\helpers\DebrisHelper;
 $this->title = '短信日志';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="row">
     <div class="col-12 col-xs-12">
         <div class="box">

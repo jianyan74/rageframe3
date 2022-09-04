@@ -131,7 +131,7 @@ class EchantsHelper
         array $time,
         $format = 'day',
         $distinguishKey = 'time',
-        $echartType = 'line'
+        $eChartType = 'line'
     ) {
         $data = call_user_func($function, $time['start'], $time['end'], self::$formats[$format]['sql']);
         // 对比key
@@ -148,7 +148,7 @@ class EchantsHelper
                 $seriesData[] = [
                     'field' => $field,
                     'name' => $value,
-                    'type' => $echartType,
+                    'type' => $eChartType,
                     // 显示数量
 //                'label' => [
 //                    'show' => true

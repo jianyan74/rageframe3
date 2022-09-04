@@ -81,13 +81,13 @@ class PayForm extends PayLog
 
                 // 直接通过授权码进行支付
                 if ($this->code) {
-                    if ($this->trade_type == PayTradeTypeEnum::WECHAT_MINI_PROGRAM) {
+                    if ($this->trade_type == PayTradeTypeEnum::WECHAT_MINI) {
                         $auth = Yii::$app->wechat->miniProgram->auth->session($this->code);
                         Yii::$app->services->base->getWechatError($auth);
                         $this->openid = $auth['openid'];
                     }
 
-                    if ($this->trade_type == PayTradeTypeEnum::WECHAT_JS) {
+                    if ($this->trade_type == PayTradeTypeEnum::WECHAT_MP) {
                         $user = Yii::$app->wechat->app->oauth->userFromCode($this->code);
                         $this->openid = $user->getId();
                     }
@@ -104,7 +104,7 @@ class PayForm extends PayLog
                 }
 
                 // 面对面收款
-                if ($this->trade_type == PayTradeTypeEnum::ALI_CAPTURE && !$this->auth_code) {
+                if ($this->trade_type == PayTradeTypeEnum::ALI_POS && !$this->auth_code) {
                     $this->addError($attribute, '找不到付款码');
                 }
 

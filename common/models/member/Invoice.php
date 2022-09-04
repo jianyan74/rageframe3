@@ -2,7 +2,7 @@
 
 namespace common\models\member;
 
-use Yii;
+use common\enums\StatusEnum;
 
 /**
  * This is the model class for table "rf_member_invoice".
@@ -72,5 +72,18 @@ class Invoice extends \common\models\base\BaseModel
             'created_at' => '创建时间',
             'updated_at' => '修改时间',
         ];
+    }
+
+    /**
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        if (($this->isNewRecord || $this->oldAttributes['is_default'] == StatusEnum::DISABLED) && $this->is_default == StatusEnum::ENABLED) {
+            self::updateAll(['is_default' => StatusEnum::DISABLED], ['member_id' => $this->member_id, 'is_default' => StatusEnum::ENABLED]);
+        }
+
+        return parent::beforeSave($insert);
     }
 }

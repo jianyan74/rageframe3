@@ -14,11 +14,11 @@
 
 参数
 
-参数名 | 参数类型 | 必填 | 默认 | 说明 | 备注
----|---|---|---|---|---
-pay_type | int | 是 | 无 | 支付类型 | 1:微信;2:支付宝;3:银联;5:余额支付 |
-trade_type | string | 是 | 无 | 交易类型 | 具体查看下文具体参数说明 |
-order_group | string | 是 | 无 | 订单类型 | recharge:充值;order:订单 | 
+参数名 | 参数类型 | 必填 | 默认 | 说明 | 备注                                    
+---|---|---|---|---|---------------------------------------
+pay_type | int | 是 | 无 | 支付类型 | 100:微信;101:支付宝;102:银联;103:字节跳动;1:余额支付 |
+trade_type | string | 是 | 无 | 交易类型 | 具体查看下文具体参数说明                          |
+order_group | string | 是 | 无 | 订单类型 | recharge:充值;order:订单                  | 
 data | string | 是 | 无 | json格式数组具体看下文 |
 
 tradeType
@@ -26,9 +26,10 @@ tradeType
 > 根据对应的支付类型，选择支持的交易类型即可，例如：app
 
 ```
-支付宝：'native', 'app', 'js', 'pos', 'mweb'
-微信：'pc', 'app', 'f2f', 'wap', 'mini_program'
+支付宝：'web', 'app', 'scan', 'wap'
+微信：'scan', 'mp'(公众号), 'app', 'pos', 'wap'(手机H5),'mini'(小程序)
 银联：'app', 'html'
+字节跳动：'byte-dance'
 余额：'default'
 ```
 

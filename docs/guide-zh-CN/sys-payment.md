@@ -4,7 +4,7 @@
 
 - 支付宝
 - 微信
-- 银联
+- 银联(弃用)
 
 ### 支付宝
 
@@ -15,7 +15,7 @@
 $config = [
     'notify_url' => 'http://rageframe.com/notify.php', // 支付通知回调地址
     'return_url' => 'http://rageframe.com/return.php', // 买家付款成功跳转地址
-    'sandbox' => false, // 沙盒模式
+    'mode' => 0, // 0:普通模式; 1:沙盒模式; 2:服务商模式
 ];
 
 // 生成订单
@@ -30,48 +30,28 @@ $order = [
 
 ```
 // 电脑网站支付
-$resConfig = Yii::$app->services->extendPay->alipay($config)->pc($order);
+$resConfig = Yii::$app->pay->alipay->web($order);
 
 // app支付
-$resConfig = Yii::$app->services->extendPay->alipay($config)->app($order);
+$resConfig = Yii::$app->pay->alipay->app($order);
 
 // 面对面支付(创建收款二维码)
-$resConfig = Yii::$app->services->extendPay->alipay($config)->f2f($order);
+$resConfig = Yii::$app->pay->alipay->sacn($order);
 
 // 手机网站支付
-$resConfig = Yii::$app->services->extendPay->alipay($config)->wap($order);
+$resConfig = Yii::$app->pay->alipay->wap($order);
 ```
 
 扫码收款
 
 ```
-$request = Yii::$app->services->extendPay->alipay->capture();
-$request->setBizContent([
+$request = Yii::$app->pay->alipay->pos([
     'out_trade_no' => date('YmdHis') . mt_rand(1000, 9999),
     'scene'        => 'bar_code',
     'auth_code'    => '288412621343841260',  //购买者手机上的付款二维码
     'subject'      => 'test',
     'total_amount' => 0.01,
 ]);
-
-/** @var \Omnipay\Alipay\Responses\AopCompletePurchaseResponse $response */
-try {
-    $response = $request->send();
-    
-    if($response->isPaid()){
-        /**
-         * Payment is successful
-         */
-    }else{
-        /**
-         * Payment is not successful
-         */
-    }
-} catch (Exception $e) {
-    /**
-     * Payment is not successful
-     */
-}
 ```
 
 
@@ -86,73 +66,39 @@ $info = [
 ];
  
    
-Yii::$app->services->extendPay->alipay->refund($info); 
+Yii::$app->pay->alipay->refund($info); 
 ```
 
 异步/同步通知
 
 ```
-$request = Yii::$app->services->extendPay->alipay([
-    'ali_public_key' => '', // 支付宝公钥
-])->notify()
+$request = Yii::$app->pay->alipay->callback()
 
-try {
-    /** @var \Omnipay\Alipay\Responses\AopCompletePurchaseResponse $response */
-    $response = $request->send();
-    
-    if($response->isPaid()){
-        /**
-         * Payment is successful
-         */
-        die('success'); //The response should be 'success' only
-    } else {
-        /**
-         * Payment is not successful
-         */
-        die('fail');
-    }
-} catch (Exception $e) {
-    /**
-     * Payment is not successful
-     */
-    die('fail');
-}
+// 成功
+return Pay::alipay()->success();
 ```
-
-更多文档：https://github.com/lokielse/omnipay-alipay
-
 
 单笔转账
 
 ```
-$info = [
+ $info = [
      'out_biz_no' => '转账单号',
-     'payee_type' => '收款人账号类型', // ALIPAY_USERID:支付宝唯一号;ALIPAY_LOGONID:支付宝登录号
-     'payee_account' => '收款人账号',
-     'amount' => '收款金额',
-     'payee_real_name' => '收款方真实姓名', // 非必填
+     'trans_amount' => '收款金额',
+     'payee_info' => [
+          'identity_type' => 'ALIPAY_LOGON_ID', // ALIPAY_USER_ID:支付宝唯一号;ALIPAY_LOGON_ID:支付宝登录号
+          'identity' => '收款人账号',
+          'name' => '收款方真实姓名', // 非必填
+     ],
      'remark' => '账业务的标题，用于在支付宝用户的账单里显示', // 非必填
-]
-```
-
-转账案例
-
-```
-$res = Yii::$app->services->extendPay->alipay([
-    'notify_url' => Url::toFront(['transfer/alipay'])
-])->transfer([
-    'out_biz_no' => time() . StringHelper::random(10),
-    'payee_account' => 13484261295,
-    'amount' => 1.00
-]);
+     'order_title' => '转账业务的标题，用于在支付宝用户的账单里显示 ', // 非必填
+  ]
 ```
 
 转账查询
 
 ```
-$result = Yii::$app->services->extendPay->alipay->transferQuery([
-    'out_biz_no' => '转账单号',
-    'order_id' => '回调单号',
+$result = Yii::$app->pay->alipay->find([
+    'out_trade_no' => '转账单号',
 ]);
 ```
 
@@ -177,46 +123,43 @@ $order = [
 生成参数
 
 ```
-// 原生扫码支付
-$resConfig = Yii::$app->services->extendPay->wechat->native($order);
+// 公众号支付
+$resConfig = Yii::$app->pay->wechat->mp($order);
+
+// 小程序支付
+$resConfig = Yii::$app->pay->wechat->mini($order);
+
+// 原生扫码支付(二维码)
+$resConfig = Yii::$app->pay->wechat->sacn($order);
 
 // app支付
-$resConfig = Yii::$app->services->extendPay->wechat->app($order);
-
-// js支付
-$resConfig = Yii::$app->services->extendPay->wechat->js($order);
+$resConfig = Yii::$app->pay->wechat->app($order);
 
 // 刷卡支付
-$resConfig = Yii::$app->services->extendPay->wechat->pos($order);
+$resConfig = Yii::$app->pay->wechat->pos($order);
 
-// H5支付
-$resConfig = Yii::$app->services->extendPay->wechat->mweb($order);
+// H5支付(非微信内)
+$resConfig = Yii::$app->pay->wechat->map($order);
 ```
 
 回调
 
 ```
-$response = Yii::$app->services->extendPay->wechat->notify();
+$result = Yii::$app->pay->wechat->callback();
 
-if ($response->isPaid()) {
-    //pay success
-    var_dump($response->getRequestData());
-}else{
-    //pay fail
-}
-
+return Pay::wechat()->success();
 ```
 
 关闭订单
 
 ```
-$response = Yii::$app->services->extendPay->wechat->close($out_trade_no);
+$response = Yii::$app->pay->wechat->close($out_trade_no);
 ```
 
 查询订单
 
 ```
-$response = Yii::$app->services->extendPay->wechat->query($transaction_id);
+$response = Yii::$app->pay->wechat->query($transaction_id);
 ```
 
 退款
@@ -229,7 +172,7 @@ $info = [
     'refund_fee'     => 1, //=0.01
 ];
 
-$response = Yii::$app->services->extendPay->wechat->refund($info);
+$response = Yii::$app->pay->wechat->refund($info);
 ```
 
 ### 银联
@@ -256,16 +199,16 @@ $order = [
 
 ```
 // app支付
-$resConfig = Yii::$app->services->extendPay->union($config)->app($order);
+$resConfig = Yii::$app->pay->union($config)->app($order);
 
 // pc/wap
-$resConfig = Yii::$app->services->extendPay->union($config)->html($order);
+$resConfig = Yii::$app->pay->union($config)->html($order);
 ```
 
 回调
 
 ```
-$response = Yii::$app->services->extendPay->union->notify();
+$response = Yii::$app->pay->union->notify();
 
 if ($response->isPaid()) {
     //pay success
@@ -277,7 +220,7 @@ if ($response->isPaid()) {
 查询订单
 
 ```
-$response  = Yii::$app->services->extendPay->union->query($orderId, $txnTime, $txnAmt);
+$response  = Yii::$app->pay->union->query($orderId, $txnTime, $txnAmt);
 
 // 获取 $queryId
 $queryId = $response['queryId'];
@@ -286,11 +229,11 @@ $queryId = $response['queryId'];
 关闭订单
 
 ```
-$response  = Yii::$app->services->extendPay->union->query($orderId, $txnTime, $txnAmt, $queryId);
+$response  = Yii::$app->pay->union->query($orderId, $txnTime, $txnAmt, $queryId);
 ```
 
 退款
 
 ```
-$response  = Yii::$app->services->extendPay->union->refund($orderId, $txnTime, $txnAmt, $queryId);
+$response  = Yii::$app->pay->union->refund($orderId, $txnTime, $txnAmt, $queryId);
 ```

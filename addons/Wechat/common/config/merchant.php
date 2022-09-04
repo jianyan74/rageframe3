@@ -8,6 +8,7 @@ return [
         'menu' => [
             'location' => 'default', // default:系统顶部菜单;addons:应用中心菜单
             'icon' => 'fa fa-comments',
+            'sort' => 11, // 自定义排序
             'pattern' => ['saas'], // 可见模式
         ],
         // 子模块配置

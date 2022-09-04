@@ -22,7 +22,14 @@ class MainController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->renderPartial($this->action->id, []);
+        // 触发主题切换
+        !Yii::$app->params['isMobile'] && Yii::$app->services->theme->autoSwitcher();
+        // 设置为 AJAX 关闭掉 DEBUG 显示
+        YII_DEBUG && Yii::$app->request->headers->set('X-Requested-With', 'XMLHttpRequest');
+
+        return $this->renderPartial('/theme/' . Yii::$app->params['theme']['layout'] . '/index', [
+
+        ]);
     }
 
     /**

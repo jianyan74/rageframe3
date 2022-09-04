@@ -19,6 +19,11 @@ return [
     'multiShop' => false,
     // 请求全局唯一ID
     'uuid' => '',
+    // 主题布局
+    'theme' => [
+        'layout' => 'subfield',
+        'color' => 'black',
+    ],
     // 全局缓存过期时间 (建议用 redis 缓存)
     'cacheExpirationTime' => [
         'default' => null, // 常用数据缓存

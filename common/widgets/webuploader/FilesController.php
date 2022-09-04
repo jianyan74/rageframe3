@@ -45,6 +45,10 @@ class FilesController extends Controller
      */
     public function behaviors()
     {
+        if (YII_DEBUG) {
+            return [];
+        }
+
         return [
             'access' => [
                 'class' => AccessControl::class,

@@ -2,10 +2,17 @@
 
 namespace common\components\payment;
 
-use Yii;
-use yii\helpers\ArrayHelper;
-use Omnipay\Omnipay;
-use common\enums\PayTradeTypeEnum;
+use yii\helpers\Json;
+use yii\web\UnprocessableEntityHttpException;
+use common\helpers\ArrayHelper;
+use Yansongda\Pay\Pay;
+use Yansongda\Pay\Exception\InvalidResponseException;
+use Yansongda\Pay\Contract\ConfigInterface;
+use Yansongda\Pay\Exception\InvalidConfigException;
+use Yansongda\Pay\Plugin\ParserPlugin;
+use Yansongda\Pay\Plugin\Wechat\PreparePlugin;
+use Yansongda\Pay\Plugin\Wechat\SignPlugin;
+use Yansongda\Pay\Plugin\Wechat\WechatPublicCertsPlugin;
 
 /**
  * 微信支付类
@@ -15,25 +22,6 @@ use common\enums\PayTradeTypeEnum;
  */
 class WechatPay
 {
-    const DEFAULT = 'WechatPay';
-    const APP = 'WechatPay_App';
-    const NATIVE = 'WechatPay_Native';
-    const JS = 'WechatPay_Js';
-    const POS = 'WechatPay_Pos';
-    const MWEB = 'WechatPay_Mweb';
-
-    /**
-     * 订单
-     *
-     * @var array
-     */
-    protected $order;
-
-    /**
-     * 配置
-     *
-     * @var
-     */
     protected $config;
 
     /**
@@ -41,145 +29,152 @@ class WechatPay
      */
     public function __construct($config)
     {
-        $this->order = [
-            'spbill_create_ip' => Yii::$app->request->userIP,
-            'fee_type' => 'CNY',
-            'notify_url' => '',
-        ];
+        // 初始化
+        Pay::config($config);
 
         $this->config = $config;
     }
 
     /**
-     * 实例化类
-     *
-     * @param $type
-     * @return \Omnipay\WechatPay\AppGateway
+     * @return array
+     * @throws InvalidConfigException
+     * @throws InvalidResponseException
+     * @throws \Yansongda\Pay\Exception\ContainerException
+     * @throws \Yansongda\Pay\Exception\InvalidParamsException
+     * @throws \Yansongda\Pay\Exception\ServiceNotFoundException
      */
-    private function create($type)
+    public function getPublicCerts()
     {
-        /* @var $gateway \Omnipay\WechatPay\AppGateway */
-        $gateway = Omnipay::create($type);
-        $gateway->setMchId($this->config['mch_id']);
-        $gateway->setAppId($this->config['app_id']);
-        $gateway->setApiKey($this->config['api_key']);
-        $gateway->setCertPath(Yii::getAlias($this->config['cert_client']));
-        $gateway->setKeyPath(Yii::getAlias($this->config['cert_key']));
-        return $gateway;
+        $params = $this->config['wechat']['default'];
+        $data = Pay::wechat()->pay(
+            [PreparePlugin::class, WechatPublicCertsPlugin::class, SignPlugin::class, ParserPlugin::class],
+            $params
+        )->get('data', []);
+
+        foreach ($data as $item) {
+            $certs[$item['serial_no']] = decrypt_wechat_resource($item['encrypt_certificate'], $params)['ciphertext'] ?? '';
+        }
+
+        $wechatConfig = get_wechat_config($params);
+        $wechatConfig['wechat_public_cert_path'] = ((array) $wechatConfig['wechat_public_cert_path']) + ($certs ?? []);
+
+        Pay::set(ConfigInterface::class, Pay::get(ConfigInterface::class)->merge([
+            'wechat' => [$params['_config'] ?? 'default' => $wechatConfig->all()],
+        ]));
+
+        return $certs;
     }
 
     /**
-     * 回调
-     *
-     * @return \Omnipay\WechatPay\Message\CompletePurchaseResponse
+     * @return \Yansongda\Supports\Collection
+     * @throws \Yansongda\Pay\Exception\ContainerException
+     * @throws \Yansongda\Pay\Exception\InvalidParamsException
      */
-    public function notify()
+    public function callback()
     {
-        $gateway = $this->create(self::DEFAULT);
+        return Pay::wechat()->callback();
+    }
 
-        return $gateway->completePurchase([
-            'request_params' => file_get_contents('php://input')
-        ])->send();
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function success()
+    {
+        return Pay::wechat()->success();
     }
 
     /**
      * 微信APP支付网关
-     * @param array $order
-     *    [
-     *        'body'              => 'The test order',
-     *        'out_trade_no'      => date('YmdHis') . mt_rand(1000, 9999),
-     *        'total_fee'         => 1, //=0.01
-     *     ]
-     * @param bool $debug
-     * @return mixed
+     *
+     * @param $order
+     * @param $debug
+     * @return \Psr\Http\Message\ResponseInterface
      */
-    public function app($order, $debug = false)
+    public function app($order)
     {
-        $gateway = $this->create(self::APP);
-        $gateway->setAppId($this->config['open_app_id']);
-        $request = $gateway->purchase(ArrayHelper::merge($this->order, $order));
-        $response = $request->send();
+        try {
+            $data = Pay::wechat()->app($order);
+        } catch (InvalidResponseException $invalidResponseException) {
+            $this->getError($invalidResponseException->extra);
+        }
 
-        return $debug ? $response->getData() : $response->getAppOrderData();
+        return $data;
     }
 
     /**
      * 微信原生扫码支付支付网关
      *
      * @param array $order
-     *    [
-     *        'body'              => 'The test order',
-     *        'out_trade_no'      => date('YmdHis') . mt_rand(1000, 9999),
-     *        'total_fee'         => 1, //=0.01
-     *     ]
      * @param bool $debug
      * @return mixed
      */
-    public function native($order, $debug = false)
+    public function scan($order)
     {
-        $gateway = $this->create(self::NATIVE);
-        $request = $gateway->purchase(ArrayHelper::merge($this->order, $order));
-        $response = $request->send();
+        try {
+            $data = Pay::wechat()->scan($order);
+        } catch (InvalidResponseException $invalidResponseException) {
+            $this->getError($invalidResponseException->extra);
+        }
 
-        return $debug ? $response->getData() : $response->getCodeUrl();
+        return $data;
     }
 
     /**
-     * 微信js支付支付网关
+     * 微信公众号支付支付网关
      *
      * @param array $order
-     *    [
-     *        'body'              => 'The test order',
-     *        'out_trade_no'      => date('YmdHis') . mt_rand(1000, 9999),
-     *        'total_fee'         => 1, //=0.01
-     *        'openid'            => 'ojPztwJ5bRWRt_Ipg', //=0.01
-     *     ]
+     * $order = [
+     *      'out_trade_no' => time().'',
+     *      'description' => 'subject-测试',
+     *      'amount' => [
+     *          'total' => 1,
+     *      ],
+     *      'payer' => [
+     *          'openid' => 'onkVf1FjWS5SBxxxxxxxx',
+     *      ],
+     * ];
      * @param bool $debug
-     * @return mixed
+     * @return array
      */
-    public function js($order, $debug = false)
+    public function mp($order)
     {
-        $gateway = $this->create(self::JS);
-        $request = $gateway->purchase(ArrayHelper::merge($this->order, $order));
-        $response = $request->send();
+        try {
+            $data = Pay::wechat()->mp($order);
+        } catch (InvalidResponseException $invalidResponseException) {
+            $this->getError($invalidResponseException->extra);
+        }
 
-        // 兼容EasyWechat
-        Yii::$app->params['wechatPaymentConfig'] = ArrayHelper::merge(Yii::$app->params['wechatPaymentConfig'], [
-            'app_id' => $this->config['app_id'],
-            'mch_id' => $this->config['mch_id'],
-            'key' => $this->config['api_key'],
-            'cert_path' => Yii::getAlias($this->config['cert_client']),
-            'key_path' => Yii::getAlias($this->config['cert_key']),
-        ]);
-
-        $data = $response->getJsOrderData();
+        $data = ArrayHelper::toArray($data);
         if (isset($data['timeStamp'])) {
             $data['timestamp'] = $data['timeStamp'];
             unset($data['timeStamp']);
         }
 
-        return $debug ? $response->getData() : $data;
+        return $data;
     }
 
     /**
+     * 小程序支付
+     *
      * @param $order
      * @param bool $debug
      * @return array|mixed|null
      */
-    public function miniProgram($order, $debug = false)
+    public function mini($order)
     {
-        $gateway = $this->create(self::JS);
-        $gateway->setAppId($this->config['mini_program_app_id']);
-        $request = $gateway->purchase(ArrayHelper::merge($this->order, $order));
-        $response = $request->send();
+        try {
+            $data = Pay::wechat()->mini($order);
+        } catch (InvalidResponseException $invalidResponseException) {
+            $this->getError($invalidResponseException->extra);
+        }
 
-        $data = $response->getJsOrderData();
+        $data = ArrayHelper::toArray($data);
         if (isset($data['timeStamp'])) {
             $data['timestamp'] = $data['timeStamp'];
             unset($data['timeStamp']);
         }
 
-        return $debug ? $response->getData() : $data;
+        return $data;
     }
 
     /**
@@ -195,96 +190,104 @@ class WechatPay
      * @param bool $debug
      * @return mixed
      */
-    public function pos($order, $debug = false)
+    public function pos($order)
     {
-        $gateway = $this->create(self::POS);
-        $request = $gateway->purchase(ArrayHelper::merge($this->order, $order));
-        $response = $request->send();
 
-        return $debug ? $response->getData() : $response->getData();
     }
 
     /**
      * 微信H5支付网关
      * @param array $order
-     *    [
-     *        'body'              => 'The test order',
-     *        'out_trade_no'      => date('YmdHis') . mt_rand(1000, 9999),
-     *        'total_fee'         => 1, //=0.01
-     *     ]
+     * $order = [
+     *      'out_trade_no' => time().'',
+     *      'description' => 'subject-测试',
+     *      'amount' => [
+     *          'total' => 1,
+     *      ],
+     *      'scene_info' => [
+     *          'payer_client_ip' => '1.2.4.8',
+     *          'h5_info' => [
+     *              'type' => 'Wap',
+     *      ]
+     *   ],
+     * ];
      * @param bool $debug
      * @return mixed
      */
-    public function mweb($order, $debug = false)
+    public function wap($order)
     {
-        $gateway = $this->create(self::MWEB);
-        $request = $gateway->purchase(ArrayHelper::merge($this->order, $order));
-        $response = $request->send();
+        try {
+            $data = Pay::wechat()->wap($order);
+        } catch (InvalidResponseException $invalidResponseException) {
+            $this->getError($invalidResponseException->extra);
+        }
 
-        return $debug ? $response->getData() : $response->getData();
+        return ArrayHelper::toArray($data);
     }
 
     /**
      * 关闭订单
      *
-     * @param $out_trade_no
-     */
-    public function close($out_trade_no)
-    {
-        $gateway = $this->create(self::DEFAULT);
-        $response = $gateway->close([
-            'out_trade_no' => $out_trade_no, //The merchant trade no
-        ])->send();
-
-        return $response->getData();
-    }
-
-    /**
-     * 查询订单
+     * $order = [
+     *      'out_trade_no' => '1217752501201407033233368018',
+     *  ];
      *
-     * @param $transaction_id
-     */
-    public function query($transaction_id)
-    {
-        $gateway = $this->create(self::DEFAULT);
-        $response = $gateway->query([
-            'transaction_id' => $transaction_id, //The wechat trade no
-        ])->send();
-
-        return $response->getData();
-    }
-
-    /**
-     * 查询订单
+     *  or
      *
-     * @param $transaction_id
+     * $order = '1217752501201407033233368018';
      */
-    public function queryByOutTradeNo($out_trade_no)
+    public function close($order)
     {
-        $gateway = $this->create(self::DEFAULT);
-        $response = $gateway->query([
-            'out_trade_no' => $out_trade_no, //The wechat trade no
-        ])->send();
-
-        return $response->getData();
+        Pay::wechat()->close($order);
     }
 
     /**
-     * @param $auth_code
+     * 转账
+     *
+     * @param $order
      * @return mixed
      */
-    public function queryOpenId($auth_code)
+    public function transfer($order)
     {
-        $gateway = $this->create(self::POS);
-        $response = $gateway->queryOpenId([
-            'auth_code' => $auth_code, //The wechat trade no
-        ])->send();
-
-        if ($response->isSuccessful()) {
-            return $response->getData();
+        /** @var  $data */
+        $result = Pay::wechat()->transfer($order);
+        $data = ArrayHelper::toArray($result);
+        if (isset($data['code'])) {
+            throw new UnprocessableEntityHttpException($data['message']);
         }
 
-        return false;
+        return $data;
+    }
+
+    /**
+     * 查询订单
+     *
+     * $order = [
+     *      'transaction_id' => '1217752501201407033233368018',
+     *  ];
+     *
+     *  or
+     *
+     * $order = '1217752501201407033233368018';
+     */
+    public function find($order)
+    {
+        return Pay::wechat()->find($order);
+    }
+
+    /**
+     * 查询退款订单
+     *
+     * @param $transaction_id
+     */
+    public function findRefund($transaction_id)
+    {
+        $order = [
+            'transaction_id' => $transaction_id,
+            '_type' => 'refund',
+        ];
+
+        return Pay::wechat()->find($order);
     }
 
     /**
@@ -292,28 +295,34 @@ class WechatPay
      *
      * 订单类型
      *
-     * @param $info
-     * [
-     *     'transaction_id' => $transaction_id, //The wechat trade no
-     *     'out_refund_no'  => $outRefundNo,
-     *     'total_fee'      => 1, //=0.01
-     *      'refund_fee'    => 1, //=0.01
-     * ]
+     * @param $order
+     * $order = [
+     *      'out_trade_no' => '1514192025',
+     *      'out_refund_no' => time(),
+     *      'amount' => [
+     *              'refund' => 1,
+     *              'total' => 1,
+     *              'currency' => 'CNY',
+     *      ],
+     * ];
      */
-    public function refund($info, $type = PayTradeTypeEnum::WECHAT_JS)
+    public function refund($order)
     {
-        $gateway = $this->create(self::DEFAULT);
-        switch ($type) {
-            case PayTradeTypeEnum::WECHAT_MINI_PROGRAM :
-                $gateway->setAppId($this->config['mini_program_app_id']);
-                break;
-            case PayTradeTypeEnum::WECHAT_APP :
-                $gateway->setAppId($this->config['open_app_id']);
-                break;
+        return Pay::wechat()->refund($order);
+    }
+
+    /**
+     * @param $error
+     * @return mixed
+     * @throws UnprocessableEntityHttpException
+     */
+    protected function getError($error)
+    {
+        if (is_array($error) && isset($error['code']) && isset($error['message'])) {
+            throw new UnprocessableEntityHttpException($error['message']);
         }
 
-        $response = $gateway->refund($info)->send();
-
-        return $response->getData();
+        $extraBody = Json::decode($error['body']);
+        throw new UnprocessableEntityHttpException($extraBody['message']);
     }
 }

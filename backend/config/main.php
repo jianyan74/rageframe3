@@ -107,5 +107,8 @@ return [
         'provinces' => 'common\controllers\ProvincesController', // 省市区
         'notify' => 'common\widgets\notify\NotifyController', // 消息
     ],
+    'as cors' => [
+        'class' => \yii\filters\Cors::class,
+    ],
     'params' => $params,
 ];

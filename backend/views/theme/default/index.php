@@ -5,8 +5,10 @@
 
 use backend\assets\AppAsset;
 use yii\bootstrap4\Html;
+use yii\helpers\Url;
 
 AppAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -31,8 +33,6 @@ AppAsset::register($this);
         <?= $this->render('_left'); ?>
         <!-- 主体内容区域 -->
         <?= $this->render('_content'); ?>
-        <!-- 底部区域 -->
-        <?= $this->render('_footer'); ?>
         <!-- 右边控制栏 -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
@@ -44,6 +44,12 @@ AppAsset::register($this);
                 tag: "<?= Yii::$app->services->config->backendConfig('sys_tags') ?? false; ?>",
                 isMobile: "<?= Yii::$app->params['isMobile'] ?? false; ?>",
             };
+
+            /* 主题布局切换 */
+            $(document).on("change", "#rfTheme", function () {
+                var layout = $('#rfTheme').val();
+                window.location.href = '<?= Url::to(['theme/update'])?>' + '?layout=' + layout;
+            });
         </script>
     </div>
     <?php $this->endBody() ?>

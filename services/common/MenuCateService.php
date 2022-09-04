@@ -23,11 +23,13 @@ class MenuCateService extends Service
      * @param $appId
      * @param array $info
      * @param $icon
-     * @param array $pattern
-     * @return MenuCate|void
+     * @param $location
+     * @param $sort
+     * @param $pattern
+     * @return MenuCate
      * @throws \yii\web\UnprocessableEntityHttpException
      */
-    public function createByAddon($appId, array $info, $icon, $location, $pattern = [])
+    public function createByAddon($appId, array $info, $icon, $location, $sort, $pattern = [])
     {
         MenuCate::deleteAll(['app_id' => $appId, 'addon_name' => $info['name']]);
 
@@ -39,6 +41,7 @@ class MenuCateService extends Service
         $model->title = $info['title'];
         $model->icon = $icon;
         $model->pattern = $pattern;
+        $model->sort = $sort;
         if (!$model->save()) {
             $this->error($model);
         }

@@ -28,5 +28,6 @@ return [
         '/main/home',// 系统首页
         '/personal/index',// 个人信息
         '/personal/update-password',// 修改密码
+        '/theme/update', // 主题修改
     ],
 ];

@@ -39,10 +39,14 @@ class WithdrawTransferStatusEnum extends BaseEnum
 
     /**
      * @param $state
-     * @return int[]|void
+     * @return array|int[]
      */
     public static function stateMap($state)
     {
+        if ($state === null) {
+            return [];
+        }
+
         switch ($state) {
             // 待转账
             case self::AUDIT :

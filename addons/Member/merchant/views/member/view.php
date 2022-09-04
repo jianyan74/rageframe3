@@ -2,31 +2,35 @@
 
 use common\helpers\Url;
 use common\helpers\Html;
+use yii\grid\GridView;
 use common\enums\GenderEnum;
 use common\helpers\ImageHelper;
 use common\helpers\DebrisHelper;
+use common\enums\CreditsLogTypeEnum;
+
+$this->title = '个人资料';
 
 ?>
 
 <style>
-    .table {
+    .box-body .table {
         border: none;
         border-collapse: separate;
         border-spacing: 5px;
     }
-    .table > thead > tr > th,
-    .table > tbody > tr > th,
-    .table > tfoot > tr > th,
-    .table > thead > tr > td,
-    .table > tbody > tr > td,
-    .table > tfoot > tr > td {
+    .box-body .table > thead > tr > th,
+    .box-body .table > tbody > tr > th,
+    .box-body .table > tfoot > tr > th,
+    .box-body .table > thead > tr > td,
+    .box-body .table > tbody > tr > td,
+    .box-body .table > tfoot > tr > td {
         border-top: 0 solid #e4eaec;
         line-height: 1.42857;
         padding: 8px;
         vertical-align: middle;
     }
 
-    .table tr td {
+    .box-body .table tr td {
         padding: 4px 8px;
         height: 28px;
         line-height: 12px;
@@ -58,9 +62,9 @@ use common\helpers\DebrisHelper;
                         <td>会员ID：<?= $member->id ?></td>
                     </tr>
                     <tr>
-                        <td colspan="2">可用余额：<?= $member->account->user_money ?></td>
-                        <td>可用积分：<?= $member->account->user_integral ?></td>
-                        <td>成长值：<?= $member->account->user_growth ?></td>
+                        <td colspan="2">可用余额：<?= $member->account->user_money ?? '' ?></td>
+                        <td>可用积分：<?= $member->account->user_integral ?? '' ?></td>
+                        <td>成长值：<?= $member->account->user_growth ?? '' ?></td>
                     </tr>
                     <tr>
                         <td>会员级别：<?= $member->memberLevel->name ?? '' ?></td>
@@ -99,40 +103,59 @@ use common\helpers\DebrisHelper;
 </div>
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary card-outline card-outline-tabs">
-            <div class="card-header border-bottom-0">
-                <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="pill" href="#custom-1">余额日志</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href="#custom-2">积分日志</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href="#custom-3">成长值日志</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href="#custom-4">消费日志</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <div class="tab-content" id="custom-tabs-four-tabContent">
-                    <div class="tab-pane fade active show" id="custom-1">
-
-                    </div>
-                    <div class="tab-pane fade" id="custom-2">
-
-                    </div>
-                    <div class="tab-pane fade" id="custom-3">
-
-                    </div>
-                    <div class="tab-pane fade" id="custom-4">
-
-                    </div>
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="<?= $type == CreditsLogTypeEnum::USER_MONEY ? 'active' : ''; ?>"><a href="<?= Url::to(['view', 'id' => $id, 'type' => CreditsLogTypeEnum::USER_MONEY])?>"> 余额日志</a></li>
+                <li class="<?= $type == CreditsLogTypeEnum::USER_INTEGRAL ? 'active' : ''; ?>"><a href="<?= Url::to(['view', 'id' => $id, 'type' => CreditsLogTypeEnum::USER_INTEGRAL])?>"> 积分日志</a></li>
+                <li class="<?= $type == CreditsLogTypeEnum::USER_GROWTH ? 'active' : ''; ?>"><a href="<?= Url::to(['view', 'id' => $id, 'type' => CreditsLogTypeEnum::USER_GROWTH])?>"> 成长值日志</a></li>
+                <li class="<?= $type == CreditsLogTypeEnum::CONSUME_MONEY ? 'active' : ''; ?>"><a href="<?= Url::to(['view', 'id' => $id, 'type' => CreditsLogTypeEnum::CONSUME_MONEY])?>"> 消费日志</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane rf-auto">
+                    <?= GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'filterModel' => $searchModel,
+                        // 重新定义分页样式
+                        'tableOptions' => ['class' => 'table table-hover'],
+                        'columns' => [
+                            [
+                                'class' => 'yii\grid\SerialColumn',
+                            ],
+                            [
+                                'label' => '变动数量',
+                                'attribute' => 'num',
+                                'format' => 'raw',
+                                'headerOptions' => ['class' => 'text-align-center'],
+                                'contentOptions' => ['class' => 'text-align-center'],
+                                'value' => function ($model) {
+                                    return $model->num > 0 ? "<span class='green'>$model->num</span>" : "<span class='red'>$model->num</span>";
+                                },
+                            ],
+                            [
+                                'label' => '变动后数量',
+                                'attribute' => 'new_num',
+                                'headerOptions' => ['class' => 'text-align-center'],
+                                'contentOptions' => ['class' => 'text-align-center'],
+                                'filter' => Html::activeTextInput($searchModel, 'new_num', [
+                                        'class' => 'form-control',
+                                        'placeholder' => '变动后数量'
+                                    ]
+                                ),
+                                'value' => function ($model) {
+                                    // return $model->old_num . $operational . abs($model->num) . '=' . $model->new_num;
+                                    return $model->new_num;
+                                },
+                            ],
+                            'remark',
+                            [
+                                'attribute' => 'created_at',
+                                'filter' => false, //不显示搜索框
+                                'format' => ['date', 'php:Y-m-d H:i:s'],
+                            ],
+                        ],
+                    ]); ?>
                 </div>
             </div>
-            <!-- /.card -->
         </div>
     </div>
 </div>

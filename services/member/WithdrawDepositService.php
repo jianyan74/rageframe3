@@ -3,6 +3,8 @@
 namespace services\member;
 
 use Yii;
+use yii\base\InvalidConfigException;
+use yii\db\ActiveRecord;
 use yii\web\NotFoundHttpException;
 use yii\web\UnprocessableEntityHttpException;
 use common\components\Service;
@@ -11,6 +13,12 @@ use common\enums\TransferTypeEnum;
 use common\enums\WithdrawTransferStatusEnum;
 use common\helpers\ArrayHelper;
 use common\models\member\WithdrawDeposit;
+use EasyWeChat\Kernel\Exceptions\InvalidArgumentException;
+use EasyWeChat\Kernel\Exceptions\RuntimeException;
+use EasyWeChat\Kernel\Support\Collection;
+use GuzzleHttp\Exception\GuzzleException;
+use Omnipay\Common\Exception\InvalidRequestException;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class WithdrawDepositService
@@ -49,24 +57,30 @@ class WithdrawDepositService extends Service
      *
      * @param WithdrawDeposit $model
      * @throws UnprocessableEntityHttpException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function wechatToBalance(WithdrawDeposit $model)
     {
-        $result = Yii::$app->wechat->payment->transfer->toBalance([
-            'partner_trade_no' => $model->withdraw_no, // 商户订单号，需保持唯一性(只能是字母或者数字，不能包含有符号)
-            'openid' => $model->account_number,
-            'check_name' => 'FORCE_CHECK', // NO_CHECK：不校验真实姓名, FORCE_CHECK：强校验真实姓名
-            're_user_name' => $model->realname, // 如果 check_name 设置为FORCE_CHECK，则必填用户真实姓名
-            'amount' => $model->cash * 100, // 企业付款金额，单位为分
-            'desc' => $model->memo, // 企业付款操作说明信息。必填
-        ]);
+        $params = [
+            'out_batch_no' => $model->batch_no, // 商户系统内部的商家批次单号，要求此参数只能由数字、大小写字母组成，在商户系统内部唯一
+            'batch_name' => '批量转账-'.$model->realname, // 转账标题
+            'batch_remark' => '批量转账-'.$model->realname, // 转账备注
+            'total_amount' => $model->cash * 100, // 转账总金额
+            'total_num' => 1, // 转账总金额
+            'transfer_detail_list' => [
+                [
+                    'out_detail_no' => $model->withdraw_no, // 商户订单号
+                    'transfer_amount' => $model->cash * 100, // 企业付款金额，单位为分
+                    'transfer_remark' => $model->memo, // 企业付款操作说明信息。必填
+                    'openid' => $model->account_number,
+                    'user_name' => $model->realname, // 明细转账金额 >= 2,000，收款用户姓名必填
+                ],
+            ],
+        ];
 
-        if ($result['return_code'] != 'SUCCESS' || $result['result_code'] != 'SUCCESS') {
-            throw new UnprocessableEntityHttpException($result['err_code_des']);
-        }
+        $result = Yii::$app->pay->wechat->transfer($params);
 
         $model->transfer_no = $result['payment_no'];
         $model->transfer_account_no = $result['mch_id'];
@@ -79,11 +93,11 @@ class WithdrawDepositService extends Service
      * 小程序提现
      *
      * @param WithdrawDeposit $model
-     * @return array|\EasyWeChat\Kernel\Support\Collection|object|\Psr\Http\Message\ResponseInterface|string
+     * @return array|Collection|object|ResponseInterface|string
      * @throws UnprocessableEntityHttpException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function wechatMiniProgramToBalance(WithdrawDeposit $model)
     {
@@ -100,10 +114,10 @@ class WithdrawDepositService extends Service
      *
      * @param WithdrawDeposit $model
      * @throws UnprocessableEntityHttpException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
-     * @throws \EasyWeChat\Kernel\Exceptions\RuntimeException
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws RuntimeException
+     * @throws GuzzleException
      */
     public function wechatToBankCard(WithdrawDeposit $model)
     {
@@ -138,16 +152,18 @@ class WithdrawDepositService extends Service
      *
      * @param WithdrawDeposit $model
      * @return mixed
-     * @throws \Omnipay\Common\Exception\InvalidRequestException
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidRequestException
+     * @throws InvalidConfigException
      */
     public function alipayToAccount(WithdrawDeposit $model)
     {
         $result = Yii::$app->pay->alipay->transfer([
             'out_biz_no' => $model->withdraw_no,
-            'payee_account' => $model->account_number,
-            'amount' => $model->cash,
-            'payee_real_name' => $model->realname, // 非必填
+            'trans_amount' => $model->cash,
+            'payee_info' => [
+                'identity' => $model->account_number, // 提现账号
+                'name' => $model->realname, // 提现金额
+            ],
             'remark' => $model->memo, // 非必填
         ]);
 
@@ -181,7 +197,7 @@ class WithdrawDepositService extends Service
      * @return mixed
      * @throws NotFoundHttpException
      * @throws UnprocessableEntityHttpException
-     * @throws \Omnipay\Common\Exception\InvalidRequestException
+     * @throws InvalidRequestException
      */
     public function queryByWithdrawNo($withdraw_no, $allReturn = false)
     {
@@ -214,6 +230,7 @@ class WithdrawDepositService extends Service
                 if ($result['return_code'] != 'SUCCESS' || $result['result_code'] != 'SUCCESS') {
                     throw new UnprocessableEntityHttpException($result['reason']);
                 }
+
                 return $this->wechatStatus[$result['status']];
                 break;
             case TransferTypeEnum::WECHAT_BALANCE :
@@ -261,7 +278,7 @@ class WithdrawDepositService extends Service
 
     /**
      * @param $withdraw_no
-     * @return array|\yii\db\ActiveRecord|null|WithdrawDeposit
+     * @return array|ActiveRecord|null|WithdrawDeposit
      */
     public function findByWithdrawNo($withdraw_no)
     {
@@ -276,16 +293,16 @@ class WithdrawDepositService extends Service
     public function getApplyCount($merchant_id = '')
     {
         return WithdrawDeposit::find()
-            ->select('id')
-            ->where(['>=', 'status', StatusEnum::DISABLED])
-            ->andWhere(['transfer_status' => WithdrawTransferStatusEnum::APPLY])
-            ->andFilterWhere(['id' => $merchant_id])
-            ->count() ?? 0;
+                ->select('id')
+                ->where(['>=', 'status', StatusEnum::DISABLED])
+                ->andWhere(['transfer_status' => WithdrawTransferStatusEnum::APPLY])
+                ->andFilterWhere(['id' => $merchant_id])
+                ->count() ?? 0;
     }
 
     /**
      * @param $id
-     * @return array|\yii\db\ActiveRecord|null|WithdrawDeposit
+     * @return array|ActiveRecord|null|WithdrawDeposit
      */
     public function findById($id)
     {

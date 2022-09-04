@@ -6,6 +6,13 @@ use common\helpers\StringHelper;
 
 ?>
 
+<footer class="rf-main-footer text-center">
+    <div class="pb-2">
+        当前版本: <?= Yii::$app->services->base->version(); ?>
+    </div>
+    <?= Yii::$app->services->config->backendConfig('web_copyright'); ?>
+</footer>
+
 <!--ajax模拟框加载-->
 <div class="modal fade" id="ajaxModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">

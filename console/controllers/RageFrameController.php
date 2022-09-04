@@ -9,6 +9,8 @@ use yii\console\Controller;
 /**
  * 在线更新
  *
+ * php ./yii rage-frame/update
+ *
  * Class RageFrameController
  * @package console\controllers
  * @author jianyan74 <751393839@qq.com>

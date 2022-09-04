@@ -94,13 +94,13 @@ class UploadForm extends \common\models\common\Attachment
      */
     public function rules()
     {
-        return ArrayHelper::merge(parent::rules(), [
+        return ArrayHelper::merge([
             [['fileName', 'fileSource'], 'required'],
             ['fileSource', 'in', 'range' => ['url', 'file', 'base64']],
             [['fileSource'], 'verifyFileSource'],
             [['guid', 'fileData'], 'string'],
             [['thumb', 'chunks', 'chunk', 'image', 'compress', 'merge', 'writeTable'], 'safe'],
-        ]);
+        ], parent::rules());
     }
 
     /**
@@ -156,7 +156,7 @@ class UploadForm extends \common\models\common\Attachment
 
         $this->extension = $file->getExtension();
         $this->size = $file->size;
-        !$this->name && $this->name = $file->getBaseName();
+        empty($this->name) && $this->name = $file->getBaseName();
     }
 
     /**

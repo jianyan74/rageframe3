@@ -27,6 +27,11 @@ class CreditsLogTypeEnum extends BaseEnum
      */
     public static function getMap(): array
     {
-        return [];
+        return [
+            self::USER_MONEY => '余额日志',
+            self::USER_INTEGRAL => '积分日志',
+            self::USER_GROWTH => '成长值日志',
+            self::CONSUME_MONEY => '消费日志',
+        ];
     }
 }

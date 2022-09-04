@@ -4,8 +4,8 @@ namespace common\traits;
 
 use Yii;
 use yii\helpers\Json;
+use yii\web\NotFoundHttpException;
 use yii\web\UnprocessableEntityHttpException;
-use Omnipay\WechatPay\Helper;
 use common\enums\StatusEnum;
 use common\helpers\ArrayHelper;
 use common\helpers\FileHelper;
@@ -24,50 +24,31 @@ use common\helpers\ResultHelper;
 trait PayNotify
 {
     /**
-     * 公用支付回调 - 支付宝
+     * 支付宝
      *
-     * @throws \Omnipay\Common\Exception\InvalidRequestException
-     * @throws \yii\base\InvalidConfigException
+     * @return void
      */
     public function actionAlipay()
     {
-        // 写入配置
-        if (Yii::$app->services->devPattern->isSAAS()) {
-            if ($logData = Yii::$app->services->extendPay->findByOutTradeNo(Yii::$app->request->post('out_trade_no'))) {
-                Yii::$app->services->merchant->setId($logData['merchant_id']);
-                $request = Yii::$app->pay->alipay([
-                    'ali_public_key' => Yii::$app->services->config->merchantConfig('alipay_notification_cert_path'),
-                ])->notify();
-            }
-        } else {
-            $request = Yii::$app->pay->alipay([
-                'ali_public_key' => Yii::$app->services->config->backendConfig('alipay_notification_cert_path'),
-            ])->notify();
-        }
-
         try {
-            /** @var \Omnipay\Alipay\Responses\AopCompletePurchaseResponse $response */
-            $response = $request->send();
-            if ($response->isPaid()) {
-                $message = Yii::$app->request->post();
-                $message['pay_fee'] = $message['total_amount'];
-                $message['transaction_id'] = $message['trade_no'];
-                $message['mch_id'] = $message['auth_app_id'];
+            $result = Yii::$app->pay->alipay->callback();
 
-                // 日志记录
-                $logPath = $this->getLogPath('alipay');
-                FileHelper::writeLog($logPath, Json::encode(ArrayHelper::toArray($message)));
+            $message = Yii::$app->request->post();
+            $message['pay_fee'] = $message['total_amount'];
+            $message['transaction_id'] = $message['trade_no'];
+            $message['mch_id'] = $message['auth_app_id'];
 
-                if ($this->pay($message)) {
-                    die('success');
-                }
+            // 日志记录
+            FileHelper::writeLog($this->getLogPath('alipay'), Json::encode(ArrayHelper::toArray($message)));
+
+            if ($this->pay($message)) {
+                die('success');
             }
 
             die('fail');
         } catch (\Exception $e) {
             // 记录报错日志
-            $logPath = $this->getLogPath('error');
-            FileHelper::writeLog($logPath, $e->getMessage());
+            FileHelper::writeLog($this->getLogPath('error'), $e->getMessage());
             die('fail'); // 通知响应
         }
     }
@@ -79,31 +60,22 @@ trait PayNotify
      */
     public function actionWechat()
     {
-        // 写入配置
-        if (Yii::$app->services->devPattern->isSAAS()) {
-            $message = Helper::xml2array(file_get_contents('php://input'));
-            if ($logData = Yii::$app->services->extendPay->findByOutTradeNo($message['out_trade_no'])) {
-                Yii::$app->services->merchant->setId($logData['merchant_id']);
-            }
-        }
+        try {
+            $result = Yii::$app->pay->wechat->callback();
+            // 记录日志
+            FileHelper::writeLog($this->getLogPath('wechat'), Json::encode(ArrayHelper::toArray($result)));
 
-        $response = Yii::$app->pay->wechat->notify();
-        $message = $response->getRequestData();
-        $logPath = $this->getLogPath('wechat');
-        FileHelper::writeLog($logPath, Json::encode(ArrayHelper::toArray($message)));
-
-        if ($response->isPaid()) {
-            //pay success 注意微信会发二次消息过来 需要判断是通知还是回调
-            if ($this->pay($message)) {
+            if ($this->pay($result)) {
                 return WechatHelper::success();
             }
-
-            return WechatHelper::fail();
-        } else {
-            FileHelper::writeLog($this->getLogPath('wechat-error-sign'), Json::encode($response->getData()) . date('Y-m-d H:i:s'));
+        } catch (\Exception $e) {
+            // 记录日志
+            FileHelper::writeLog($this->getLogPath('wechat-error-sign'), Json::encode($e->getMessage()).date('Y-m-d H:i:s'));
 
             return WechatHelper::fail();
         }
+
+        return $pay->success();
     }
 
     /**
@@ -233,7 +205,7 @@ trait PayNotify
      * 支付回调
      *
      * @param PayLog $payLog
-     * @throws \yii\web\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     public function notify(PayLog $payLog)
     {
@@ -246,6 +218,6 @@ trait PayNotify
      */
     protected function getLogPath($type)
     {
-        return Yii::getAlias('@runtime') . "/pay-logs/" . date('Y_m_d') . '/' . $type . '.txt';
+        return Yii::getAlias('@runtime')."/pay-logs/".date('Y_m_d').'/'.$type.'.txt';
     }
 }

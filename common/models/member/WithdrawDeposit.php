@@ -13,6 +13,7 @@ use common\traits\HasOneMerchant;
  * @property int|null $member_id 会员id
  * @property int|null $member_type 1:会员;2:后台管理员;3:商家管理员
  * @property string|null $withdraw_no 提现流水号
+ * @property string|null $batch_no 批量转账单号
  * @property string $realname 真实姓名
  * @property string $mobile 手机号
  * @property string|null $account_number 银行账号
@@ -67,7 +68,7 @@ class WithdrawDeposit extends \common\models\base\BaseModel
         return [
             [['merchant_id', 'member_id', 'member_type', 'account_type', 'transfer_type', 'transfer_status', 'transfer_time', 'payment_time', 'audit_time', 'is_addon', 'status', 'created_at', 'updated_at'], 'integer'],
             [['cash', 'transfer_money', 'service_charge', 'service_charge_rate', 'service_charge_single', 'service_charge_total'], 'number', 'min' => 0],
-            [['withdraw_no', 'bank_name', 'transfer_no', 'transfer_account_no', 'addon_name'], 'string', 'max' => 100],
+            [['withdraw_no', 'batch_no', 'bank_name', 'transfer_no', 'transfer_account_no', 'addon_name'], 'string', 'max' => 100],
             [['realname', 'account_number', 'transfer_name'], 'string', 'max' => 50],
             [['mobile', 'identity_card'], 'string', 'max' => 20],
             [['account_type_name'], 'string', 'max' => 30],
@@ -85,6 +86,7 @@ class WithdrawDeposit extends \common\models\base\BaseModel
             'merchant_id' => '商户id',
             'member_id' => '会员id',
             'member_type' => '1:会员;2:后台管理员;3:商家管理员',
+            'batch_no' => '批量转账单号',
             'withdraw_no' => '提现流水号',
             'realname' => '真实姓名',
             'mobile' => '手机号',

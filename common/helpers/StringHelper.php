@@ -334,6 +334,63 @@ class StringHelper extends BaseStringHelper
     }
 
     /**
+     * 清除Html & Script
+     *
+     * @param $document
+     * @return array|string|string[]|null
+     */
+    public static function replaceHtmlAndJs($document)
+    {
+        $document = trim($document);
+        if (strlen($document) <= 0) {
+            return $document;
+        }
+        $search = [
+            "'<script[^>]*?>.*?</script>'si", // 去掉 javascript
+            "'<[\/\!]*?[^<>]*?>'si", // 去掉 HTML 标记
+            "'([\r\n])[\s]+'", // 去掉空白字符
+            "'&(quot|#34);'i", // 替换 HTML 实体
+            "'&(amp|#38);'i",
+            "'&(lt|#60);'i",
+            "'&(gt|#62);'i",
+            "'&(nbsp|#160);'i",
+        ];
+
+        $replace = [
+            '',
+            '',
+            "\\1",
+            "\"",
+            "&",
+            "<",
+            ">",
+            " ",
+        ];
+
+        return preg_replace($search, $replace, $document);
+    }
+
+    /**
+     * 匹配出内容的所有图片
+     *
+     * @param $content
+     * @return array
+     */
+    public static function getImages($content): array
+    {
+        preg_match_all('/<\s*img\s+[^>]*?src\s*=\s*(\'|\")(.*?)\\1[^>]*?\/?\s*>/i', $content, $matches);
+        if (empty($matches[0])) {
+            return [];
+        }
+        $imgs = [];
+        foreach ($matches[0] as $key => $match) {
+            $imgs[] = ['html' => $matches[0][$key], 'src' => $matches[2][$key]];
+        }
+
+        return $imgs;
+    }
+
+    /**
      * 去除内容的注释
      *
      * @param $content

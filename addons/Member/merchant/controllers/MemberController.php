@@ -6,9 +6,11 @@ use Yii;
 use common\models\base\SearchModel;
 use common\enums\StatusEnum;
 use common\enums\MemberTypeEnum;
+use common\enums\CreditsLogTypeEnum;
 use common\forms\MemberForm as Member;
 use common\traits\MemberMobileSelect;
 use common\traits\MerchantCurd;
+use common\models\member\CreditsLog;
 use addons\Member\merchant\forms\RechargeForm;
 use addons\Member\merchant\forms\MemberEditForm;
 use addons\Member\merchant\forms\MemberCreateForm;
@@ -122,8 +124,33 @@ class MemberController extends BaseController
      */
     public function actionView($id)
     {
+        $type = Yii::$app->request->get('type', CreditsLogTypeEnum::USER_MONEY);
+
+        $searchModel = new SearchModel([
+            'model' => CreditsLog::class,
+            'scenario' => 'default',
+            'partialMatchAttributes' => [], // 模糊查询
+            'defaultOrder' => [
+                'id' => SORT_DESC
+            ],
+            'pageSize' => $this->pageSize
+        ]);
+
+        $dataProvider = $searchModel
+            ->search(Yii::$app->request->queryParams);
+        $dataProvider->query
+            ->andWhere(['member_id' => $id])
+            ->andWhere(['>=', 'status', StatusEnum::DISABLED])
+            ->andWhere(['type' => $type, 'member_type' => MemberTypeEnum::MEMBER])
+            ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+            ->with(['member']);
+
         return $this->render($this->action->id, [
             'member' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'type' => $type,
+            'id' => $id,
         ]);
     }
 

@@ -8,6 +8,7 @@ return [
         'menu' => [
             'location' => 'default', // default:系统顶部菜单;addons:应用中心菜单
             'icon' => 'fa fa-user',
+            'sort' => 0, // 自定义排序
             'pattern' => [], // 可见开发模式 b2c、b2b2c、saas 不填默认全部可见
         ],
         // 子模块配置

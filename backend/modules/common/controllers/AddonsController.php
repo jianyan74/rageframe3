@@ -151,6 +151,7 @@ class AddonsController extends BaseController
                         $config->info,
                         $defaultConfig[$appId]['menu']['icon'],
                         $defaultConfig[$appId]['menu']['location'],
+                        $defaultConfig[$appId]['menu']['sort'] ?? 999,
                         $defaultConfig[$appId]['menu']['pattern'] ?? []
                     );
                     Yii::$app->services->menu->delByCate($cate);

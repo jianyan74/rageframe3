@@ -6,6 +6,7 @@ use common\helpers\ArrayHelper;
 use common\helpers\ImageHelper;
 use common\enums\AppEnum;
 use common\widgets\notify\Notify;
+use common\enums\ThemeLayoutEnum;
 
 $roles = Yii::$app->services->rbacAuthRole->getRoles();
 $menuCates = Yii::$app->services->menuCate->findAllInAuth(Yii::$app->id)
@@ -33,6 +34,15 @@ $menuCates = Yii::$app->services->menuCate->findAllInAuth(Yii::$app->id)
         <li class="nav-item dropdown hide-menu hide">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fas fa-outdent"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu"></div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="#">
+                <?= Html::dropDownList('theme-layout', Yii::$app->params['theme']['layout'], ThemeLayoutEnum::getMap(), [
+                    'id' => 'rfTheme',
+                    'class' => 'form-control',
+                ]);?>
             </a>
             <div class="dropdown-menu dropdown-menu"></div>
         </li>
@@ -69,18 +79,18 @@ $menuCates = Yii::$app->services->menuCate->findAllInAuth(Yii::$app->id)
                 </a>
                 <div class="dropdown-divider"></div>
                 <?php if (Yii::$app->id == AppEnum::BACKEND) { ?>
-                <a href="<?= BaseUrl::to(['main/clear-cache'])?>" class="dropdown-item text-center dropdown-footer J_menuItem">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <div class="media-body" onclick="$('body').click();">
-                            <h4 class="text-sm">
-                                清理缓存
-                            </h4>
+                    <a href="<?= BaseUrl::to(['main/clear-cache'])?>" class="dropdown-item text-center dropdown-footer J_menuItem">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <div class="media-body" onclick="$('body').click();">
+                                <h4 class="text-sm">
+                                    清理缓存
+                                </h4>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
                 <?php } ?>
                 <span href="#" class="dropdown-item dropdown-footer purple text-sm">
                     <?php if(in_array(Yii::$app->user->id, Yii::$app->params['adminAccount'])){ ?>

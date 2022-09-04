@@ -61,6 +61,7 @@ use common\components\Service;
  * @property \services\common\ConfigService $config 配置
  * @property \services\common\ConfigCateService $configCate 配置分类
  * @property \services\common\DevPatternService $devPattern 开发模式
+ * @property \services\common\ThemeService $theme 主题
  * @property \services\common\MailerService $mailer 邮件
  * @property \services\common\MenuService $menu 菜单
  * @property \services\common\MenuCateService $menuCate 菜单分类
@@ -136,6 +137,7 @@ class Application extends Service
         'notifyAnnounce' => 'services\common\NotifyAnnounceService',
         'notifyConfig' => 'services\common\NotifyConfigService',
         'devPattern' => 'services\common\DevPatternService',
+        'theme' => 'services\common\ThemeService',
         'mailer' => [
             'class' => 'services\common\MailerService',
             'queueSwitch' => false, // 是否丢进队列

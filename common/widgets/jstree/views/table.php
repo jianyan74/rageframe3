@@ -288,7 +288,7 @@ JS
         layer.load(2);
 
         isNodeNewRecord = false;
-        $('.jstree-table-id').text('(ID - ' + id + ')');
+        $('.jstree-table-id').html('<small>ID: ' + id + '</small>');
 
         $.ajax({
             type: "get",
@@ -372,7 +372,7 @@ JS
                             "text": res.title // 节点文本
                         });
 
-                        $('.jstree-table-id').text('- ID: ' + res.id);
+                        $('.jstree-table-id').html('<small>ID: ' + res.id + '</small>');
                     }
 
                     swal("操作成功", "小手一抖就打开了一个框", "success");

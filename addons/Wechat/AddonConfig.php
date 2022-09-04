@@ -19,7 +19,7 @@ class AddonConfig extends BaseAddonConfig
      */
     public $info = [
         'name' => 'Wechat',
-        'title' => '微信公众号',
+        'title' => '微信',
         'brief_introduction' => '微信公众号基础功能管理',
         'description' => '',
         'author' => '简言',

@@ -8,6 +8,7 @@ return [
         'menu' => [
             'location' => 'default', // default:系统顶部菜单;addons:应用中心菜单
             'icon' => 'fa fa-puzzle-piece',
+            'sort' => 0, // 自定义排序
             'pattern' => ['saas'],
         ],
         // 子模块配置

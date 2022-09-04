@@ -59,7 +59,7 @@ function autoFontColor() {
 
 function autoChangeMenu(leftAuto = false) {
     // 改变框架高度
-    var mainContent = window.innerHeight - 153;
+    var mainContent = window.innerHeight - 99;
     if (config.tag != true || config.isMobile == true) {
         mainContent = mainContent + 40;
     }
@@ -221,6 +221,27 @@ $(document).on("click", ".rfTopMenu", function () {
         $('.rfLeftMenu').addClass('hide');
         $('.rfLeftMenu-' + id).removeClass('hide');
         $(this).addClass('rfTopMenuHover');
+    }
+
+    // 无标签页面
+    if (config.tag != true) {
+        // 自动打开菜单二级
+        $('.rfLeftMenu-' + id).each(function (index, item) {
+            if (index === 0 && !$(item).hasClass('menu-open')) {
+                $(item).find('a').eq(0).trigger('click');
+                // 二级菜单打开
+                var itemUlTwo = $(item).find('a').eq(0).next('ul');
+                if (itemUlTwo.length > 0) {
+                    $(itemUlTwo).find('a').eq(0).trigger('click');
+                }
+
+                // 判断三级
+                var itemThree = $(itemUlTwo).find('a').eq(0).next('ul');
+                if (itemThree.length > 0) {
+                    $(itemThree).find('a').eq(0).trigger('click');
+                }
+            }
+        });
     }
 });
 

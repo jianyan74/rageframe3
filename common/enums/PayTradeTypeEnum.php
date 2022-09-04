@@ -13,19 +13,19 @@ class PayTradeTypeEnum extends BaseEnum
     const DEFAULT = 'default';
 
     /****************** 微信 *****************/
-    const WECHAT_JS = 'js';
+    const WECHAT_MP = 'mp';
+    const WECHAT_MINI = 'mini';
     const WECHAT_APP = 'app';
-    const WECHAT_NATIVE = 'native';
+    const WECHAT_SCAN = 'scan';
     const WECHAT_POS = 'pos';
-    const WECHAT_M_WEB = 'mweb';
-    const WECHAT_MINI_PROGRAM = 'mini_program';
+    const WECHAT_WAP = 'wap';
 
     /****************** 支付宝 *****************/
-    const ALI_PC = 'pc';
+    const ALI_WEB = 'web';
     const ALI_APP = 'app';
-    const ALI_F2F = 'f2f';
+    const ALI_SCAN = 'scan';
+    const ALI_POS = 'pos';
     const ALI_WAP = 'wap';
-    const ALI_CAPTURE = 'capture';
 
     /****************** 银联 *****************/
     const UNION_HTML = 'html';
@@ -45,12 +45,12 @@ class PayTradeTypeEnum extends BaseEnum
     public static function getWechatMap(): array
     {
         return [
-            self::WECHAT_JS => 'H5',
+            self::WECHAT_MP => '公众号',
             self::WECHAT_APP => 'app',
-            self::WECHAT_NATIVE => '扫码',
-            self::WECHAT_POS => '刷卡',
-            self::WECHAT_M_WEB => '手机',
-            self::WECHAT_MINI_PROGRAM => '小程序',
+            self::WECHAT_SCAN => '二维码扫码',
+            self::WECHAT_POS => '二维码收款',
+            self::WECHAT_WAP => 'H5',
+            self::WECHAT_MINI => '小程序',
         ];
     }
 
@@ -60,11 +60,11 @@ class PayTradeTypeEnum extends BaseEnum
     public static function getAliMap(): array
     {
         return [
-            self::ALI_PC => 'PC',
+            self::ALI_WEB => '网页',
             self::ALI_APP => 'app',
-            self::ALI_F2F => '面对面二维码',
+            self::ALI_SCAN => '二维码扫码',
             self::ALI_WAP => '手机',
-            self::ALI_CAPTURE => '面对面收款',
+            self::ALI_POS => '二维码收款',
         ];
     }
 

@@ -7,7 +7,6 @@ use yii\web\UnprocessableEntityHttpException;
 use common\enums\PayTypeEnum;
 use common\enums\StatusEnum;
 use common\enums\PayTradeTypeEnum;
-use common\helpers\ArrayHelper;
 use common\helpers\BcHelper;
 use common\helpers\StringHelper;
 use common\models\extend\PayLog;
@@ -33,23 +32,35 @@ class PayService
      */
     public function wechat(PayLog $payLog)
     {
-        // 小程序支付
-        if ($payLog->trade_type == 'mini_program') {
-            return $this->wechatMp($payLog);
-        }
-
-        // 生成订单
         $order = [
-            'body' => $payLog->body, // 内容
             'out_trade_no' => $payLog->out_trade_no, // 订单号
-            'total_fee' => $payLog->total_fee * 100,
-            'notify_url' => $payLog->notify_url, // 回调地址
-            'detail' => $payLog->detail,
+            'description' => $payLog->body, // 内容
+            'amount' => [
+                'total' => $payLog->total_fee * 100,
+            ],
+            'notify_url' => $payLog->notify_url, // 通知地址
         ];
 
-        //  判断如果是js支付
-        $payLog->trade_type == PayTradeTypeEnum::WECHAT_JS && $order['openid'] = $payLog->openid;
-        //  判断如果是刷卡支付
+        //  判断如果是公众号/小程序支付
+        if (in_array($payLog->trade_type, [PayTradeTypeEnum::WECHAT_MP, PayTradeTypeEnum::WECHAT_MINI])) {
+            $order['payer'] = [
+                'openid' => $payLog->openid
+            ];
+        }
+
+        //  判断如果是手机H5支付
+        if (in_array($payLog->trade_type, [PayTradeTypeEnum::WECHAT_WAP])) {
+            $order['scene_info'] = [
+                'payer_client_ip' => Yii::$app->request->userIP,
+                'h5_info' => [
+                    'type' => 'Wap', // iOS, Android, Wap
+                    // 'bundle_id' => '', // iOS平台BundleID
+                    // 'package_name' => '', // Android平台PackageName
+                ],
+            ];
+        }
+
+        //  判断如果是刷卡支付(V3暂时不支持)
         if ($payLog->trade_type == PayTradeTypeEnum::WECHAT_POS) {
             $payLog->auth_code = StringHelper::replace('\r', '', $payLog->auth_code);
             $payLog->auth_code = StringHelper::replace('\n', '', $payLog->auth_code);
@@ -58,14 +69,8 @@ class PayService
 
         // 交易类型
         $tradeType = $payLog->trade_type;
-        $result = Yii::$app->pay->wechat->$tradeType($order);
-        if (empty($result)) {
-            $debug = Yii::$app->pay->wechat->$tradeType($order, true);
-            Yii::$app->services->log->push(500, 'wechatPayError', $debug);
-            return $debug;
-        }
 
-        return $result;
+        return Yii::$app->pay->wechat->$tradeType($order);
     }
 
     /**
@@ -80,9 +85,9 @@ class PayService
         // 配置
         $config = [
             'notify_url' => $payLog->notify_url, // 支付通知回调地址
-            'return_url' => $payLog->return_url, // 买家付款成功跳转地址
-            'sandbox' => false,
         ];
+        // 买家付款成功跳转地址
+        !empty($payLog->return_url) && $config['return_url'] = $payLog->return_url;
 
         // 生成订单
         $order = [
@@ -91,13 +96,8 @@ class PayService
             'subject' => $payLog->body,
         ];
 
-        // 面对面二维码
-        if ($payLog->trade_type == PayTradeTypeEnum::ALI_F2F) {
-            return Yii::$app->pay->alipay($config)->f2f($order);
-        }
-
         // 面对面收款
-        if ($payLog->trade_type == PayTradeTypeEnum::ALI_CAPTURE) {
+        if ($payLog->trade_type == PayTradeTypeEnum::ALI_POS) {
             $order['scene'] = 'bar_code';
             $payLog->auth_code = StringHelper::replace('\r', '', $payLog->auth_code);
             $payLog->auth_code = StringHelper::replace('\n', '', $payLog->auth_code);
@@ -113,7 +113,7 @@ class PayService
     }
 
     /**
-     * 银联支付
+     * 银联支付(已弃用)
      *
      * @param PayForm $payForm
      * @return mixed
@@ -165,42 +165,6 @@ class PayService
         ];
 
         return Yii::$app->pay->byteDance($config)->create($order);
-    }
-
-    /**
-     * @param PayForm $payForm
-     * @param $baseOrder
-     * @return array
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
-     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function wechatMp(PayLog $payLog)
-    {
-        // 设置appid
-        Yii::$app->params['wechatPaymentConfig'] = ArrayHelper::merge(Yii::$app->params['wechatPaymentConfig'], [
-            'app_id' => Yii::$app->services->config->backendConfig('miniprogram_appid'),
-        ]);
-
-        $orderData = [
-            'trade_type' => 'JSAPI',
-            'body' => $payLog->body,
-            'detail' => $payLog->detail,
-            'notify_url' => $payLog->notify_url, // 支付结果通知网址，如果不设置则会使用配置里的默认地址
-            'out_trade_no' => $payLog->out_trade_no, // 支付
-            'total_fee' => $payLog->total_fee * 100,
-            'openid' => $payLog->openid, // trade_type=JSAPI，此参数必传，用户在商户appid下的唯一标识，
-        ];
-
-        $payment = Yii::$app->wechat->payment;
-        $result = $payment->order->unify($orderData);
-        if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS') {
-            return $payment->jssdk->sdkConfig($result['prepay_id']);
-        }
-
-        Yii::$app->services->log->push(500, 'wechatMpPayError', $result);
-
-        return $result;
     }
 
     /**
@@ -316,7 +280,9 @@ class PayService
                         'out_trade_no' => $model->out_trade_no,
                         'transaction_id' => $model->transaction_id, //The wechat trade no
                         'out_refund_no' => $refund_sn,
-                        'total_fee' => $total_fee * 100, //=0.01
+                        'amount' => [
+                            'refund' => $total_fee * 100
+                        ],
                         'refund_fee' => $money * 100, //=0.01
                     ];
 

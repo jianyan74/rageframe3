@@ -2,7 +2,6 @@
 
 namespace services\common;
 
-use common\enums\DevPatternEnum;
 use Yii;
 use yii\helpers\Json;
 use common\enums\StatusEnum;
@@ -48,6 +47,17 @@ class MenuCateService extends Service
         }
 
         return $model;
+    }
+
+    /**
+     * 更新状态
+     *
+     * @param $addon_name
+     * @return void
+     */
+    public function updateStatusByAddonName($addon_name, $status)
+    {
+        MenuCate::updateAll(['status' => $status], ['addon_name' => $addon_name, 'is_addon' => StatusEnum::ENABLED]);
     }
 
     /**

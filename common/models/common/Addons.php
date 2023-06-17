@@ -99,6 +99,9 @@ class Addons extends \common\models\base\BaseModel
     {
         // 写入缓存数据
          Yii::$app->services->addons->updateCacheByName($this->name);
+        // 更新菜单和菜单分类显示
+        Yii::$app->services->menu->updateStatusByAddonName($this->name, $this->status);
+        Yii::$app->services->menuCate->updateStatusByAddonName($this->name, $this->status);
 
         parent::afterSave($insert, $changedAttributes);
     }

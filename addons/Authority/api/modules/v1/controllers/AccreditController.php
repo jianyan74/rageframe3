@@ -30,8 +30,6 @@ class AccreditController extends OnAuthController
      */
     public function actionVerify()
     {
-        return ResultHelper::json(422, '系统未授权, 请联系管理员');
-
         $url = Yii::$app->request->post('url');
         if (empty($url)) {
             return ResultHelper::json(422, '系统未授权, 请联系管理员');

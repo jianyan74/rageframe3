@@ -39,6 +39,17 @@ class MenuService extends Service
     }
 
     /**
+     * 更新状态
+     *
+     * @param $addon_name
+     * @return void
+     */
+    public function updateStatusByAddonName($addon_name, $status)
+    {
+        Menu::updateAll(['status' => $status], ['addon_name' => $addon_name, 'is_addon' => StatusEnum::ENABLED]);
+    }
+
+    /**
      * @param array $menus
      * @param MenuCate $cate
      * @param int $pid

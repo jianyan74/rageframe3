@@ -308,7 +308,9 @@ class ExcelHelper
     {
         $newField = explode('.', $field);
         if (count($newField) == 1) {
-            return $row[$field] ?? '';
+            $result = $row[$field] ?? '';
+
+            return is_array($result) ? json_encode($result) : $result;
         }
 
         foreach ($newField as $item) {
@@ -319,6 +321,6 @@ class ExcelHelper
             }
         }
 
-        return is_array($row) ? false : $row;
+        return is_array($row) ? json_encode($row) : $row;
     }
 }

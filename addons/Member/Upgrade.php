@@ -10,7 +10,8 @@ use common\interfaces\AddonWidget;
  * 升级数据库
  *
  * Class Upgrade
- * @package addons\Member */
+ * @package addons\Member
+ */
 class Upgrade extends Migration implements AddonWidget
 {
     /**
@@ -18,8 +19,7 @@ class Upgrade extends Migration implements AddonWidget
      */
     public $versions = [
         '1.0.0', // 默认版本
-        '1.0.1',
-        '1.0.2',
+        '1.0.1', '1.0.2'
     ];
 
     /**
@@ -31,12 +31,11 @@ class Upgrade extends Migration implements AddonWidget
     {
         switch ($addon->version) {
             case '1.0.2' :
-                // 删除测试 - 冗余的字段
-                // $this->dropColumn('{{%addon_example_curd}}', 'redundancy_field');
+                $this->addColumn('{{%member}}', 'bg_image', "varchar(200) NULL DEFAULT '' COMMENT '个人背景图'");
+                $this->addColumn('{{%member}}', 'description', "varchar(200) NULL DEFAULT '' COMMENT '个人说明'");
                 break;
             case '1.0.1' :
-                // 增加测试 - 冗余的字段
-                // $this->addColumn('{{%addon_example_curd}}', 'redundancy_field', 'varchar(48)');
+                $this->addColumn('{{%member_withdraw_deposit}}', 'batch_no', "varchar(100) NULL DEFAULT '' COMMENT '批量转账单号'");
                 break;
         }
     }

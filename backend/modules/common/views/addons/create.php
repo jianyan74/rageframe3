@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 </style>
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-12">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li><a href="<?= Url::to(['index']) ?>"> 已安装的插件</a></li>
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             ],
                         ]); ?>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-12">
                                 <?= $form->field($model, 'title')->textInput()->hint('显示在用户的插件列表中. 不要超过20个字符') ?>
                                 <?= $form->field($model, 'name')->textInput()->hint('应对应插件文件夹的名称, 系统按照此标识符查找插件定义, 只能英文和下划线组成，建议大写驼峰，例如：RfArticle') ?>
                                 <?= $form->field($model, 'author')->textInput() ?>
@@ -134,11 +134,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                                 <?= $form->field($model,
                                     'upgrade')->textInput()->hint('当前插件更新时所执行的脚本, 指定为单个的php脚本文件, 如: Upgrade.php') ?>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-12 text-center">
-                                    <div class="hr-line-dashed"></div>
-                                    <button class="btn btn-primary" type="submit">保存</button>
-                                </div>
+                            <div class="col-12 text-center">
+                                <div class="hr-line-dashed"></div>
+                                <button class="btn btn-primary" type="submit">保存</button>
                             </div>
                         </div>
                         <?php ActiveForm::end(); ?>

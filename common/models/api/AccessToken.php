@@ -15,7 +15,7 @@ use common\models\base\User;
  *
  * @property int $id
  * @property int|null $merchant_id 商户ID
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property string|null $refresh_token 刷新令牌
  * @property string|null $access_token 授权令牌
  * @property int|null $member_id 用户id
@@ -41,7 +41,7 @@ class AccessToken extends User
     public function rules()
     {
         return [
-            [['merchant_id', 'member_id', 'shop_id', 'member_type', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'member_id', 'store_id', 'member_type', 'status', 'created_at', 'updated_at'], 'integer'],
             [['refresh_token', 'access_token'], 'string', 'max' => 60],
             [['group'], 'string', 'max' => 100],
             [['access_token'], 'unique'],
@@ -57,7 +57,7 @@ class AccessToken extends User
         return [
             'id' => 'ID',
             'merchant_id' => '商户ID',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'refresh_token' => '刷新令牌',
             'access_token' => '授权令牌',
             'member_id' => '用户id',

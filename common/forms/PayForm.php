@@ -180,6 +180,10 @@ class PayForm extends PayLog
         $log->merchant_id = $model->getMerchantId();
         $log->total_fee = $model->getTotalFee();
         $log->pay_fee = $log->total_fee;
+        if ($log->total_fee <= 0) {
+            throw new UnprocessableEntityHttpException('请使用余额支付');
+        }
+
         if (!$log->save()) {
             throw new UnprocessableEntityHttpException(Yii::$app->services->base->analysisErr($log->getFirstErrors()));
         }
@@ -204,7 +208,7 @@ class PayForm extends PayLog
                 return Yii::$app->services->extendPay->alipay($log);
                 break;
             case PayTypeEnum::UNION :
-                return Yii::$app->services->extendPay->union($log);
+                return Yii::$app->services->extendPay->unipay($log);
                 break;
             case PayTypeEnum::BYTE_DANCE :
                 return Yii::$app->services->extendPay->byteDance($log);

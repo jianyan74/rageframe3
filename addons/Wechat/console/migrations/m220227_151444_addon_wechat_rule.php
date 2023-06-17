@@ -8,12 +8,12 @@ class m220227_151444_addon_wechat_rule extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%addon_wechat_rule}}', [
             'id' => "int(10) unsigned NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'name' => "varchar(50) NOT NULL DEFAULT '' COMMENT '规则名称'",
             'module' => "varchar(50) NOT NULL DEFAULT '' COMMENT '模块'",
             'data' => "text NULL COMMENT '数据'",
@@ -23,12 +23,12 @@ class m220227_151444_addon_wechat_rule extends Migration
             'updated_at' => "int(10) NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='微信_回复规则名称表'");
-        
+
         /* 索引设置 */
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

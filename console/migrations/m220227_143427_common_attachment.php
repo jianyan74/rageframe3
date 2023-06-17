@@ -8,13 +8,13 @@ class m220227_143427_common_attachment extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%common_attachment}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
             'member_id' => "int(10) NULL DEFAULT '0' COMMENT '用户'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'cate_id' => "int(10) NULL DEFAULT '0' COMMENT '分类'",
             'drive' => "varchar(50) NULL DEFAULT '' COMMENT '驱动'",
             'upload_type' => "varchar(10) NULL DEFAULT '' COMMENT '上传类型'",
@@ -38,13 +38,13 @@ class m220227_143427_common_attachment extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='公用_资源管理'");
-        
+
         /* 索引设置 */
         $this->createIndex('md5','{{%common_attachment}}','md5',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

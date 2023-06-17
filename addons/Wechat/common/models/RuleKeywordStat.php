@@ -36,7 +36,7 @@ class RuleKeywordStat extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'shop_id', 'rule_id', 'keyword_id', 'keyword_type', 'hit', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'rule_id', 'keyword_id', 'keyword_type', 'hit', 'status', 'created_at', 'updated_at'], 'integer'],
             [['rule_name'], 'string', 'max' => 50],
             [['keyword_content'], 'string', 'max' => 255],
         ];
@@ -117,9 +117,9 @@ class RuleKeywordStat extends \common\models\base\BaseModel
             [
                 'class' => BlameableBehavior::class,
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['shop_id'],
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['store_id'],
                 ],
-                'value' => Yii::$app->services->merchantShop->getNotNullId(),
+                'value' => Yii::$app->services->store->getNotNullId(),
             ]
         ];
     }

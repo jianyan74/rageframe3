@@ -21,7 +21,7 @@ return [
     'uuid' => '',
     // 主题布局
     'theme' => [
-        'layout' => 'subfield',
+        'layout' => 'default',
         'color' => 'black',
     ],
     // 全局缓存过期时间 (建议用 redis 缓存)

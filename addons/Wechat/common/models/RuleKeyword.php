@@ -2,14 +2,14 @@
 
 namespace addons\Wechat\common\models;
 
-use common\behaviors\MerchantShopBehavior;
+use common\behaviors\MerchantStoreBehavior;
 
 /**
  * This is the model class for table "{{%addon_wechat_rule_keyword}}".
  *
  * @property int $id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property int|null $rule_id 规则ID
  * @property string $module 模块名
  * @property string $content 内容
@@ -19,7 +19,7 @@ use common\behaviors\MerchantShopBehavior;
  */
 class RuleKeyword extends \yii\db\ActiveRecord
 {
-    use MerchantShopBehavior;
+    use MerchantStoreBehavior;
 
     /**
      * {@inheritdoc}
@@ -35,7 +35,7 @@ class RuleKeyword extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['merchant_id', 'shop_id', 'rule_id', 'type', 'sort', 'status'], 'integer'],
+            [['merchant_id', 'store_id', 'rule_id', 'type', 'sort', 'status'], 'integer'],
             [['module'], 'string', 'max' => 50],
             [['content'], 'string', 'max' => 255],
         ];
@@ -49,7 +49,7 @@ class RuleKeyword extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'rule_id' => '规则ID',
             'module' => '模块名',
             'content' => '内容',

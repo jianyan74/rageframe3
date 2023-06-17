@@ -8,12 +8,12 @@ class m220227_143429_member_level extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%member_level}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT COMMENT '主键'",
             'merchant_id' => "int(11) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'level' => "int(11) NULL DEFAULT '0' COMMENT '等级（数字越大等级越高）'",
             'name' => "varchar(255) NULL DEFAULT '' COMMENT '等级名称'",
             'icon' => "varchar(255) NULL DEFAULT '' COMMENT '等级图标'",
@@ -28,12 +28,12 @@ class m220227_143429_member_level extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='会员_等级表'");
-        
+
         /* 索引设置 */
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

@@ -8,12 +8,12 @@ class m220227_151444_addon_wechat_message_history extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%addon_wechat_message_history}}', [
             'id' => "int(10) unsigned NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'rule_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '规则id'",
             'keyword_id' => "int(10) NULL DEFAULT '0' COMMENT '关键字id'",
             'openid' => "varchar(50) NULL DEFAULT ''",
@@ -28,12 +28,12 @@ class m220227_151444_addon_wechat_message_history extends Migration
             'updated_at' => "int(10) NOT NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='微信_历史记录表'");
-        
+
         /* 索引设置 */
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

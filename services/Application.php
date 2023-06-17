@@ -22,10 +22,13 @@ use common\components\Service;
  * @property \services\member\BankAccountService $memberBankAccount 会员银行提现账号
  * @property \services\member\CreditsLogService $memberCreditsLog 会员变动日志
  * @property \services\member\WithdrawDepositService $memberWithdrawDeposit 会员提现
+ * @property \services\member\CancelService $memberCancel 会员注销
  *
  * 商户
  * @property \services\merchant\MerchantService $merchant 商户
- * @property \services\merchant\ShopService $merchantShop 商户店铺
+ *
+ * 店铺
+ * @property \services\store\StoreService $store 店铺
  *
  * Api
  * @property \services\api\AccessTokenService $apiAccessToken 接口
@@ -35,17 +38,21 @@ use common\components\Service;
  * @property \services\extend\PayService $extendPay 支付
  * @property \services\extend\UploadService $extendUpload 上传
  * @property \services\extend\SmsService $extendSms 短信
- * @property \services\extend\AppPushService $extendAppPush app 推送
- * @property \services\extend\GeTuiService $extendGeTui app 个推
- * @property \services\extend\JPushService $extendJPush app 极光推送
- * @property \services\extend\PrinterService $extendPrinter 小票打印
- * @property \services\extend\YiLianYunService $extendYiLianYun 易联云小票打印
- * @property \services\extend\FeiEYunService $extendFeiEYun 飞鹅云小票打印机
- * @property \services\extend\XpYunService $extendXpYun 芯烨云小票打印机
- * @property \services\extend\HiPrintService $extendHiPrint 本地打印机
+ * @property \services\extend\push\AppPushService $extendAppPush app 推送
+ * @property \services\extend\push\GeTuiService $extendGeTui app 个推
+ * @property \services\extend\push\JPushService $extendJPush app 极光推送
+ * @property \services\extend\printer\PrinterService $extendPrinter 小票打印
+ * @property \services\extend\printer\YiLianYunService $extendPrinterYiLianYun 易联云小票打印
+ * @property \services\extend\printer\FeiEYunService $extendPrinterFeiEYun 飞鹅云小票打印机
+ * @property \services\extend\printer\XpYunService $extendPrinterXpYun 芯烨云小票打印机
+ * @property \services\extend\printer\HiPrintService $extendPrinterHiPrint 本地打印机
  * @property \services\extend\MapService $extendMap 地图
  * @property \services\extend\OpenPlatformService $extendOpenPlatform 开放平台
- * @property \services\extend\LogisticsService $extendLogistics 物流查询
+ * @property \services\extend\logistics\LogisticsService $extendLogistics 物流查询
+ * @property \services\extend\logistics\ALiYunService $extendLogisticsALiYun 物流查询-阿里云
+ * @property \services\extend\logistics\JuHeService $extendLogisticsJuHe 物流查询-聚合
+ * @property \services\extend\logistics\Kd100Service $extendLogisticsKd100 物流查询-快递100
+ * @property \services\extend\logistics\KdnService $extendLogisticsKdn 物流查询-快递鸟
  * @property \services\extend\DetectionService $extendDetection 访问设备信息
  *
  * 公用
@@ -108,9 +115,11 @@ class Application extends Service
         'memberBankAccount' => 'services\member\BankAccountService',
         'memberCreditsLog' => 'services\member\CreditsLogService',
         'memberWithdrawDeposit' => 'services\member\WithdrawDepositService',
+        'memberCancel' => 'services\member\CancelService',
         /** ------ 商户 ------ **/
         'merchant' => 'services\merchant\MerchantService',
-        'merchantShop' => 'services\merchant\ShopService',
+        /** ------ 店铺 ------ **/
+        'store' => 'services\store\StoreService',
         /** ------ api ------ **/
         'apiAccessToken' => [
             'class' => 'services\api\AccessTokenService',
@@ -152,25 +161,30 @@ class Application extends Service
         'extendUpload' => 'services\extend\UploadService',
         'extendMap' => 'services\extend\MapService',
         'extendOpenPlatform' => 'services\extend\OpenPlatformService',
-        'extendLogistics' => 'services\extend\LogisticsService',
         'extendDetection' => 'services\extend\DetectionService',
         'extendConfig' => 'services\extend\ConfigService',
         // app 推送
         'extendAppPush' => [
-            'class' => 'services\extend\AppPushService',
+            'class' => 'services\extend\push\AppPushService',
             'queueSwitch' => false, // 是否丢进队列
         ],
-        'extendJPush' => 'services\extend\JPushService',
-        'extendGeTui' => 'services\extend\GeTuiService',
+        'extendJPush' => 'services\extend\push\JPushService',
+        'extendGeTui' => 'services\extend\push\GeTuiService',
         // 小票打印机
         'extendPrinter' => [
-            'class' => 'services\extend\PrinterService',
+            'class' => 'services\extend\printer\PrinterService',
             'queueSwitch' => false, // 是否丢进队列
         ],
-        'extendYiLianYun' => 'services\extend\YiLianYunService',
-        'extendFeiEYun' => 'services\extend\FeiEYunService',
-        'extendXpYun' => 'services\extend\XpYunService',
-        'extendHiPrint' => 'services\extend\HiPrintService',
+        'extendPrinterYiLianYun' => 'services\extend\printer\YiLianYunService',
+        'extendPrinterFeiEYun' => 'services\extend\printer\FeiEYunService',
+        'extendPrinterXpYun' => 'services\extend\printer\XpYunService',
+        'extendPrinterHiPrint' => 'services\extend\printer\HiPrintService',
+        // 物流进度查询
+        'extendLogistics' => 'services\extend\logistics\LogisticsService',
+        'extendLogisticsALiYun' => 'services\extend\logistics\ALiYunService',
+        'extendLogisticsJuHe' => 'services\extend\logistics\JuHeService',
+        'extendLogisticsKd100' => 'services\extend\logistics\Kd100Service',
+        'extendLogisticsKdn' => 'services\extend\logistics\KdnService',
         // 短信发送
         'extendSms' => [
             'class' => 'services\extend\SmsService',

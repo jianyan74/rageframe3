@@ -44,7 +44,7 @@ class SmsService
      * @param int $code 验证码
      * @param string $usage 用途
      * @param int $member_id 用户ID
-     * @return string|null
+     * @return SmsLog|string|null
      * @throws UnprocessableEntityHttpException
      */
     public function send($mobile, $code, $usage, $member_id = 0)
@@ -102,7 +102,7 @@ class SmsService
                 ],
             ]);
 
-            $log = $this->saveLog([
+            $this->saveLog([
                 'mobile' => $mobile,
                 'code' => $code,
                 'member_id' => $member_id,
@@ -112,8 +112,6 @@ class SmsService
                 'error_msg' => 'ok',
                 'error_data' => Json::encode($result),
             ]);
-
-            return $log;
         } catch (NotFoundHttpException $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());
         } catch (\Exception $e) {
@@ -127,7 +125,7 @@ class SmsService
                 }
             }
 
-            $log = $this->saveLog([
+            $this->saveLog([
                 'mobile' => $mobile,
                 'code' => $code,
                 'member_id' => $member_id,
@@ -205,9 +203,9 @@ class SmsService
 
         // 模板
         if ($gateway == 'aliyun') {
-            $this->template = $config['sms_aliyun_template'] ?? [];
+            $this->template = $config['sms_aliyun_template'] ?? '';
         } else {
-            $this->template = $config['sms_tencent_template'] ?? [];
+            $this->template = $config['sms_tencent_template'] ?? '';
         }
 
         $this->config = [

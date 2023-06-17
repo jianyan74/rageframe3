@@ -23,7 +23,7 @@ class AddonConfig extends BaseAddonConfig
         'brief_introduction' => 'RageFrame 官方在线升级工具',
         'description' => '',
         'author' => '简言',
-        'version' => '3.0.25',
+        'version' => '3.1.13',
     ];
 
     /**

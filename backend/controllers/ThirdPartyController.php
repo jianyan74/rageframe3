@@ -6,7 +6,8 @@ use Yii;
 use yii\web\Response;
 use common\helpers\ArrayHelper;
 use common\enums\StatusEnum;
-use common\enums\MemberAuthOauthClientEnum;
+use common\enums\AccessTokenGroupEnum;
+use common\helpers\ResultHelper;
 
 /**
  * 第三方授权
@@ -31,10 +32,10 @@ class ThirdPartyController extends BaseController
     public function actionIndex()
     {
         $thirdParty = [
-            MemberAuthOauthClientEnum::WECHAT => [
-                'name' => MemberAuthOauthClientEnum::WECHAT,
+            AccessTokenGroupEnum::WECHAT_MP => [
+                'name' => AccessTokenGroupEnum::WECHAT_MP,
                 'client' => '无',
-                'title' => MemberAuthOauthClientEnum::getValue(MemberAuthOauthClientEnum::WECHAT),
+                'title' => AccessTokenGroupEnum::getValue(AccessTokenGroupEnum::WECHAT_MP),
                 'status' => StatusEnum::DISABLED
             ]
         ];
@@ -72,7 +73,12 @@ class ThirdPartyController extends BaseController
             'model_type' => 1,
             'expire_seconds' => 5 * 60,
             'extend' => [
-                'member_id' => $member_id
+                'type' => 'binding',
+                'member_id' => $member_id,
+                'remind' => [
+                    'success' => '绑定账号: {member.username}; 绑定时间: {time}',
+                    'error' => '账号 {member.username} 已被绑定过，请先解绑; 操作时间: {time}',
+                ]
             ],
         ]);
 
@@ -96,5 +102,20 @@ class ThirdPartyController extends BaseController
         Yii::$app->services->memberAuth->unBind($type, $member_id);
 
         return $this->message("解绑成功", $this->redirect(['index', 'member_id' => $member_id]));
+    }
+
+    /**
+     * @param $type
+     * @param $member_id
+     * @return array|mixed
+     */
+    public function actionOauthStatus($type, $member_id)
+    {
+        $auth = Yii::$app->services->memberAuth->findByMemberIdAndOauthClient($member_id, $type);
+        if ($auth) {
+            return ResultHelper::json(200, '已授权');
+        }
+
+        return ResultHelper::json(422, '未授权');
     }
 }

@@ -8,13 +8,13 @@ class m220227_143427_common_log extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%common_log}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
             'app_id' => "varchar(50) NULL DEFAULT '' COMMENT '应用id'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(11) NULL DEFAULT '0' COMMENT '用户id'",
             'member_name' => "varchar(100) NULL DEFAULT '' COMMENT '用户名称'",
             'method' => "varchar(20) NULL DEFAULT '' COMMENT '提交类型'",
@@ -38,17 +38,17 @@ class m220227_143427_common_log extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='公用_日志'");
-        
+
         /* 索引设置 */
         $this->createIndex('error_code','{{%common_log}}','error_code',0);
         $this->createIndex('req_id','{{%common_log}}','req_id',0);
         $this->createIndex('ip','{{%common_log}}','ip',0);
         $this->createIndex('created_at','{{%common_log}}','created_at',0);
         $this->createIndex('status','{{%common_log}}','status, created_at',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

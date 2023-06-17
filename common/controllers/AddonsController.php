@@ -37,7 +37,11 @@ class AddonsController extends Controller
 
         // 后台视图默认载入模块视图
         if (!$this->layout && in_array(Yii::$app->id, AppEnum::admin())) {
-            $this->layout = '@' . Yii::$app->id . '/views/layouts/addon';
+            if (Yii::$app->id == AppEnum::MERCHANT) {
+                $this->layout = '@' . AppEnum::BACKEND . '/views/layouts/addon';
+            } else {
+                $this->layout = '@' . Yii::$app->id . '/views/layouts/addon';
+            }
         }
     }
 

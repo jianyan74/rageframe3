@@ -116,15 +116,55 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="box box-solid">
             <div class="box-header">
                 <i class="fa fa-circle rf-circle" style="font-size: 8px"></i>
-                <h3 class="box-title">关注人数统计</h3>
+                <h3 class="box-title">注册会员人数</h3>
             </div>
             <?= \common\widgets\echarts\Echarts::widget([
                 'config' => [
                     'server' => Url::to(['member-between-count']),
-                    'height' => '315px'
-                ]
+                    'height' => '315px',
+                ],
             ]) ?>
             <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">会员注册渠道比率</h3>
+            </div>
+            <div class="box-body">
+                <?= \common\widgets\echarts\Echarts::widget([
+                    'config' => [
+                        'server' => Url::to(['member-source']),
+                        'height' => '315px',
+                    ],
+                    'theme' => 'pie',
+                    'themeConfig' => [
+                        'all' => '全部',
+                    ],
+                ]) ?>
+            </div>
+        </div>
+        <!-- /.box -->
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">会员等级比率</h3>
+            </div>
+            <div class="box-body">
+                <?= \common\widgets\echarts\Echarts::widget([
+                    'config' => [
+                        'server' => Url::to(['member-level']),
+                        'height' => '315px',
+                    ],
+                    'theme' => 'pie',
+                    'themeConfig' => [
+                        'all' => '全部',
+                    ],
+                ]) ?>
+            </div>
         </div>
         <!-- /.box -->
     </div>

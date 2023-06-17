@@ -2,8 +2,11 @@
 
 namespace merchant\controllers;
 
+use common\enums\AccessTokenGroupEnum;
+use common\enums\MemberTypeEnum;
 use Yii;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\UnauthorizedHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -52,7 +55,7 @@ class SiteController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['login', 'register', 'sms-code', 'register-protocol', 'error', 'captcha'],
+                        'actions' => ['login', 'get-wechat-login-qr', 'qr', 'wechat-login', 'register', 'sms-code', 'register-protocol', 'error', 'captcha'],
                         'allow' => true,
                     ],
                     [
@@ -123,6 +126,7 @@ class SiteController extends Controller
 
             return $this->render('login', [
                 'model' => $model,
+                'hasWechat' => Yii::$app->has('wechatService'), // 微信插件是否安装
             ]);
         }
     }
@@ -226,6 +230,100 @@ class SiteController extends Controller
             'register_protocol_title' => $setting->register_protocol_title,
             'register_protocol' => $setting->register_protocol,
         ]);
+    }
+
+    /**
+     * 微信登录
+     *
+     * @param $uuid
+     * @return mixed
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function actionWechatLogin($ticket)
+    {
+        $data = Yii::$app->wechatService->qrcode->findByWhere([
+            'ticket' => $ticket
+        ]);
+
+        if (empty($data)) {
+            return ResultHelper::json(422, '无效的ticket');
+        }
+
+        if ($data['end_time'] <= time()) {
+            return ResultHelper::json(422, '无效的ticket');
+        }
+
+        if (empty($data['extend']['openid'])) {
+            return ResultHelper::json(422, '未登录');
+        }
+
+        $auth = Yii::$app->services->memberAuth->findOauthClient(AccessTokenGroupEnum::WECHAT_MP, $data['extend']['openid'], MemberTypeEnum::MERCHANT);
+        if (empty($auth) || empty($auth->member)) {
+            return ResultHelper::json(422, '未绑定账号');
+        }
+
+        // 登录
+        Yii::$app->user->login($auth->member);
+        // 记录行为日志
+        Yii::$app->services->actionLog->create('login', '二维码登录', 0, [], false);
+
+        return ResultHelper::json(200, '登录成功');
+    }
+
+    /**
+     * 微信登录
+     *
+     * @param $uuid
+     * @return mixed
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function actionGetWechatLoginQr()
+    {
+        try {
+            $data = Yii::$app->wechatService->qrcode->syncCreateByData([
+                'name' => '账号绑定',
+                'model_type' => 1,
+                'expire_seconds' => 5 * 60,
+                'extend' => [
+                    'type' => 'merchantLogin',
+                    'member_id' => -1,
+                    'remind' => [
+                        'success' => '商户登录成功, 操作时间: {time}',
+                        'error' => '登录失败，未绑定商户账号, 操作时间: {time}',
+                    ]
+                ],
+            ]);
+
+            $data->save();
+
+            return ResultHelper::json(200, '返回登录', [
+                'ticket' => $data['ticket'],
+                'url' => $data['url'],
+                'expire_seconds' => $data['expire_seconds'],
+            ]);
+        } catch (\Exception $e) {
+            return ResultHelper::json(422, $e->getMessage());
+        }
+    }
+
+    /**
+     * 二维码显示
+     *
+     * @param $uuid
+     * @return mixed
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function actionQr($url)
+    {
+        $qr = Yii::$app->get('qr');
+        Yii::$app->response->format = Response::FORMAT_RAW;
+        Yii::$app->response->headers->add('Content-Type', $qr->getContentType());
+
+        return $qr->setText($url)
+            ->setErrorCorrectionLevel('quartile')
+            ->setSize(200)
+            ->setMargin(7)
+            ->writeString();
     }
 
     /**

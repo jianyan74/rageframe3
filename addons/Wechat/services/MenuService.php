@@ -70,6 +70,8 @@ class MenuService extends Service
         }
 
         !$model->save() && $this->error($model);
+
+        Menu::updateAll(['menu_data' => $buttons], ['id' => $model->id]);
     }
 
     /**

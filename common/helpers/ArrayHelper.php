@@ -304,13 +304,15 @@ class ArrayHelper extends BaseArrayHelper
                 if (!empty($todayTime)) {
                     $config[] = [
                         'day' => date('m', $dateTime) . '月' . date('d', $dateTime) . '日',
-                        'time' => $todayTime
+                        'time' => $todayTime,
+                        'daytime' => $dateTime,
                     ];
                 }
             } else {
                 $config[] = [
                     'day' => date('m', $dateTime) . '月' . date('d', $dateTime) . '日',
-                    'time' => $distributionTime
+                    'time' => $distributionTime,
+                    'daytime' => $dateTime,
                 ];
             }
         }

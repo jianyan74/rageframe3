@@ -6,6 +6,7 @@ use Yii;
 use common\helpers\ArrayHelper;
 use common\helpers\ResultHelper;
 use addons\RfDevTool\common\models\Database;
+use yii\db\Migration;
 
 /**
  * 数据备份还原
@@ -64,6 +65,26 @@ class DataBaseController extends BaseController
         return $this->render('backups', [
             'models' => $models
         ]);
+    }
+
+    /**
+     * 修改表名称
+     *
+     * @return array|mixed
+     */
+    public function actionUpdateTableComment()
+    {
+        $table = Yii::$app->request->get('table');
+        $comment = Yii::$app->request->get('comment');
+
+        try {
+            $migration = new Migration();
+            $migration->addCommentOnTable($table, trim($comment));
+            ob_clean();
+        } catch (\Exception $e) {
+        }
+
+        return ResultHelper::json(200, '修改成功');
     }
 
     /**

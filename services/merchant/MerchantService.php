@@ -52,7 +52,7 @@ class MerchantService extends Service
      */
     public function getAutoId()
     {
-        return Yii::$app->services->devPattern->isSAAS() ? $this->getNotNullId() : 0;
+        return 0;
     }
 
     /**

@@ -10,6 +10,7 @@ use common\components\Service;
  * @package addons\RfDemo\services
  * @property ConfigService $config 默认配置
  * @property CateService $cate 分类
+ * @property CurdMapService $curdMap 地图范围
  */
 class Application extends Service
 {
@@ -19,5 +20,6 @@ class Application extends Service
     public $childService = [
         'config' => ConfigService::class,
         'cate' => CateService::class,
+        'curdMap' => CurdMapService::class,
     ];
 }

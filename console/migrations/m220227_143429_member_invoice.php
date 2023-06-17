@@ -8,12 +8,12 @@ class m220227_143429_member_invoice extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%member_invoice}}', [
             'id' => "int(11) unsigned NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(11) unsigned NULL DEFAULT '0' COMMENT '用户id'",
             'title' => "varchar(200) NULL DEFAULT '' COMMENT '公司抬头'",
             'duty_paragraph' => "varchar(200) NULL DEFAULT '' COMMENT '税号'",
@@ -26,12 +26,12 @@ class m220227_143429_member_invoice extends Migration
             'updated_at' => "int(10) unsigned NULL COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='会员_发票'");
-        
+
         /* 索引设置 */
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

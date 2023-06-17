@@ -32,6 +32,15 @@ a.desc:after {
     font-size: 16px;
 }
 
+.box blockquote,
+blockquote {
+    background-color: #fff;
+    border-left: .2rem solid #57a3f3;
+    padding: 0 .7rem 0 .7rem;
+    font-weight: 600;
+    color: rgb(55, 71, 79);
+}
+
 .content-header > .breadcrumb {
     top: 8px;
 }

@@ -8,12 +8,12 @@ class m220227_151443_addon_wechat_attachment extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%addon_wechat_attachment}}', [
             'id' => "int(10) unsigned NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'file_name' => "varchar(150) NULL DEFAULT '' COMMENT '文件原始名'",
             'local_url' => "varchar(150) NULL DEFAULT '' COMMENT '本地地址'",
             'media_type' => "varchar(15) NULL DEFAULT '' COMMENT '类别'",
@@ -32,13 +32,13 @@ class m220227_151443_addon_wechat_attachment extends Migration
             'updated_at' => "int(10) NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='微信_资源表'");
-        
+
         /* 索引设置 */
         $this->createIndex('media_id','{{%addon_wechat_attachment}}','media_id',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

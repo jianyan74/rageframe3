@@ -14,6 +14,7 @@
 - 图片裁剪上传
 - 多 Input 框控件
 - 地图经纬度选择
+- 地图范围选择
 - Select2
 - 省市区控件
 - 省市区控件(复选框)
@@ -279,6 +280,16 @@ config 更多参考 http://fex.baidu.com/webuploader/doc/
 // 注意提前申请好对应地图的key
 <?= $form->field($model, 'address')->widget(\common\widgets\map\Map::class, [
     'type' => 'amap', // amap高德;tencent:腾讯;baidu:百度
+]); ?>
+```
+
+### 地图范围选择
+
+```
+// 注意提前申请好对应地图的key
+<?= $form->field($model, 'overlay')->widget(\common\widgets\map\MapOverlay::class, [
+    'longitude' => '116.456270',
+    'latitude' => '39.919990',
 ]); ?>
 ```
 

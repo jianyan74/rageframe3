@@ -26,6 +26,7 @@ BaseAsset::register($this);
     <?php $this->beginBody() ?>
     <?= $content; ?>
     <?= Alert::widget(); ?>
+    <?= $this->render('_common') ?>
     <script>
         // 配置
         let config = {

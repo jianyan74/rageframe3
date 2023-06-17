@@ -73,10 +73,10 @@ class AddonsConfigService
      * @param array $config
      * @param string $name
      * @param int $merchant_id
-     * @param int $shop_id
+     * @param int $store_id
      * @return array|mixed
      */
-    public function setConfig($config = [], $name = '', $merchant_id = 0, $shop_id = 0)
+    public function setConfig($config = [], $name = '', $merchant_id = 0, $store_id = 0)
     {
         empty($name) && $name = Yii::$app->params['addon']['name'];
         $app_id = $merchant_id > 0 ? AppEnum::MERCHANT : AppEnum::BACKEND;
@@ -85,7 +85,7 @@ class AddonsConfigService
             $configModel = new AddonsConfig();
             $configModel->addon_name = $name;
             $configModel->merchant_id = $merchant_id;
-            $configModel->shop_id = $shop_id;
+            $configModel->store_id = $store_id;
             $configModel->app_id = $app_id;
             $configModel->data = [];
         }

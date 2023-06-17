@@ -738,6 +738,59 @@
     padding: 10px 15px;
 }
 
+/* 导航栏 */
+.nav-tabs-child {
+    background: #E1E6F0;
+    overflow: hidden;
+    padding-left: 5px;
+}
+
+.nav-tabs-child ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.nav-tabs-child.fixed {
+    position: fixed;
+    top: 50px;
+    z-index: 1000;
+    width: 100%;
+}
+
+.nav-tabs-child li {
+    float: left;
+    width: 85px;
+    text-align: center;
+    padding: 5px 2px 0 2px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.nav-tabs-child li a {
+    display: block;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 8px;
+    color: #76838f;
+}
+
+.nav-tabs-child li.selected a,
+.nav-tabs-child li:hover a {
+    background: #fff;
+}
+
+.nav-tabs-child li a:hover,
+.nav-tabs-child li a:active,
+.nav-tabs-child li a:focus {
+    color: #76838f;
+}
+
+.nav-tabs-child li {
+    width: 130px;
+}
+
 /* PAGINATION */
 .pagination > li > a {
     background: #fafafa;
@@ -1026,12 +1079,14 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     text-align: center;
 }
 
-.rf-table thead tr th {
+.rf-table thead tr th,
+.rf-table-base thead tr th {
     word-break: keep-all;
     white-space: nowrap;
 }
 
-.rf-table tbody tr td {
+.rf-table tbody tr td,
+.rf-table-base tbody tr td {
     white-space: nowrap;
 }
 
@@ -1046,6 +1101,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
 
 .rf-i {
     min-width: 18px;
+    max-width: 18px;
     font-size: 13px;
 }
 
@@ -1127,9 +1183,9 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: .375rem .75rem;
+    padding: 5px 12px;
     margin-bottom: 0;
-    font-size: 1rem;
+    font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
     color: #526069;
@@ -1203,6 +1259,7 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     color: #76838f;
     padding: .5rem .5rem;
     margin: .125rem 0 0;
+    line-height: 1.5;
 }
 
 

@@ -8,12 +8,12 @@ class m220227_151444_addon_wechat_rule_stat extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%addon_wechat_rule_stat}}', [
             'id' => "int(10) unsigned NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'rule_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '规则id'",
             'rule_name' => "varchar(50) NULL DEFAULT '' COMMENT '规则名称'",
             'hit' => "int(10) unsigned NULL DEFAULT '1'",
@@ -22,13 +22,13 @@ class m220227_151444_addon_wechat_rule_stat extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='微信_触发规则记录表'");
-        
+
         /* 索引设置 */
         $this->createIndex('rid','{{%addon_wechat_rule_stat}}','rule_id',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

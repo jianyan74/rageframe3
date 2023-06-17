@@ -122,17 +122,6 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         });
     }
 
-    function createKey(num, id) {
-        let letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let token = '';
-        for (let i = 0; i < num; i++) {
-            let j = parseInt(Math.random() * 61 + 1);
-            token += letters[j];
-        }
-        $("#" + id).val(token);
-    }
-
-
     $.fn.serializeObject = function () {
         var o = {};
         var a = this.serializeArray();

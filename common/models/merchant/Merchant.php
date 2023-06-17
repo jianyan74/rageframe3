@@ -155,7 +155,7 @@ class Merchant extends \common\models\base\BaseModel
         $this->start_time = StringHelper::dateToInt($this->start_time);
         $this->end_time = StringHelper::dateToInt($this->end_time);
 
-        if ($this->area_id != $this->oldAttributes['area_id']) {
+        if (isset($this->oldAttributes['area_id']) && $this->area_id != $this->oldAttributes['area_id']) {
             $this->address_name = Yii::$app->services->provinces->getCityListName([$this->province_id, $this->city_id, $this->area_id]);
         }
 

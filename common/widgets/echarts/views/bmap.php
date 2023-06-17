@@ -5,6 +5,7 @@ echo $this->render("_nav", [
     'config' => $config,
     'themeJs' => $themeJs,
     'themeConfig' => $themeConfig,
+    'columns' => $columns,
 ]);
 
 $jsonConfig = \yii\helpers\Json::encode($config);

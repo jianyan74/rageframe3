@@ -18,6 +18,9 @@ return [
     /** ------ 当前商户 ------ **/
     'merchant' => [],
 
+    // token有效期 默认 2 小时
+    'user.accessTokenExpire' => 2 * 60 * 60,
+
     /**
      * 不需要验证的路由全称
      *

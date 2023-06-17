@@ -5,7 +5,7 @@ namespace common\components;
 use Yii;
 use yii\base\Component;
 use common\components\payment\AliPay;
-use common\components\payment\UnionPay;
+use common\components\payment\UniPay;
 use common\components\payment\WechatPay;
 use common\components\payment\ByteDancePay;
 use common\components\payment\Stripe;
@@ -18,7 +18,7 @@ use common\helpers\ArrayHelper;
  * @package common\components
  * @property \common\components\payment\WechatPay $wechat
  * @property \common\components\payment\AliPay $alipay
- * @property \common\components\payment\UnionPay $union
+ * @property \common\components\payment\UniPay $unipay
  * @property \common\components\payment\ByteDancePay $byteDance
  * @property \common\components\payment\Stripe $stripe
  * @author jianyan74 <751393839@qq.com>
@@ -91,6 +91,22 @@ class Pay extends Component
                 'mode' => \Yansongda\Pay\Pay::MODE_NORMAL,
             ]
         ],
+        'unipay' => [
+            'default' => [
+                // 必填-商户号
+                'mch_id' => '',
+                // 必填-商户公私钥
+                'mch_cert_path' => '',
+                // 必填-商户公私钥密码
+                'mch_cert_password' => '',
+                // 必填-银联公钥证书路径
+                'unipay_public_cert_path' => '',
+                // 必填
+                'return_url' => '',
+                // 必填
+                'notify_url' => '',
+            ],
+        ],
         'logger' => [
             'enable' => true,
             'file' => './logs/alipay.log',
@@ -119,15 +135,15 @@ class Pay extends Component
         // 初始化支付宝配置
         $this->config['alipay']['default'] = ArrayHelper::merge($this->config['alipay']['default'], [
             // 必填-支付宝分配的 app_id
-            'app_id' => $this->rfConfig['alipay_appid'],
+            'app_id' => $this->rfConfig['alipay_app_id'],
             // 必填-应用私钥 字符串或路径
-            'app_secret_cert' => Yii::getAlias($this->rfConfig['alipay_key_path']),
+            'app_secret_cert' => Yii::getAlias($this->rfConfig['alipay_app_secret_cert']),
             // 必填-应用公钥证书 路径
-            'app_public_cert_path' => Yii::getAlias($this->rfConfig['alipay_cert_path']), // /Users/yansongda/pay/cert/appCertPublicKey_2016082000295641.crt
+            'app_public_cert_path' => Yii::getAlias($this->rfConfig['alipay_app_public_cert_path']), // /Users/yansongda/pay/cert/appCertPublicKey_2016082000295641.crt
             // 必填-支付宝公钥证书 路径
-            'alipay_public_cert_path' => Yii::getAlias($this->rfConfig['alipay_notification_cert_path']), // /Users/yansongda/pay/cert/alipayCertPublicKey_RSA2.crt
+            'alipay_public_cert_path' => Yii::getAlias($this->rfConfig['alipay_public_cert_path']), // /Users/yansongda/pay/cert/alipayCertPublicKey_RSA2.crt
             // 必填-支付宝根证书 路径
-            'alipay_root_cert_path' => Yii::getAlias($this->rfConfig['alipay_root_path']), // /Users/yansongda/pay/cert/alipayRootCert.crt
+            'alipay_root_cert_path' => Yii::getAlias($this->rfConfig['alipay_root_cert_path']), // /Users/yansongda/pay/cert/alipayRootCert.crt
             'return_url' => '', // https://yansongda.cn/alipay/return
             'notify_url' => '', // https://yansongda.cn/alipay/notify
         ]);
@@ -135,21 +151,21 @@ class Pay extends Component
         // 初始化微信配置
         $this->config['wechat']['default'] = ArrayHelper::merge($this->config['wechat']['default'], [
             // 必填-商户号，服务商模式下为服务商商户号
-            'mch_id' => $this->rfConfig['wechat_mchid'],
+            'mch_id' => $this->rfConfig['wechat_mch_id'],
             // 必填-商户秘钥
-            'mch_secret_key' => Yii::getAlias($this->rfConfig['wechat_api_key']),
-            // 必填-商户私钥 字符串或路径
-            'mch_secret_cert' => Yii::getAlias($this->rfConfig['wechat_key_path']),
+            'mch_secret_key' => Yii::getAlias($this->rfConfig['wechat_mch_secret_key']),
+            // 必填-商户私钥证书 字符串或路径
+            'mch_secret_cert' => Yii::getAlias($this->rfConfig['wechat_mch_secret_cert']),
             // 必填-商户公钥证书路径
-            'mch_public_cert_path' => Yii::getAlias($this->rfConfig['wechat_cert_path']),
+            'mch_public_cert_path' => Yii::getAlias($this->rfConfig['wechat_mch_public_cert_path']),
             // 必填
             'notify_url' => '',
             // 选填-公众号 的 app_id
-            'mp_app_id' => $this->rfConfig['wechat_appid'],
+            'mp_app_id' => $this->rfConfig['wechat_mp_app_id'],
             // 选填-小程序 的 app_id
-            'mini_app_id' => $this->rfConfig['miniprogram_appid'],
+            'mini_app_id' => $this->rfConfig['wechat_mini_app_id'],
             // 选填-app 的 app_id
-            'app_id' => $this->rfConfig['login_wechat_appid'], // 微信开放平台 APPID
+            'app_id' => $this->rfConfig['wechat_app_id'], // 微信开放平台 APPID
             // 选填-合单 app_id
             'combine_app_id' => '',
             // 选填-合单商户号
@@ -166,6 +182,22 @@ class Pay extends Component
             'wechat_public_cert_path' => [
                 // '45F59D4DABF31918AFCEC556D5D2C6E376675D57' => __DIR__.'/Cert/wechatPublicKey.crt',
             ],
+        ]);
+
+        // 初始化银联配置
+        $this->config['unipay']['default'] = ArrayHelper::merge($this->config['unipay']['default'], [
+            // 必填-商户号
+            'mch_id' => $this->rfConfig['unipay_mch_id'],
+            // 必填-商户公私钥
+            'mch_cert_path' => Yii::getAlias($this->rfConfig['unipay_mch_cert_path']),
+            // 必填-商户公私钥密码
+            'mch_cert_password' => $this->rfConfig['unipay_mch_cert_password'],
+            // 必填-银联公钥证书路径
+            'unipay_public_cert_path' => Yii::getAlias($this->rfConfig['unipay_public_cert_path']),
+            // 必填
+            'return_url' => '',
+            // 必填
+            'notify_url' => '',
         ]);
 
         // 日志目录
@@ -207,18 +239,14 @@ class Pay extends Component
      * 银联支付
      *
      * @param array $config
-     * @return UnionPay
+     * @return UniPay
      * @throws \yii\base\InvalidConfigException
      */
-    public function union(array $config = [])
+    public function unipay(array $config = [])
     {
-        return new UnionPay(ArrayHelper::merge([
-            'mch_id' => $this->rfConfig['union_mchid'],
-            'notify_url' => '',
-            'return_url' => '',
-            'cert_id' => $this->rfConfig['union_cert_id'],
-            'private_key' => $this->rfConfig['union_private_key'],
-        ], $config));
+        !empty($config) && $this->config['unipay']['default'] = ArrayHelper::merge($this->config['unipay']['default'], $config);
+
+        return new UniPay($this->config);
     }
 
     /**
@@ -231,10 +259,10 @@ class Pay extends Component
     public function byteDance(array $config = [])
     {
         return new ByteDancePay(ArrayHelper::merge([
-            'app_id' => $this->rfConfig['byte_dance_app_id'],
-            'app_secret' => $this->rfConfig['byte_dance_app_secret'],
-            'app_salt' => $this->rfConfig['byte_dance_app_salt'], // SALT
-            'app_token' => $this->rfConfig['byte_dance_app_token'], // SALT
+            'app_id' => $this->rfConfig['byte_dance_mini_app_id'],
+            'app_secret' => $this->rfConfig['byte_dance_mini_app_secret'],
+            'app_salt' => $this->rfConfig['byte_dance_mini_app_salt'], // SALT
+            'app_token' => $this->rfConfig['byte_dance_mini_app_token'], // SALT
             'notify_url' => '',
             'return_url' => '',
         ], $config));

@@ -13,7 +13,7 @@ class m220227_143427_common_notify extends Migration
         $this->createTable('{{%common_notify}}', [
             'id' => "bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'title' => "varchar(150) NULL DEFAULT '' COMMENT '标题'",
             'content' => "varchar(300) NULL DEFAULT '' COMMENT '消息内容'",
             'type' => "tinyint(1) NULL DEFAULT '0' COMMENT '消息类型[1:公告;2:提醒;3:信息(私信)'",

@@ -6,12 +6,12 @@ use Yii;
 use Exception;
 use common\helpers\ArrayHelper;
 use common\components\Service;
+use common\enums\AccessTokenGroupEnum;
+use common\enums\MemberTypeEnum;
 use addons\Wechat\common\models\Qrcode;
 use addons\Wechat\common\models\QrcodeStat;
 use addons\Wechat\common\enums\QrcodeStatTypeEnum;
 use addons\Wechat\common\enums\WechatEnum;
-use common\enums\MemberAuthOauthClientEnum;
-use yii\web\UnprocessableEntityHttpException;
 
 /**
  * Class QrcodeStatService
@@ -51,27 +51,69 @@ class QrcodeStatService extends Service
             Qrcode::updateAllCounters(['scan_num' => 1], ['id' => $qrCode['id']]);
             $this->create($qrCode, $message['FromUserName'], QrcodeStatTypeEnum::SCAN);
 
-            // 触发绑定
+            // 触发绑定/登录
             if (
                 !empty($qrCode['extend']) &&
-                !empty($qrCode['extend']['member_id']) &&
-                !empty($member = Yii::$app->services->member->findById($qrCode['extend']['member_id']))
+                !empty($qrCode['extend']['type'])
             ) {
-                if (empty(Yii::$app->services->memberAuth->findByMemberIdOauthClient(MemberAuthOauthClientEnum::WECHAT, $member->id))) {
-                    Yii::$app->services->memberAuth->create([
-                        'member_id' => $member->id,
-                        'member_type' => $member->type,
-                        'merchant_id' => $member->merchant_id,
-                        'shop_id' => $member->shop_id,
-                        'nickname' => $member->username,
-                        'oauth_client' => MemberAuthOauthClientEnum::WECHAT,
-                        'oauth_client_user_id' => $message['FromUserName'],
-                    ]);
+                $member = Yii::$app->services->member->findById($qrCode['extend']['member_id']);
+                $remind = [
+                    'time' => date('Y-m-d H:i:s'),
+                    'member' => !empty($member) ? $member : []
+                ];
 
-                    throw new Exception('账号 ' . $member->username . ' 绑定成功, 绑定时间: ' . date('Y-m-d H:i:s') . '0', 200);
+                // 修改openid
+                Qrcode::updateAll([
+                    'extend' => ArrayHelper::merge($qrCode['extend'], [
+                        'openid' => $message['FromUserName']
+                    ])
+                ], ['id' => $qrCode['id']]);
+
+                switch ($qrCode['extend']['type']) {
+                    // 绑定
+                    case 'binding' :
+                        if (
+                            !empty($oldOauth = Yii::$app->services->memberAuth->findOauthClient(AccessTokenGroupEnum::WECHAT_MP, $message['FromUserName'], $member->type)) &&
+                            !empty($oldMember = $oldOauth->member)
+                        ) {
+                            throw new Exception('绑定失败, 您已绑定账号 ' . $oldMember->username . ', 请先解绑', 200);
+                        }
+
+                        if (empty(Yii::$app->services->memberAuth->findByMemberIdOauthClient(AccessTokenGroupEnum::WECHAT_MP, $member->id))) {
+                            Yii::$app->services->memberAuth->create([
+                                'member_id' => $member->id,
+                                'member_type' => $member->type,
+                                'merchant_id' => $member->merchant_id,
+                                'store_id' => $member->store_id,
+                                'nickname' => $member->username,
+                                'oauth_client' => AccessTokenGroupEnum::WECHAT_MP,
+                                'oauth_client_user_id' => $message['FromUserName'],
+                            ]);
+
+                            throw new Exception(ArrayHelper::recursionGetVal($qrCode['extend']['remind']['success'], $remind), 200);
+                        }
+
+                        throw new Exception(ArrayHelper::recursionGetVal($qrCode['extend']['remind']['error'], $remind), 200);
+                        break;
+                    // 总后台登录
+                    case 'login' :
+                        $auth = Yii::$app->services->memberAuth->findOauthClient(AccessTokenGroupEnum::WECHAT_MP, $message['FromUserName'], MemberTypeEnum::MANAGER);
+                        if ($auth) {
+                            throw new Exception(ArrayHelper::recursionGetVal($qrCode['extend']['remind']['success'], $remind), 200);
+                        }
+
+                        throw new Exception(ArrayHelper::recursionGetVal($qrCode['extend']['remind']['error'], $remind), 200);
+                        break;
+                    // 总后台登录
+                    case 'merchantLogin' :
+                        $auth = Yii::$app->services->memberAuth->findOauthClient(AccessTokenGroupEnum::WECHAT_MP, $message['FromUserName'], MemberTypeEnum::MERCHANT);
+                        if ($auth) {
+                            throw new Exception(ArrayHelper::recursionGetVal($qrCode['extend']['remind']['success'], $remind), 200);
+                        }
+
+                        throw new Exception(ArrayHelper::recursionGetVal($qrCode['extend']['remind']['error'], $remind), 200);
+                        break;
                 }
-
-                throw new Exception('账号 ' . $member->username . ' 已被绑定过，请先解绑', 200);
             }
 
             return $qrCode['keyword'];

@@ -8,14 +8,14 @@ class m220227_143428_common_report_log extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%common_report_log}}', [
             'id' => "bigint(20) unsigned NOT NULL AUTO_INCREMENT",
             'log_id' => "int(11) unsigned NULL DEFAULT '0' COMMENT '公用日志id'",
             'app_id' => "varchar(50) NULL DEFAULT '' COMMENT '应用id'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(11) unsigned NULL DEFAULT '0' COMMENT '用户ID'",
             'device_id' => "varchar(64) NULL DEFAULT '' COMMENT '设备ID'",
             'device_name' => "varchar(64) NULL DEFAULT '' COMMENT '设备名称'",
@@ -47,13 +47,13 @@ class m220227_143428_common_report_log extends Migration
             'updated_at' => "int(10) NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='公用_风控日志'");
-        
+
         /* 索引设置 */
         $this->createIndex('log_id','{{%common_report_log}}','log_id',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

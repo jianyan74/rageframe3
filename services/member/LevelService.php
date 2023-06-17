@@ -25,22 +25,6 @@ class LevelService extends Service
     private $timeout = 20;
 
     /**
-     * @return array
-     */
-    public function getMapByAuto()
-    {
-        if (Yii::$app->services->devPattern->isSAAS()) {
-            $list = $this->findAll();
-        } else {
-            $list = $this->findAll(0);
-        }
-
-        $list = ArrayHelper::arraySort($list, 'level');
-
-        return ArrayHelper::map($list, 'level', 'name');
-    }
-
-    /**
      * @param Member $member
      * @return bool|Level|mixed|\yii\db\ActiveRecord
      */
@@ -74,13 +58,8 @@ class LevelService extends Service
             return false;
         }
 
-        $merchant_id = Yii::$app->services->merchant->getNotNullId();
-        if (!Yii::$app->services->devPattern->isSAAS()) {
-            $merchant_id = 0;
-        }
-
         // 未开启自动升级
-        $config = Yii::$app->services->memberLevelConfig->findModel($merchant_id);
+        $config = Yii::$app->services->memberLevelConfig->findModel(0);
         if ($config->auto_upgrade_type == MemberLevelAutoUpgradeTypeEnum::CLOSE) {
             return false;
         }
@@ -126,30 +105,26 @@ class LevelService extends Service
     /**
      * @return array
      */
-    public function getMap($merchant_id = '')
+    public function getMap()
     {
-        $list = $this->findAll($merchant_id);
+        $list = ArrayHelper::arraySort($this->findAll(0), 'level');
 
         return ArrayHelper::map($list, 'level', 'name');
     }
 
     /**
-     * @param $merchant_id
      * @return array|\yii\db\ActiveRecord[]
      */
-    public function findAll($merchant_id = '')
+    public function findAll()
     {
-        $merchant_id === '' && $merchant_id = Yii::$app->services->merchant->getId();
-
         return Level::find()
             ->where(['status' => StatusEnum::ENABLED])
-            ->andFilterWhere(['merchant_id' => $merchant_id])
+            ->andFilterWhere(['merchant_id' => 0])
             ->orderBy(['level' => SORT_DESC, 'id' => SORT_DESC])
             ->all();
     }
 
     /**
-     * @param $merchant_id
      * @return array|\yii\db\ActiveRecord[]
      */
     public function findAllByEdit()
@@ -158,6 +133,18 @@ class LevelService extends Service
             ->where(['status' => StatusEnum::ENABLED])
             ->orderBy(['level' => SORT_ASC, 'id' => SORT_DESC])
             ->all();
+    }
+
+    /**
+     * @param $level
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function findByLevel($level)
+    {
+        return Level::find()
+            ->where(['status' => StatusEnum::ENABLED])
+            ->andWhere(['level' => $level])
+            ->one();
     }
 
     /**

@@ -31,4 +31,22 @@ class SettingController extends BaseController
             'model' => $model,
         ]);
     }
+
+    /**
+     * @return mixed|string
+     */
+    public function actionConfig()
+    {
+        $request = Yii::$app->request;
+        $model = new SettingForm();
+        $model->attributes = Yii::$app->services->addonsConfig->getConfig();
+        if ($model->load($request->post()) && $model->validate()) {
+            Yii::$app->services->addonsConfig->setConfig(ArrayHelper::toArray($model));
+            return $this->message('修改成功', $this->redirect(['config']));
+        }
+
+        return $this->render('config',[
+            'model' => $model,
+        ]);
+    }
 }

@@ -11,7 +11,7 @@ use Yii;
  * @property string $app_id 应用
  * @property string $addon_name 插件名或标识
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property string|null $data 配置
  */
 class AddonsConfig extends \yii\db\ActiveRecord
@@ -30,7 +30,7 @@ class AddonsConfig extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['merchant_id', 'shop_id'], 'integer'],
+            [['merchant_id', 'store_id'], 'integer'],
             [['data'], 'safe'],
             [['app_id'], 'string', 'max' => 20],
             [['addon_name'], 'string', 'max' => 100],
@@ -47,7 +47,7 @@ class AddonsConfig extends \yii\db\ActiveRecord
             'app_id' => '应用',
             'addon_name' => '插件名或标识',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'data' => '配置',
         ];
     }

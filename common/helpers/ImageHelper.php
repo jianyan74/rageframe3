@@ -20,7 +20,7 @@ class ImageHelper
      * @param string $defaultImgSre
      * @return string
      */
-    public static function default($imgSrc, $defaultImgSre = '@baseResources/img/error.png')
+    public static function default($imgSrc, $defaultImgSre = '@baseResources/img/img-error.png')
     {
         return !empty($imgSrc) ? Yii::getAlias($imgSrc) : Yii::getAlias($defaultImgSre);
     }

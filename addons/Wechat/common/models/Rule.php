@@ -10,7 +10,7 @@ use common\behaviors\MerchantBehavior;
  *
  * @property int $id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property string $name 规则名称
  * @property string $module 模块
  * @property string|null $data 数据
@@ -41,7 +41,7 @@ class Rule extends \common\models\base\BaseModel
             ['name', 'unique','message' => '规则名称已经被占用', 'filter' => function ($query) {
                     $query->andWhere(['merchant_id' => Yii::$app->services->merchant->getNotNullId()]);
                 }],
-            [['merchant_id', 'shop_id', 'sort', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'sort', 'status', 'created_at', 'updated_at'], 'integer'],
             [['data'], 'string'],
             [['name', 'module'], 'string', 'max' => 50],
         ];
@@ -55,7 +55,7 @@ class Rule extends \common\models\base\BaseModel
         return [
             'id' => 'ID',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'name' => '规则名称',
             'module' => '模块',
             'data' => '数据',

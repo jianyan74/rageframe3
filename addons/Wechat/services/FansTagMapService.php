@@ -24,7 +24,7 @@ class FansTagMapService extends Service
     {
         FansTagMap::deleteAll(['fans_id' => $fans_id]);
 
-        $field = ['fans_id', 'tag_id', 'shop_id', 'merchant_id'];
+        $field = ['fans_id', 'tag_id', 'store_id', 'merchant_id'];
         return Yii::$app->db->createCommand()->batchInsert(FansTagMap::tableName(), $field, $data)->execute();
     }
 }

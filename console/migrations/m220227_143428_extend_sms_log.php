@@ -13,7 +13,7 @@ class m220227_143428_extend_sms_log extends Migration
         $this->createTable('{{%extend_sms_log}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(11) unsigned NULL DEFAULT '0' COMMENT '用户id'",
             'mobile' => "varchar(20) NULL DEFAULT '' COMMENT '手机号码'",
             'code' => "varchar(6) NULL DEFAULT '' COMMENT '验证码'",

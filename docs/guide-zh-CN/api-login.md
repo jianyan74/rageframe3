@@ -6,13 +6,13 @@ iOS | 苹果
 android | 安卓
 app | app
 h5 | H5
-wechat | 微信
-wechatMp | 微信小程序
-aliMp | 支付宝小程序
-qqMp | QQ小程序
-baiduMp | 百度小程序
-dingTalkMp | 钉钉小程序
-touTiaoMp | 头条小程序
+wechatMp | 微信公众号
+wechatMini | 微信小程序
+aliMini | 支付宝小程序
+qqMini | QQ小程序
+baiduMini | 百度小程序
+bytedanceMini | 字节跳动小程序
+dingTalkMini | 钉钉小程序
 
 > 注意：如果是商户 api 的需要安装商户插件，并创建用户信息进行登录
 

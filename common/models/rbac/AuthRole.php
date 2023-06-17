@@ -11,7 +11,7 @@ use common\helpers\TreeHelper;
  *
  * @property int $id 主键
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property string $title 标题
  * @property string $app_id 应用
  * @property int|null $pid 上级id
@@ -46,7 +46,7 @@ class AuthRole extends \common\models\base\BaseModel
             [['title'], 'required'],
             [['title'], 'isUniqueTitle'],
             [['title'], 'trim'],
-            [['merchant_id', 'shop_id', 'operating_type', 'pid', 'level', 'sort', 'is_default', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'operating_type', 'pid', 'level', 'sort', 'is_default', 'status', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'string', 'max' => 50],
             [['app_id'], 'string', 'max' => 20],
             [['tree'], 'string', 'max' => 300],
@@ -62,7 +62,7 @@ class AuthRole extends \common\models\base\BaseModel
         return [
             'id' => '主键',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'title' => '角色名称',
             'app_id' => '应用',
             'pid' => '父级',

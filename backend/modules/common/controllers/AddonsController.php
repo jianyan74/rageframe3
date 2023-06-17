@@ -126,6 +126,14 @@ class AddonsController extends BaseController
 
             $allAuthItem = [];
             $defaultConfig = [];
+
+            // 前置插件
+            foreach ($config->preposition as $addon => $preposition) {
+                if (empty(Yii::$app->services->addons->findByName($addon))) {
+                    throw new NotFoundHttpException('请先安装「' . $preposition . '」插件');
+                }
+            }
+
             foreach ($config->appsConfig as $appId => $item) {
                 $file = $rootPath . $item;
 

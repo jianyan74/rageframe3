@@ -23,7 +23,7 @@ class Theme extends \common\models\base\BaseModel
     use MerchantBehavior;
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName()
     {

@@ -8,7 +8,7 @@ class m220227_143427_common_config_cate extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%common_config_cate}}', [
             'id' => "int(10) NOT NULL AUTO_INCREMENT COMMENT '主键'",
@@ -24,10 +24,10 @@ class m220227_143427_common_config_cate extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='公用_配置分类表'");
-        
+
         /* 索引设置 */
-        
-        
+
+
         /* 表数据 */
         $this->insert('{{%common_config_cate}}',['id'=>'1','title'=>'网站配置','name'=>'site','pid'=>'0','app_id'=>'backend','level'=>'1','sort'=>'0','tree'=>'0 ','status'=>'1','created_at'=>'1553908350','updated_at'=>'1634397053']);
         $this->insert('{{%common_config_cate}}',['id'=>'2','title'=>'系统配置','name'=>'system','pid'=>'0','app_id'=>'backend','level'=>'1','sort'=>'1','tree'=>'0 ','status'=>'1','created_at'=>'1553908371','updated_at'=>'1634397074']);
@@ -63,13 +63,6 @@ class m220227_143427_common_config_cate extends Migration
         $this->insert('{{%common_config_cate}}',['id'=>'33','title'=>'腾讯COS','name'=>'cloudStorageCOS','pid'=>'7','app_id'=>'backend','level'=>'2','sort'=>'2','tree'=>'0-7 ','status'=>'1','created_at'=>'1559527993','updated_at'=>'1634397680']);
         $this->insert('{{%common_config_cate}}',['id'=>'34','title'=>'OAuth2','name'=>'OAuth2','pid'=>'0','app_id'=>'backend','level'=>'1','sort'=>'13','tree'=>'0 ','status'=>'1','created_at'=>'1559704928','updated_at'=>'1634397851']);
         $this->insert('{{%common_config_cate}}',['id'=>'35','title'=>'授权配置','name'=>'OAuth2Base','pid'=>'34','app_id'=>'backend','level'=>'2','sort'=>'0','tree'=>'0-34 ','status'=>'1','created_at'=>'1559704944','updated_at'=>'1634397866']);
-        $this->insert('{{%common_config_cate}}',['id'=>'36','title'=>'系统配置','name'=>'','pid'=>'0','app_id'=>'merchant','level'=>'1','sort'=>'0','tree'=>'0 ','status'=>'1','created_at'=>'1572587852','updated_at'=>'1572587852']);
-        $this->insert('{{%common_config_cate}}',['id'=>'37','title'=>'系统基础','name'=>'','pid'=>'36','app_id'=>'merchant','level'=>'2','sort'=>'0','tree'=>'0-36 ','status'=>'1','created_at'=>'1572587861','updated_at'=>'1572587861']);
-        $this->insert('{{%common_config_cate}}',['id'=>'38','title'=>'微信配置','name'=>'','pid'=>'0','app_id'=>'merchant','level'=>'1','sort'=>'1','tree'=>'0 ','status'=>'1','created_at'=>'1553908392','updated_at'=>'1573090902']);
-        $this->insert('{{%common_config_cate}}',['id'=>'39','title'=>'公众号','name'=>'','pid'=>'38','app_id'=>'merchant','level'=>'2','sort'=>'0','tree'=>'0-38 ','status'=>'1','created_at'=>'1553908626','updated_at'=>'1553908626']);
-        $this->insert('{{%common_config_cate}}',['id'=>'40','title'=>'小程序','name'=>'','pid'=>'0','app_id'=>'merchant','level'=>'1','sort'=>'2','tree'=>'0 ','status'=>'1','created_at'=>'1553908673','updated_at'=>'1573090902']);
-        $this->insert('{{%common_config_cate}}',['id'=>'41','title'=>'基础配置','name'=>'','pid'=>'46','app_id'=>'merchant','level'=>'2','sort'=>'0','tree'=>'0-46 ','status'=>'1','created_at'=>'1553908719','updated_at'=>'1553908719']);
-        $this->insert('{{%common_config_cate}}',['id'=>'42','title'=>'基础配置','name'=>'','pid'=>'40','app_id'=>'merchant','level'=>'2','sort'=>'0','tree'=>'0-40 ','status'=>'1','created_at'=>'1573091290','updated_at'=>'1573091290']);
         $this->insert('{{%common_config_cate}}',['id'=>'43','title'=>'物流追踪','name'=>'logistics','pid'=>'0','app_id'=>'backend','level'=>'1','sort'=>'10','tree'=>'0 ','status'=>'1','created_at'=>'1575892976','updated_at'=>'1634397706']);
         $this->insert('{{%common_config_cate}}',['id'=>'44','title'=>'快递鸟','name'=>'logisticsKuaiDiNiao','pid'=>'43','app_id'=>'backend','level'=>'2','sort'=>'2','tree'=>'0-43 ','status'=>'1','created_at'=>'1575892983','updated_at'=>'1634974814']);
         $this->insert('{{%common_config_cate}}',['id'=>'45','title'=>'快递100','name'=>'logisticsKuaiDi100','pid'=>'43','app_id'=>'backend','level'=>'2','sort'=>'3','tree'=>'0-43 ','status'=>'1','created_at'=>'1575892995','updated_at'=>'1634974824']);
@@ -83,25 +76,9 @@ class m220227_143427_common_config_cate extends Migration
         $this->insert('{{%common_config_cate}}',['id'=>'63','title'=>'默认物流追踪','name'=>'logisticsDefault','pid'=>'43','app_id'=>'backend','level'=>'2','sort'=>'0','tree'=>'0-43 ','status'=>'1','created_at'=>'1619936881','updated_at'=>'1634397718']);
         $this->insert('{{%common_config_cate}}',['id'=>'64','title'=>'默认短信','name'=>'smsDefault','pid'=>'27','app_id'=>'backend','level'=>'2','sort'=>'0','tree'=>'0-27 ','status'=>'1','created_at'=>'1619937935','updated_at'=>'1634397553']);
         $this->insert('{{%common_config_cate}}',['id'=>'65','title'=>'腾讯云','name'=>'smsTencent','pid'=>'27','app_id'=>'backend','level'=>'2','sort'=>'2','tree'=>'0-27 ','status'=>'1','created_at'=>'1619937948','updated_at'=>'1634397582']);
-        $this->insert('{{%common_config_cate}}',['id'=>'66','title'=>'支付配置','name'=>'','pid'=>'0','app_id'=>'merchant','level'=>'1','sort'=>'5','tree'=>'0 ','status'=>'1','created_at'=>'1625642408','updated_at'=>'1625642408']);
-        $this->insert('{{%common_config_cate}}',['id'=>'67','title'=>'支付宝','name'=>'','pid'=>'66','app_id'=>'merchant','level'=>'2','sort'=>'0','tree'=>'0-66 ','status'=>'1','created_at'=>'1625642408','updated_at'=>'1625642408']);
-        $this->insert('{{%common_config_cate}}',['id'=>'68','title'=>'微信','name'=>'','pid'=>'66','app_id'=>'merchant','level'=>'2','sort'=>'1','tree'=>'0-66 ','status'=>'1','created_at'=>'1625642409','updated_at'=>'1625642409']);
-        $this->insert('{{%common_config_cate}}',['id'=>'69','title'=>'银联','name'=>'','pid'=>'66','app_id'=>'merchant','level'=>'2','sort'=>'2','tree'=>'0-66 ','status'=>'1','created_at'=>'1625642410','updated_at'=>'1625642410']);
-        $this->insert('{{%common_config_cate}}',['id'=>'70','title'=>'Stripe','name'=>'','pid'=>'66','app_id'=>'merchant','level'=>'2','sort'=>'3','tree'=>'0-66 ','status'=>'1','created_at'=>'1625642411','updated_at'=>'1625642411']);
-        $this->insert('{{%common_config_cate}}',['id'=>'71','title'=>'字节跳动','name'=>'','pid'=>'66','app_id'=>'merchant','level'=>'2','sort'=>'4','tree'=>'0-66 ','status'=>'1','created_at'=>'1625642411','updated_at'=>'1625642411']);
-        $this->insert('{{%common_config_cate}}',['id'=>'72','title'=>'第三方登录','name'=>'','pid'=>'0','app_id'=>'merchant','level'=>'1','sort'=>'6','tree'=>'0 ','status'=>'1','created_at'=>'1625642411','updated_at'=>'1625642411']);
-        $this->insert('{{%common_config_cate}}',['id'=>'73','title'=>'QQ登录','name'=>'','pid'=>'72','app_id'=>'merchant','level'=>'2','sort'=>'0','tree'=>'0-72 ','status'=>'1','created_at'=>'1625642411','updated_at'=>'1625642411']);
-        $this->insert('{{%common_config_cate}}',['id'=>'74','title'=>'微博登录','name'=>'','pid'=>'72','app_id'=>'merchant','level'=>'2','sort'=>'1','tree'=>'0-72 ','status'=>'1','created_at'=>'1625642411','updated_at'=>'1625642411']);
-        $this->insert('{{%common_config_cate}}',['id'=>'75','title'=>'微信登录','name'=>'','pid'=>'72','app_id'=>'merchant','level'=>'2','sort'=>'2','tree'=>'0-72 ','status'=>'1','created_at'=>'1625642412','updated_at'=>'1625642412']);
-        $this->insert('{{%common_config_cate}}',['id'=>'76','title'=>'GitHub登录','name'=>'','pid'=>'72','app_id'=>'merchant','level'=>'2','sort'=>'3','tree'=>'0-72 ','status'=>'1','created_at'=>'1625642412','updated_at'=>'1625642412']);
-        $this->insert('{{%common_config_cate}}',['id'=>'77','title'=>'邮件配置','name'=>'','pid'=>'0','app_id'=>'merchant','level'=>'1','sort'=>'7','tree'=>'0 ','status'=>'1','created_at'=>'1625642412','updated_at'=>'1625642412']);
-        $this->insert('{{%common_config_cate}}',['id'=>'78','title'=>'邮件','name'=>'','pid'=>'77','app_id'=>'merchant','level'=>'2','sort'=>'0','tree'=>'0-77 ','status'=>'1','created_at'=>'1625642412','updated_at'=>'1625642412']);
-        $this->insert('{{%common_config_cate}}',['id'=>'79','title'=>'App推送','name'=>'','pid'=>'0','app_id'=>'merchant','level'=>'1','sort'=>'12','tree'=>'0 ','status'=>'1','created_at'=>'1625642413','updated_at'=>'1625642413']);
-        $this->insert('{{%common_config_cate}}',['id'=>'80','title'=>'极光推送','name'=>'','pid'=>'79','app_id'=>'merchant','level'=>'2','sort'=>'0','tree'=>'0-79 ','status'=>'1','created_at'=>'1625642413','updated_at'=>'1625642413']);
-        $this->insert('{{%common_config_cate}}',['id'=>'81','title'=>'个推推送','name'=>'','pid'=>'79','app_id'=>'merchant','level'=>'2','sort'=>'1','tree'=>'0-79 ','status'=>'1','created_at'=>'1625642413','updated_at'=>'1625642413']);
         $this->insert('{{%common_config_cate}}',['id'=>'83','title'=>'限流配置','name'=>'currentLimiting','pid'=>'0','app_id'=>'backend','level'=>'1','sort'=>'14','tree'=>'0','status'=>'1','created_at'=>'1635566120','updated_at'=>'1635566120']);
         $this->insert('{{%common_config_cate}}',['id'=>'84','title'=>'基础限流','name'=>'currentLimitingBase','pid'=>'83','app_id'=>'backend','level'=>'2','sort'=>'0','tree'=>'0-83','status'=>'1','created_at'=>'1635566154','updated_at'=>'1635566172']);
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

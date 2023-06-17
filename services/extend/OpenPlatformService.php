@@ -43,13 +43,8 @@ class OpenPlatformService
      */
     public function wechat(string $code)
     {
-        if (Yii::$app->services->devPattern->isSAAS()) {
-            $appId = Yii::$app->services->config->merchantConfig('login_wechat_appid'); //开发平台申请
-            $appSecret = Yii::$app->services->config->merchantConfig('login_wechat_app_secret'); //开发平台申请
-        } else {
-            $appId = Yii::$app->services->config->backendConfig('login_wechat_appid'); //开发平台申请
-            $appSecret = Yii::$app->services->config->backendConfig('login_wechat_app_secret'); //开发平台申请
-        }
+        $appId = Yii::$app->services->config->backendConfig('wechat_app_id'); //开发平台申请
+        $appSecret = Yii::$app->services->config->backendConfig('wechat_app_secret'); //开发平台申请
 
         // 认证
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . $appId . "&secret=" . $appSecret . "&code=" . $code . "&grant_type=authorization_code";

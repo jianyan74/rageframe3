@@ -10,7 +10,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property int|null $member_id 用户id
  * @property int|null $member_type 用户类型
  * @property float|null $user_money 当前余额
@@ -49,7 +49,7 @@ class Account extends ActiveRecord
             [
                 [
                     'merchant_id',
-                    'shop_id',
+                    'store_id',
                     'member_id',
                     'member_type',
                     'user_integral',
@@ -87,7 +87,7 @@ class Account extends ActiveRecord
         return [
             'id' => 'ID',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'member_id' => '用户id',
             'member_type' => '用户类型',
             'user_money' => '当前余额',

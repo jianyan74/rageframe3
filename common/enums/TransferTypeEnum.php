@@ -66,7 +66,7 @@ class TransferTypeEnum extends BaseEnum
                     self::ALI_BALANCE => '支付宝转账到零钱',
                 ];
                 break;
-            case AccountTypeEnum::WECHAT_MP :
+            case AccountTypeEnum::WECHAT_MINI :
                 return [
                     self::OFFLINE => '线下转账',
                     self::WECHAT_BALANCE => '微信转账到零钱',

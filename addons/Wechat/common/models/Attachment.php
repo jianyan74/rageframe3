@@ -10,7 +10,7 @@ use addons\Wechat\common\enums\AttachmentTypeEnum;
  *
  * @property int $id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property string|null $file_name 文件原始名
  * @property string|null $local_url 本地地址
  * @property string|null $media_type 类别
@@ -46,7 +46,7 @@ class Attachment extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'shop_id', 'width', 'height', 'year', 'month', 'day', 'link_type', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'width', 'height', 'year', 'month', 'day', 'link_type', 'status', 'created_at', 'updated_at'], 'integer'],
             [['file_name', 'local_url'], 'string', 'max' => 150],
             [['media_type'], 'string', 'max' => 15],
             [['media_id'], 'string', 'max' => 200],
@@ -64,7 +64,7 @@ class Attachment extends \common\models\base\BaseModel
         return [
             'id' => 'ID',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'file_name' => '文件原始名',
             'local_url' => '本地地址',
             'media_type' => '类别',

@@ -148,17 +148,15 @@ use common\helpers\ArrayHelper;
             </div>
             <?php if ($multiple == true) { ?>
                 <div class="col-lg-2">
-
                     <?php if ($key == 0) { ?>
                         <span class="multiple-cascader-input cascader-input-plus btn btn-white">
-                        <i class="fa fa-plus"></i>
-                    </span>
+                            <i class="fa fa-plus"></i>
+                        </span>
                     <?php } else { ?>
                         <span class="multiple-cascader-input cascader-input-remove btn btn-danger">
-                        <i class="fa fa-times"></i>
-                    </span>
+                            <i class="fa fa-times"></i>
+                        </span>
                     <?php } ?>
-
                 </div>
             <?php } ?>
         </div>

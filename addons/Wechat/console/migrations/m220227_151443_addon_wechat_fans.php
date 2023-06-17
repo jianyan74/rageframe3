@@ -13,7 +13,7 @@ class m220227_151443_addon_wechat_fans extends Migration
         $this->createTable('{{%addon_wechat_fans}}', [
             'id' => "int(10) unsigned NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户ID'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '用户id'",
             'unionid' => "varchar(64) NULL DEFAULT '' COMMENT '唯一公众号ID'",
             'openid' => "varchar(50) NOT NULL DEFAULT '' COMMENT 'openid'",

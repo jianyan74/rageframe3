@@ -2,7 +2,7 @@
 
 namespace common\models\common;
 
-use common\behaviors\MerchantBehavior;
+use common\behaviors\MerchantStoreBehavior;
 
 /**
  * This is the model class for table "{{%common_attachment}}".
@@ -10,6 +10,7 @@ use common\behaviors\MerchantBehavior;
  * @property int $id
  * @property int|null $member_id 用户
  * @property int|null $merchant_id 商户id
+ * @property int|null $store_id 门店ID
  * @property int|null $cate_id 分类
  * @property string|null $drive 驱动
  * @property string|null $upload_type 上传类型
@@ -34,7 +35,7 @@ use common\behaviors\MerchantBehavior;
  */
 class Attachment extends \common\models\base\BaseModel
 {
-    use MerchantBehavior;
+    use MerchantStoreBehavior;
 
     /**
      * {@inheritdoc}
@@ -51,7 +52,7 @@ class Attachment extends \common\models\base\BaseModel
     {
         return [
             [['name'], 'required'],
-            [['member_id', 'merchant_id', 'cate_id', 'size', 'year', 'month', 'day', 'width', 'height', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['member_id', 'merchant_id', 'store_id', 'cate_id', 'size', 'year', 'month', 'day', 'width', 'height', 'status', 'created_at', 'updated_at'], 'integer'],
             [['drive', 'req_id', 'format_size'], 'string', 'max' => 50],
             [['upload_type'], 'string', 'max' => 10],
             [['specific_type', 'md5', 'extension'], 'string', 'max' => 100],
@@ -69,14 +70,15 @@ class Attachment extends \common\models\base\BaseModel
             'id' => 'ID',
             'member_id' => '用户',
             'merchant_id' => '商户id',
-            'cate_id' => '分类',
+            'store_id' => '门店ID',
+            'cate_id' => '所属分组',
             'drive' => '驱动',
             'upload_type' => '上传类型',
             'specific_type' => '类别',
             'url' => 'Url 地址',
             'path' => '本地路径',
             'md5' => 'md5校验码',
-            'name' => '文件原始名',
+            'name' => '文件名', // 文件原始名
             'extension' => '扩展名',
             'size' => '大小',
             'format_size' => '大小',

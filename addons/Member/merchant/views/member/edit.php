@@ -4,10 +4,12 @@ use yii\widgets\ActiveForm;
 use common\enums\GenderEnum;
 use common\enums\StatusEnum;
 use kartik\select2\Select2;
+use common\enums\AccessTokenGroupEnum;
 
 $this->title = '编辑';
 $this->params['breadcrumbs'][] = ['label' => '会员信息', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
+
 ?>
 
 <div class="row">
@@ -18,7 +20,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             </div>
             <?php $form = ActiveForm::begin([
                 'fieldConfig' => [
-                    'template' => "<div class='row'><div class='col-sm-2 text-right'>{label}</div><div class='col-sm-10'>{input}\n{hint}\n{error}</div></div>",
+                    'template' => "<div class='row'><div class='col-1 text-right'>{label}</div><div class='col-11'>{input}\n{hint}\n{error}</div></div>",
                 ]
             ]); ?>
             <div class="box-body">
@@ -63,7 +65,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         'maximumInputLength' => 20
                     ],
                 ]); ?>
-                <?= $form->field($model, 'status')->radioList(StatusEnum::getMap()) ?>
+                <?= $form->field($model, 'source')->dropDownList(AccessTokenGroupEnum::getMap()) ?>
             </div>
             <div class="box-footer text-center">
                 <button class="btn btn-primary" type="submit">保存</button>

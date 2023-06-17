@@ -13,7 +13,7 @@ class m220227_143428_extend_config extends Migration
         $this->createTable('{{%extend_config}}', [
             'id' => "int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'store_id' => "int(10) NULL DEFAULT '0' COMMENT '门店'",
             'title' => "varchar(50) NULL DEFAULT '' COMMENT '配置标题'",
             'name' => "varchar(50) NULL DEFAULT '' COMMENT '配置标识'",

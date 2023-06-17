@@ -3,7 +3,7 @@
 namespace addons\Wechat\common\models;
 
 use Yii;
-use common\behaviors\MerchantShopBehavior;
+use common\behaviors\MerchantStoreBehavior;
 use common\models\base\BaseModel;
 use addons\Wechat\common\enums\QrcodeModelTypeEnum;
 
@@ -12,7 +12,7 @@ use addons\Wechat\common\enums\QrcodeModelTypeEnum;
  *
  * @property int $id
  * @property int|null $merchant_id 商户ID
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property string|null $name 场景名称
  * @property string|null $keyword 关联关键字
  * @property int|null $scene_id 场景ID
@@ -33,7 +33,7 @@ use addons\Wechat\common\enums\QrcodeModelTypeEnum;
  */
 class Qrcode extends BaseModel
 {
-    use MerchantShopBehavior;
+    use MerchantStoreBehavior;
 
     /**
      * {@inheritdoc}
@@ -53,7 +53,7 @@ class Qrcode extends BaseModel
             [
                 [
                     'merchant_id',
-                    'shop_id',
+                    'store_id',
                     'scene_id',
                     'model_type',
                     'expire_seconds',
@@ -84,7 +84,7 @@ class Qrcode extends BaseModel
         return [
             'id' => 'ID',
             'merchant_id' => '商户ID',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'name' => '场景名称',
             'keyword' => '关联关键字',
             'scene_id' => '场景ID',

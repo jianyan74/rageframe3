@@ -8,12 +8,12 @@ class m220227_151444_addon_wechat_rule_keyword extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%addon_wechat_rule_keyword}}', [
             'id' => "int(10) unsigned NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'rule_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '规则ID'",
             'module' => "varchar(50) NOT NULL DEFAULT '' COMMENT '模块名'",
             'content' => "varchar(255) NOT NULL DEFAULT '' COMMENT '内容'",
@@ -22,15 +22,15 @@ class m220227_151444_addon_wechat_rule_keyword extends Migration
             'status' => "tinyint(1) NULL DEFAULT '1' COMMENT '状态[-1:删除;0:禁用;1启用]'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='微信_回复关键字表'");
-        
+
         /* 索引设置 */
         $this->createIndex('idx_content','{{%addon_wechat_rule_keyword}}','content',0);
-        $this->createIndex('shop_id','{{%addon_wechat_rule_keyword}}','shop_id',0);
+        $this->createIndex('store_id','{{%addon_wechat_rule_keyword}}','store_id',0);
         $this->createIndex('merchant_id','{{%addon_wechat_rule_keyword}}','merchant_id',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

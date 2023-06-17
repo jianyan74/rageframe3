@@ -1,4 +1,10 @@
-<div class="btn btn-primary selector-upload-album" id="<?= $boxId; ?>">立即上传</div>
+<?php
+
+use common\enums\AttachmentUploadTypeEnum;
+
+?>
+
+<div class="btn btn-primary selector-upload-album" id="<?= $boxId; ?>">上传<?= AttachmentUploadTypeEnum::getValue($type); ?></div>
 <!--隐藏上传组件-->
 <div class="hidden" id="upload-<?= $boxId; ?>">
     <div class="upload-album-<?= $boxId; ?>"></div>

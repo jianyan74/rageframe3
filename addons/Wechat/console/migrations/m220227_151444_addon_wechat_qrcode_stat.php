@@ -8,12 +8,12 @@ class m220227_151444_addon_wechat_qrcode_stat extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%addon_wechat_qrcode_stat}}', [
             'id' => "int(10) unsigned NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'qrcord_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '二维码id'",
             'openid' => "varchar(50) NULL DEFAULT '' COMMENT '微信openid'",
             'type' => "tinyint(1) unsigned NULL DEFAULT '0' COMMENT '1:关注;2:扫描'",
@@ -27,14 +27,14 @@ class m220227_151444_addon_wechat_qrcode_stat extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='微信_二维码扫描记录表'");
-        
+
         /* 索引设置 */
         $this->createIndex('qrcord_id','{{%addon_wechat_qrcode_stat}}','qrcord_id',0);
-        $this->createIndex('merchant_id','{{%addon_wechat_qrcode_stat}}','merchant_id, shop_id',0);
-        
-        
+        $this->createIndex('merchant_id','{{%addon_wechat_qrcode_stat}}','merchant_id, store_id',0);
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

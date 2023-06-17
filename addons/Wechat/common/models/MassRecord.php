@@ -4,7 +4,7 @@ namespace addons\Wechat\common\models;
 
 use yii\db\ActiveQuery;
 use common\helpers\StringHelper;
-use common\behaviors\MerchantShopBehavior;
+use common\behaviors\MerchantStoreBehavior;
 use common\models\base\BaseModel;
 
 /**
@@ -12,7 +12,7 @@ use common\models\base\BaseModel;
  *
  * @property int $id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property int|null $msg_id 微信消息id
  * @property string|null $msg_data_id 图文消息数据id
  * @property int|null $tag_id 标签id
@@ -31,7 +31,7 @@ use common\models\base\BaseModel;
  */
 class MassRecord extends BaseModel
 {
-    use MerchantShopBehavior;
+    use MerchantStoreBehavior;
 
     /**
      * {@inheritdoc}
@@ -51,7 +51,7 @@ class MassRecord extends BaseModel
             [
                 [
                     'merchant_id',
-                    'shop_id',
+                    'store_id',
                     'msg_id',
                     'tag_id',
                     'fans_num',
@@ -79,7 +79,7 @@ class MassRecord extends BaseModel
         return [
             'id' => 'ID',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'msg_id' => '微信消息id',
             'msg_data_id' => '图文消息数据id',
             'tag_id' => '标签',

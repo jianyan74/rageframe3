@@ -34,7 +34,7 @@ $roles = Yii::$app->services->rbacAuthRole->getRoles();
                 <img src="<?= ImageHelper::defaultHeaderPortrait(Yii::$app->user->identity->head_portrait); ?>" class="img-circle head_portrait" width="30px">
                 <?= Yii::$app->user->identity->username; ?>
             </a>
-            <div class="dropdown-menu dropdown-menu">
+            <div class="dropdown-menu">
                 <a href="<?= BaseUrl::to(['personal/index'])?>" class="dropdown-item text-center J_menuItem">
                     <!-- Message Start -->
                     <div class="media">

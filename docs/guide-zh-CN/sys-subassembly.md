@@ -199,17 +199,17 @@ array (size=4)
 
 ```
 // 查询所有的可用快递公司
-$companies = Yii::$app->logistics->companies('aliyun');
+$companies = Yii::$app->extendLogistics->companies('aliyun');
 
 /**
  * 支持 aliyun(阿里云)、juhe(聚合)、kdniao(快递鸟)、kd100(快递100)
  *
  * @param string $no 快递单号
  * @param null $company 快递公司
+  * @param null $customerName 手机号码(顺丰必填)
  * @param bool $isCache 是否缓存读取默认缓存1小时
- * @return OrderInterface
  */
-$order = Yii::$app->logistics->aliyun($no, $company, $isCache);
+$order = Yii::$app->extendLogistics->aliyun($no, $company, $customerName, $isCache);
 ```
 
 ### 小票打印

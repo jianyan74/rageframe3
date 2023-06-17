@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = ['label' =>  $this->title];
                                     }
 
                                     if ($model->model_type == QrcodeModelTypeEnum::TEM) {
-                                        $str[] = $model->end_time < time() ? "<span class='label label-danger'>已过期</span>" : "<span class='label label-primary'>未过期</span>";
+                                        $str[] = $model->end_time < time() ? "<span class='red'>已过期</span>" : "未过期";
                                     }
 
                                     return implode('<br>', $str);
@@ -125,7 +125,7 @@ $this->params['breadcrumbs'][] = ['label' =>  $this->title];
                         ]); ?>
                         <span>
                             注意：永久二维码无法在微信平台删除，但是您可以点击
-                            <a href="javascript:;" class="color-default">【删除】</a>来删除本地数据。
+                            <a href="javascript:void(0);" class="color-default">【删除】</a>来删除本地数据。
                         </span>
                     </div>
                 </div>

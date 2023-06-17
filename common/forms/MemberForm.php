@@ -28,7 +28,8 @@ class MemberForm extends Member
         return ArrayHelper::merge(parent::rules(), [
             [['mobile'], 'uniqueMobile'],
             [['username'], 'uniqueUsername'],
-            [['email'], 'uniqueEmail']
+            [['email'], 'uniqueEmail'],
+            [['id'], 'safe'],
         ]);
     }
 

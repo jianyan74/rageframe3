@@ -10,7 +10,7 @@ use common\models\base\BaseModel;
  *
  * @property int $id
  * @property int|null $merchant_id 商户ID
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property string|null $tags 标签
  * @property int|null $status 状态[-1:删除;0:禁用;1启用]
  * @property int|null $created_at 创建时间
@@ -34,7 +34,7 @@ class FansTags extends BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'shop_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['tags'], 'safe'],
         ];
     }
@@ -47,7 +47,7 @@ class FansTags extends BaseModel
         return [
             'id' => 'ID',
             'merchant_id' => '商户ID',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'tags' => '标签',
             'status' => '状态[-1:删除;0:禁用;1启用]',
             'created_at' => '创建时间',

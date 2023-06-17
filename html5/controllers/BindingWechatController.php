@@ -4,7 +4,7 @@ namespace html5\controllers;
 
 use Yii;
 use yii\helpers\Json;
-use common\enums\MemberAuthOauthClientEnum;
+use common\enums\AccessTokenGroupEnum;
 use common\helpers\HashidsHelper;
 use yii\web\UnprocessableEntityHttpException;
 
@@ -55,12 +55,12 @@ class BindingWechatController extends BaseController
         }
 
         $original = Yii::$app->params['wechatMember']['original'];
-        $auth = Yii::$app->services->memberAuth->findByMemberIdOauthClient(MemberAuthOauthClientEnum::WECHAT, $member_id);
+        $auth = Yii::$app->services->memberAuth->findByMemberIdOauthClient(AccessTokenGroupEnum::WECHAT_MP, $member_id);
         $message = '请先解绑再绑定';
         if (empty($auth)) {
             Yii::$app->services->backendMemberAuth->create([
                 'member_id' => $member_id,
-                'oauth_client' => MemberAuthOauthClientEnum::WECHAT,
+                'oauth_client' => AccessTokenGroupEnum::WECHAT_MP,
                 'oauth_client_user_id' => $original['openid'],
                 'gender' => $original['sex'],
                 'nickname' => $original['nickname'],

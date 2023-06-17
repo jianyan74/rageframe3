@@ -1,8 +1,9 @@
 <?php
 
 use common\helpers\Html;
+use common\helpers\Url;
 use common\enums\StatusEnum;
-use common\enums\MemberAuthOauthClientEnum;
+use common\enums\AccessTokenGroupEnum;
 
 $this->title = '第三方授权';
 
@@ -43,12 +44,14 @@ $this->title = '第三方授权';
                             </td>
                             <td>
                                 <?php if($item['status'] == StatusEnum::DISABLED) { ?>
-                                    <?= Html::a('立即绑定', ['binding-wechat', 'member_id' => $memberId, 'type' => MemberAuthOauthClientEnum::WECHAT], [
-                                        'class' => 'cyan',
+                                    <?= Html::a('立即绑定', ['binding-wechat', 'member_id' => $memberId, 'type' => AccessTokenGroupEnum::WECHAT_MP], [
+                                        'class' => 'cyan wechat-binding',
+                                        'data-member_id' => $memberId,
+                                        'data-oauth_client' => AccessTokenGroupEnum::WECHAT_MP,
                                         'data-fancybox' => 'gallery',
                                     ])?>
                                 <?php } else { ?>
-                                    <?= Html::a('解绑', ['un-bind', 'member_id' => $memberId, 'type' => MemberAuthOauthClientEnum::WECHAT], [
+                                    <?= Html::a('解绑', ['un-bind', 'member_id' => $memberId, 'type' => AccessTokenGroupEnum::WECHAT_MP], [
                                         'class' => 'red'
                                     ])?>
                                 <?php } ?>
@@ -61,3 +64,33 @@ $this->title = '第三方授权';
         </div>
     </div>
 </div>
+
+<script>
+    var timer;
+    var member_id;
+    var type;
+    $('.wechat-binding').click(function () {
+        if (timer) {
+            clearInterval(timer);
+        }
+
+        member_id = $(this).data('member_id');
+        type = $(this).data('oauth_client');
+        timer = setInterval(binding, 1000);
+    })
+
+    function binding() {
+        // 判断登录
+        $.ajax({
+            type: "get",
+            url: "<?= Url::to(['oauth-status'])?>",
+            dataType: "json",
+            data: {member_id: member_id, type: type},
+            success: function (data) {
+                if (parseInt(data.code) === 200) {
+                    window.location.reload();
+                }
+            }
+        });
+    }
+</script>

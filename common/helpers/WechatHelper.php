@@ -44,7 +44,7 @@ class WechatHelper
     {
         $config = Yii::$app->services->config->configAll(true);
 
-        $token = $config['miniprogram_token'] ?? '';
+        $token = $config['wechat_mini_token'] ?? '';
         $tmpArr = [$token, $timestamp, $nonce];
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode($tmpArr);

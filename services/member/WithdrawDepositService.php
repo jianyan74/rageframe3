@@ -65,15 +65,15 @@ class WithdrawDepositService extends Service
     {
         $params = [
             'out_batch_no' => $model->batch_no, // 商户系统内部的商家批次单号，要求此参数只能由数字、大小写字母组成，在商户系统内部唯一
-            'batch_name' => '批量转账-'.$model->realname, // 转账标题
-            'batch_remark' => '批量转账-'.$model->realname, // 转账备注
+            'batch_name' => '批量转账 - ' . $model->realname, // 转账标题
+            'batch_remark' => '批量转账 - ' . $model->realname, // 转账备注
             'total_amount' => $model->cash * 100, // 转账总金额
             'total_num' => 1, // 转账总金额
             'transfer_detail_list' => [
                 [
                     'out_detail_no' => $model->withdraw_no, // 商户订单号
                     'transfer_amount' => $model->cash * 100, // 企业付款金额，单位为分
-                    'transfer_remark' => $model->memo, // 企业付款操作说明信息。必填
+                    'transfer_remark' => !empty($model->memo) ? $model->memo : '无', // 企业付款操作说明信息。必填
                     'openid' => $model->account_number,
                     'user_name' => $model->realname, // 明细转账金额 >= 2,000，收款用户姓名必填
                 ],
@@ -103,7 +103,7 @@ class WithdrawDepositService extends Service
     {
         // 设置appid
         Yii::$app->params['wechatPaymentConfig'] = ArrayHelper::merge(Yii::$app->params['wechatPaymentConfig'], [
-            'app_id' => Yii::$app->services->config->backendConfig('miniprogram_appid'),
+            'app_id' => Yii::$app->services->config->backendConfig('wechat_mini_app_id'),
         ]);
 
         return $this->wechatToBalance($model);
@@ -209,21 +209,12 @@ class WithdrawDepositService extends Service
         switch ($log->transfer_type) {
             case TransferTypeEnum::ALI_BANK_CARD :
             case TransferTypeEnum::ALI_BALANCE :
-                $result = Yii::$app->pay->alipay->transferQuery([
+                $result = Yii::$app->pay->alipay->find([
                     'out_biz_no' => $withdraw_no,
-                    'order_id' => $log->transaction_id,
+                    '_type' => 'transfer',
                 ]);
 
-                if ($result['code'] != '10000') {
-                    if (isset($result['sub_msg'])) {
-                        throw new UnprocessableEntityHttpException($result['sub_msg']);
-                    }
-
-                    throw new UnprocessableEntityHttpException($result['msg']);
-                }
-
                 return $allReturn ? $result : $result['msg'];
-
                 break;
             case TransferTypeEnum::WECHAT_BANK_CARD :
                 $result = Yii::$app->wechat->payment->transfer->queryBankCardOrder($withdraw_no);

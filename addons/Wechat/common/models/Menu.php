@@ -11,7 +11,7 @@ use addons\Wechat\common\enums\MenuTypeEnum;
  *
  * @property int $id 公众号id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property int|null $menu_id 微信菜单id
  * @property int|null $type 1:默认菜单；2个性化菜单
  * @property string|null $title 标题
@@ -39,7 +39,7 @@ class Menu extends \common\models\base\BaseModel
     {
         return [
             [['title'], 'required'],
-            [['merchant_id', 'shop_id', 'menu_id', 'type', 'tag_id', 'client_platform_type', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'menu_id', 'type', 'tag_id', 'client_platform_type', 'status', 'created_at', 'updated_at'], 'integer'],
             [['menu_data'], 'safe'],
             [['title'], 'string', 'max' => 30],
             [['title'], 'verifyEmpty'],
@@ -54,7 +54,7 @@ class Menu extends \common\models\base\BaseModel
         return [
             'id' => '公众号id',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'menu_id' => '微信菜单id',
             'type' => '1:默认菜单；2个性化菜单',
             'title' => '标题',

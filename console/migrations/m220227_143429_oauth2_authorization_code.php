@@ -13,7 +13,7 @@ class m220227_143429_oauth2_authorization_code extends Migration
         $this->createTable('{{%oauth2_authorization_code}}', [
             'authorization_code' => "varchar(100) NOT NULL",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'client_id' => "varchar(64) NOT NULL COMMENT '授权ID'",
             'member_id' => "varchar(100) NULL COMMENT '用户ID'",
             'redirect_uri' => "varchar(2000) NULL COMMENT '回调url'",

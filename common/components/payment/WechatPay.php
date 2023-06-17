@@ -87,8 +87,8 @@ class WechatPay
      * 微信APP支付网关
      *
      * @param $order
-     * @param $debug
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return \Yansongda\Supports\Collection
+     * @throws UnprocessableEntityHttpException
      */
     public function app($order)
     {

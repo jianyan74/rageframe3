@@ -13,7 +13,7 @@ class m220227_151443_addon_wechat_attachment_news extends Migration
         $this->createTable('{{%addon_wechat_attachment_news}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'attachment_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '关联的资源id'",
             'title' => "varchar(50) NOT NULL DEFAULT '' COMMENT '标题'",
             'thumb_media_id' => "varchar(200) NULL DEFAULT '' COMMENT '图文消息的封面图片素材id（必须是永久mediaID）'",

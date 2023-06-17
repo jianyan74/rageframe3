@@ -13,7 +13,7 @@ class m220227_143428_member_address extends Migration
         $this->createTable('{{%member_address}}', [
             'id' => "int(10) NOT NULL AUTO_INCREMENT COMMENT '主键'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(11) unsigned NULL DEFAULT '0' COMMENT '用户id'",
             'realname' => "varchar(100) NULL DEFAULT '' COMMENT '真实姓名'",
             'mobile' => "varchar(20) NULL DEFAULT '' COMMENT '手机号码'",

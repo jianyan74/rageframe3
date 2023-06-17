@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = ['label' =>  $this->title];
                 <h3 class="box-title"><?= $this->title; ?></h3>
             </div>
             <div class="box-body table-responsive">
-                <div class="col-sm-12 normalPaddingJustV">
+                <div class="col-12 normalPaddingJustV">
                     <?php $form = ActiveForm::begin([
                         'action' => Url::to(['rule-keyword']),
                         'method' => 'get'

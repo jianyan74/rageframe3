@@ -30,7 +30,7 @@ class MapController extends Controller
         // 高德 code
         $mapAMapCode = Yii::$app->services->config->backendConfig('map_amap_code');
 
-        return $this->render('@common/widgets/map/views/' . $type, [
+        return $this->render('@common/widgets/map/views/map/' . $type, [
             'lng' => $lng,
             'lat' => $lat,
             'zoom' => $zoom,
@@ -54,7 +54,7 @@ class MapController extends Controller
         // 注册js
         $this->registerViewJs($type, $secret_key);
 
-        return $this->render('@common/widgets/map/views/' . $type . '-view', [
+        return $this->render('@common/widgets/map/views/map/detail/' . $type, [
             'lng' => $lng,
             'lat' => $lat,
             'label' => $label,
@@ -76,7 +76,7 @@ class MapController extends Controller
         // 注册js
         $this->registerViewJs($type, $secret_key);
 
-        return $this->render('@common/widgets/map/views/' . $type . '-riding-route', [
+        return $this->render('@common/widgets/map/views/map/route/' . $type, [
             'lng' => $lng,
             'lat' => $lat,
             'label' => $label,
@@ -97,7 +97,7 @@ class MapController extends Controller
      */
     public function actionInput($lng = '', $lat = '', $boxId = 12)
     {
-        return $this->renderAjax('@common/widgets/map/views/input', [
+        return $this->renderAjax('@common/widgets/map/views/map/input', [
             'lng' => $lng,
             'lat' => $lat,
             'boxId' => $boxId,

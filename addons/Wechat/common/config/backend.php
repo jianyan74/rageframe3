@@ -9,7 +9,7 @@ return [
             'location' => 'default', // default:系统顶部菜单;addons:应用中心菜单
             'icon' => 'fa fa-comments',
             'sort' => 11, // 自定义排序
-            'pattern' => ['b2c', 'b2b2c']
+            'pattern' => ['blank']
         ],
         // 子模块配置
         'modules' => [
@@ -94,8 +94,8 @@ return [
             ],
         ],
         [
-            'title' => '参数配置',
-            'name' => 'setting/history-stat',
+            'title' => '微信配置',
+            'name' => 'config/index',
             'icon' => 'fa fa-cog',
             'pattern' => ['b2c', 'b2b2c'], // 可见模式
         ],
@@ -104,9 +104,6 @@ return [
     // ----------------------- 权限配置 ----------------------- //
 
     'authItem' => [
-        [
-            'title' => '所有权限',
-            'name' => '*',
-        ],
+
     ],
 ];

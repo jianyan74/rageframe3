@@ -2,6 +2,8 @@
 
 namespace common\widgets\webuploader;
 
+use common\helpers\ArrayHelper;
+use common\models\common\AttachmentCate;
 use Yii;
 use yii\data\Pagination;
 use yii\web\Controller;
@@ -70,7 +72,7 @@ class FilesController extends Controller
      */
     public function actionSelector()
     {
-        // $this->layout = '';
+        $this->layout = '@backend/views/layouts/blank';
 
         $pageSize = Yii::$app->request->get('per-page', 10);
         $uploadType = Yii::$app->request->get('upload_type', AttachmentUploadTypeEnum::IMAGES);
@@ -83,6 +85,7 @@ class FilesController extends Controller
         $data = Attachment::find()
             ->where(['status' => StatusEnum::ENABLED, 'upload_type' => $uploadType])
             ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+            ->andFilterWhere(['store_id' => $this->getStoreId()])
             ->andFilterWhere(['drive' => $drive])
             ->andFilterWhere(['year' => $year])
             ->andFilterWhere(['month' => $month])
@@ -95,6 +98,18 @@ class FilesController extends Controller
             ->limit($pages->limit)
             ->asArray()
             ->all();
+
+        // 数量
+        $groupByCateId = Attachment::find()
+            ->select(['count(id) as count', 'cate_id'])
+            ->where(['status' => StatusEnum::ENABLED, 'upload_type' => $uploadType])
+            ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+            ->andFilterWhere(['store_id' => $this->getStoreId()])
+            ->groupBy('cate_id')
+            ->asArray()
+            ->all();
+
+        $cateCountMap = ArrayHelper::map($groupByCateId, 'cate_id', 'count');
 
         // 如果是以文件形式上传的图片手动修改为图片类型显示
         foreach ($models as &$model) {
@@ -130,12 +145,62 @@ class FilesController extends Controller
             'uploadDrive' => $uploadDrive,
             'multiple' => Yii::$app->request->get('multiple', true),
             'boxId' => Yii::$app->request->get('box_id'),
-            'cates' => Yii::$app->services->attachmentCate->findAll(),
+            'cates' => Yii::$app->services->attachmentCate->findAll($uploadType),
             'cateId' => $cateId,
+            'cateCountMap' => $cateCountMap,
             'year' => $year,
             'month' => $month,
             'keyword' => $keyword,
             'drive' => $drive,
+        ]);
+    }
+
+    /**
+     * @return mixed|string|\yii\web\Response
+     * @throws \yii\base\ExitException
+     */
+    public function actionAjaxEdit()
+    {
+        $id = Yii::$app->request->get('id');
+        $type = Yii::$app->request->get('type');
+        $model = Yii::$app->services->attachment->findById($id);
+
+        // ajax 校验
+        $this->activeFormValidate($model);
+        if ($model->load(Yii::$app->request->post())) {
+            return $model->save()
+                ? $this->message('操作成功，请切换到第一页查看', $this->redirect(Yii::$app->request->referrer))
+                : $this->message($this->getError($model), $this->redirect(Yii::$app->request->referrer), 'error');
+        }
+
+        return $this->renderAjax('@common/widgets/webuploader/views/ajax-edit', [
+            'model' => $model,
+            'cateMap' => Yii::$app->services->attachmentCate->getMap($type),
+        ]);
+    }
+
+    /**
+     * @return array|mixed|string|\yii\web\Response
+     * @throws \yii\base\ExitException
+     */
+    public function actionCateAjaxEdit()
+    {
+        $type = Yii::$app->request->get('type');
+        $model = new AttachmentCate();
+        $model->loadDefaultValues();
+        $model->type = $type;
+
+        // ajax 校验
+        $this->activeFormValidate($model);
+        if ($model->load(Yii::$app->request->post())) {
+            return $model->save()
+                ? $this->message('操作成功', $this->redirect(Yii::$app->request->referrer))
+                : $this->message($this->getError($model), $this->redirect(Yii::$app->request->referrer), 'error');
+        }
+
+        return $this->renderAjax('@common/widgets/webuploader/views/cate-ajax-edit', [
+            'model' => $model,
+            'type' => $type,
         ]);
     }
 }

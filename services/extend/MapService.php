@@ -95,10 +95,6 @@ class MapService
      */
     protected function getConfigByKey($key)
     {
-        if (Yii::$app->services->devPattern->isSAAS()) {
-            // return Yii::$app->services->config->merchantConfig($key);
-        }
-
         return Yii::$app->services->config->backendConfig($key);
     }
 }

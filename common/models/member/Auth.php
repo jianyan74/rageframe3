@@ -69,7 +69,7 @@ class Auth extends \common\models\base\BaseModel
             'member_type' => '1:会员;2:后台管理员;3:商家管理员',
             'unionid' => '唯一ID',
             'oauth_client' => '授权组别',
-            'oauth_client_user_id' => '授权id',
+            'oauth_client_user_id' => '授权ID',
             'gender' => '性别',
             'nickname' => '昵称',
             'head_portrait' => '头像',

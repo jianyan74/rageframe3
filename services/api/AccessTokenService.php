@@ -124,11 +124,8 @@ class AccessTokenService extends Service
      */
     public function findByAccessToken($token)
     {
-        $merchant_id = DevPatternEnum::SAAS == Yii::$app->params['devPattern'] ? $this->getMerchantId() : '';
-
         return AccessToken::find()
             ->where(['access_token' => $token, 'status' => StatusEnum::ENABLED])
-            ->andFilterWhere(['merchant_id' => $merchant_id])
             ->one();
     }
 

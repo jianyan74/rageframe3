@@ -2,6 +2,7 @@
 
 namespace services\common;
 
+use common\enums\DevPatternEnum;
 use Yii;
 use yii\helpers\Json;
 use common\enums\StatusEnum;
@@ -146,7 +147,7 @@ class MenuCateService extends Service
      */
     public function findDefault($app_id)
     {
-        return MenuCate::find()
+        $list = MenuCate::find()
             ->where([
                 'type' => StatusEnum::DISABLED,
                 'app_id' => $app_id
@@ -156,6 +157,14 @@ class MenuCateService extends Service
             ->orderBy('sort asc, id asc')
             ->asArray()
             ->all();
+
+//        foreach ($list as $key => $item) {
+//            if (in_array(DevPatternEnum::BLANK, Json::decode($item['pattern']))) {
+//                unset($list[$key]);
+//            }
+//        }
+
+        return array_merge($list);
     }
 
     /**

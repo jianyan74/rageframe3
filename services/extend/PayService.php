@@ -17,6 +17,7 @@ use common\forms\PayForm;
 /**
  * Class PayService
  * @package services\extend
+ * @author jianyan74 <751393839@qq.com>
  */
 class PayService
 {
@@ -42,7 +43,7 @@ class PayService
         ];
 
         //  判断如果是公众号/小程序支付
-        if (in_array($payLog->trade_type, [PayTradeTypeEnum::WECHAT_MP, PayTradeTypeEnum::WECHAT_MINI])) {
+        if (in_array($payLog->trade_type, [PayTradeTypeEnum::WECHAT_MINI, PayTradeTypeEnum::WECHAT_MINI])) {
             $order['payer'] = [
                 'openid' => $payLog->openid
             ];
@@ -98,7 +99,6 @@ class PayService
 
         // 面对面收款
         if ($payLog->trade_type == PayTradeTypeEnum::ALI_POS) {
-            $order['scene'] = 'bar_code';
             $payLog->auth_code = StringHelper::replace('\r', '', $payLog->auth_code);
             $payLog->auth_code = StringHelper::replace('\n', '', $payLog->auth_code);
             $order['auth_code'] = (int)$payLog->auth_code;
@@ -113,13 +113,13 @@ class PayService
     }
 
     /**
-     * 银联支付(已弃用)
+     * 银联支付
      *
      * @param PayForm $payForm
      * @return mixed
      * @throws \yii\base\InvalidConfigException
      */
-    public function union(PayLog $payLog)
+    public function unipay(PayLog $payLog)
     {
         // 配置
         $config = [
@@ -138,7 +138,7 @@ class PayService
         // 交易类型
         $tradeType = $payLog->trade_type;
 
-        return Yii::$app->pay->union($config)->$tradeType($order);
+        return Yii::$app->pay->unipay($config)->$tradeType($order);
     }
 
     /**
@@ -263,7 +263,6 @@ class PayService
 
         $refund_sn = date('YmdHis') . StringHelper::random(8, true);
         $response = [];
-
         // 字节跳动小程序退款
         if ($model['trade_type'] == 'byte-dance') {
             $response = Yii::$app->pay->byteDance->refund([
@@ -286,13 +285,12 @@ class PayService
                         'refund_fee' => $money * 100, //=0.01
                     ];
 
-                    $response = Yii::$app->pay->wechat->refund($info, $model->trade_type);
-                    if ($response['return_code'] != 'SUCCESS' || $response['result_code'] != 'SUCCESS') {
+                    $response = Yii::$app->pay->wechat->refund($info);
+                    if ($response['status'] != 'SUCCESS') {
                         throw new UnprocessableEntityHttpException($response['err_code_des']);
                     }
 
                     break;
-
                 case PayTypeEnum::ALI :
                     $info = [
                         'out_trade_no' => $model->out_trade_no,
@@ -306,6 +304,16 @@ class PayService
                         throw new UnprocessableEntityHttpException($response['alipay_trade_refund_response']['sub_msg']);
                     }
 
+                    break;
+                case PayTypeEnum::UNION :
+                    $info = [
+                        'txnTime' => date('YmdHis'),
+                        'origQryId' => $model->transaction_id,
+                        'txnAmt' => $money,
+                        'orderId' => $refund_sn,
+                    ];
+
+                    $response = Yii::$app->pay->unipay->refund($info);
                     break;
             }
         }

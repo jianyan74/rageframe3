@@ -12,7 +12,7 @@ use common\behaviors\MerchantBehavior;
  *
  * @property int $id
  * @property int|null $merchant_id 商户ID
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property int|null $member_id 用户id
  * @property string|null $unionid 唯一公众号ID
  * @property string $openid openid
@@ -56,7 +56,7 @@ class Fans extends \yii\db\ActiveRecord
             [
                 [
                     'merchant_id',
-                    'shop_id',
+                    'store_id',
                     'member_id',
                     'follow',
                     'follow_time',
@@ -88,7 +88,7 @@ class Fans extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'merchant_id' => '商户ID',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'member_id' => '用户id',
             'unionid' => '唯一公众号ID',
             'openid' => 'openId',

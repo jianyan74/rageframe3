@@ -28,7 +28,7 @@ class AddonLeftWidget extends Widget
             $auth = Auth::getAuth();
             foreach ($menus as $kye => $menu) {
                 // 移除无权限菜单
-                if (Auth::verify($menu['route'], $auth) === false) {
+                if (Auth::verify($menu['url'], $auth) === false) {
                     unset($menus[$kye]);
                 }
 

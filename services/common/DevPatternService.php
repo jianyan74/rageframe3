@@ -49,7 +49,7 @@ class DevPatternService extends Service
      */
     public function isPlatformLocation()
     {
-        if (($this->isB2B2C() || $this->isSAAS()) && Yii::$app->id == AppEnum::BACKEND) {
+        if ($this->isB2B2C() && Yii::$app->id == AppEnum::BACKEND) {
             return true;
         }
 
@@ -63,7 +63,7 @@ class DevPatternService extends Service
      */
     public function isMerchantLocation()
     {
-        if (($this->isB2B2C() || $this->isSAAS()) && Yii::$app->id == AppEnum::MERCHANT) {
+        if ($this->isB2B2C() && Yii::$app->id == AppEnum::MERCHANT) {
             return true;
         }
 

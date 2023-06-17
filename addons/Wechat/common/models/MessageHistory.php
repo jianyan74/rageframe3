@@ -9,7 +9,7 @@ use common\models\member\Auth;
  *
  * @property int $id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property int|null $rule_id 规则id
  * @property int|null $keyword_id 关键字id
  * @property string|null $openid
@@ -39,7 +39,7 @@ class MessageHistory extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'shop_id', 'rule_id', 'keyword_id', 'is_addon', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'rule_id', 'keyword_id', 'is_addon', 'status', 'created_at', 'updated_at'], 'integer'],
             [['openid', 'module'], 'string', 'max' => 50],
             [['addon_name'], 'string', 'max' => 100],
             [['message'], 'string', 'max' => 1000],
@@ -55,7 +55,7 @@ class MessageHistory extends \common\models\base\BaseModel
         return [
             'id' => 'ID',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'rule_id' => '规则id',
             'keyword_id' => '关键字id',
             'openid' => 'openId',

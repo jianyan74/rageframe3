@@ -65,6 +65,23 @@ HTML;
             <?php } ?>
             <?php $i++; ?>
         <?php } ?>
+        <?php foreach ($columns as $column) { ?>
+            <div class="col-<?= $column['col'] ?> pull-left" style="margin-top: -5px;margin-left: 10px;">
+                <?php if($column['type'] == 'radioList') { ?>
+                    <?= Html::radioList($column['name'], $column['value'], $column['items'], [
+                        'style' => 'padding-top: 5px',
+                        'class' => 'echarts-input',
+                        'data-type' => 'radioList'
+                    ])?>
+                <?php } ?>
+                <?php if($column['type'] == 'dropDownList') { ?>
+                    <?= Html::dropDownList($column['name'], $column['value'], $column['items'], [
+                        'class' => 'form-control echarts-input',
+                        'data-type' => 'dropDownList'
+                    ])?>
+                <?php } ?>
+            </div>
+        <?php } ?>
     </div>
     <div style="height: <?= $config['height'] ?>" id="<?= $boxId; ?>-echarts"></div>
     <!-- /.row -->

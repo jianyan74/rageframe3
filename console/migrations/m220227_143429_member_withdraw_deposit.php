@@ -8,15 +8,16 @@ class m220227_143429_member_withdraw_deposit extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%member_withdraw_deposit}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(11) NULL COMMENT '会员id'",
             'member_type' => "tinyint(4) NULL DEFAULT '1' COMMENT '1:会员;2:后台管理员;3:商家管理员'",
             'withdraw_no' => "varchar(100) NULL DEFAULT '' COMMENT '提现流水号'",
+            'batch_no' => "varchar(100) NULL DEFAULT '' COMMENT '批量转账单号'",
             'realname' => "varchar(50) NOT NULL DEFAULT '' COMMENT '真实姓名'",
             'mobile' => "varchar(20) NOT NULL DEFAULT '' COMMENT '手机号'",
             'account_number' => "varchar(50) NULL DEFAULT '' COMMENT '银行账号'",
@@ -51,14 +52,14 @@ class m220227_143429_member_withdraw_deposit extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='会员_提现记录表'");
-        
+
         /* 索引设置 */
         $this->createIndex('withdraw_no','{{%member_withdraw_deposit}}','withdraw_no',0);
         $this->createIndex('merchant_id','{{%member_withdraw_deposit}}','merchant_id, member_id',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

@@ -8,13 +8,13 @@ class m220227_143426_common_action_log extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%common_action_log}}', [
             'id' => "int(10) NOT NULL AUTO_INCREMENT COMMENT '主键'",
             'app_id' => "varchar(50) NULL DEFAULT '' COMMENT '应用id'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(10) NULL DEFAULT '0' COMMENT '用户id'",
             'member_name' => "varchar(100) NULL DEFAULT '' COMMENT '用户id'",
             'method' => "varchar(20) NULL DEFAULT '' COMMENT '提交类型'",
@@ -42,14 +42,14 @@ class m220227_143426_common_action_log extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='公用_行为表'");
-        
+
         /* 索引设置 */
         $this->createIndex('addon_name','{{%common_action_log}}','addon_name',0);
         $this->createIndex('is_addon','{{%common_action_log}}','is_addon, status',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

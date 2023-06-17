@@ -1,12 +1,9 @@
 <?php
 
-use common\helpers\Url;
 use yii\grid\GridView;
 use common\helpers\Html;
 use common\helpers\ImageHelper;
 use common\helpers\MemberHelper;
-use yii\web\JsExpression;
-use kartik\select2\Select2;
 
 $this->title = '会员信息';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
@@ -42,14 +39,19 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                         ],
                         [
                             'attribute' => 'id',
+                            'filter' => Html::activeTextInput($searchModel, 'id', [
+                                    'class' => 'form-control',
+                                    'style' => 'width: 50px'
+                                ]
+                            ),
                         ],
                         [
                             'attribute' => 'head_portrait',
                             'headerOptions' => ['style' => 'width: 100px'],
                             'value' => function ($model) {
                                 return Html::img(ImageHelper::defaultHeaderPortrait(Html::encode($model->head_portrait)), [
-                                        'class' => 'img-circle rf-img-md elevation-1',
-                                    ]);
+                                    'class' => 'img-circle rf-img-md elevation-1',
+                                ]);
                             },
                             'filter' => false,
                             'format' => 'raw',
@@ -57,6 +59,23 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                         [
                             'attribute' => 'nickname',
                             'format' => 'raw',
+                            'value' => function ($model) {
+                                $tagsHtml = '';
+                                $tagsTitle = [];
+                                $i = 1;
+                                foreach ($model->tag as $item) {
+                                    $tagsTitle[]= Html::encode($item['title']);
+                                    if ($i <= 3) {
+                                        $tagsHtml .= '<span class="label label-outline-default">' . Html::encode($item['title']) . '</span>';
+                                    }
+
+                                    $i++;
+                                }
+
+                                $tagMore = count($model->tag) > 3 ? "<span title='" . implode(', ', $tagsTitle) ."'>...</span>" : '';
+
+                                return Html::encode($model->nickname) . "<br>" . $tagsHtml . $tagMore;
+                            },
                         ],
                         [
                             'attribute' => 'mobile',
@@ -64,12 +83,16 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                         ],
                         [
                             'attribute' => 'memberLevel.name',
+                            'filter' => Html::activeDropDownList($searchModel, 'current_level', $levelMap, [
+                                    'prompt' => '全部',
+                                    'class' => 'form-control'
+                                ]
+                            ),
                             'value' => function ($model) {
                                 return Html::tag('span', $model->memberLevel->name ?? '', [
                                     'class' => 'label label-outline-primary'
                                 ]);
                             },
-                            'filter' => false,
                             'format' => 'raw',
                         ],
                         [
@@ -89,7 +112,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                                 }
 
                                 return MemberHelper::html($model->parent);
-                                },
+                            },
                         ],
                         [
                             'label' => '账户金额',
@@ -135,7 +158,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                             'header' => "操作",
                             'contentOptions' => ['class' => 'text-align-center'],
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{ajax-edit} {address} {update-level} {recharge} {edit} {status} {destroy}',
+                            'template' => '{ajax-edit} {address} {update-level} {recharge} {edit} {status} {blacklist} {destroy}',
                             'buttons' => [
                                 'ajax-edit' => function ($url, $model, $key) {
                                     return Html::a('账号密码', ['ajax-edit', 'id' => $model->id], [
@@ -150,11 +173,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                                         ]) . '<br>';
                                 },
                                 'update-level' => function ($url, $model, $key) {
-                                    return Html::a('修改等级', ['update-level', 'id' => $model->id], [
-                                        'data-toggle' => 'modal',
-                                        'data-target' => '#ajaxModal',
-                                        'class' => 'green'
-                                    ]) . '<br>';
+                                    return Html::a('更换等级', ['update-level', 'id' => $model->id], [
+                                            'data-toggle' => 'modal',
+                                            'data-target' => '#ajaxModal',
+                                            'class' => 'green'
+                                        ]) . '<br>';
                                 },
                                 'recharge' => function ($url, $model, $key) {
                                     return Html::a('充值', ['recharge', 'id' => $model->id], [
@@ -166,6 +189,12 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                                 'edit' => function ($url, $model, $key) {
                                     return Html::a('编辑', ['edit', 'id' => $model->id], [
                                             'class' => 'purple'
+                                        ]) . '<br>';
+                                },
+                                'blacklist' => function ($url, $model, $key) {
+                                    return Html::a('黑名单', ['blacklist', 'id' => $model->id], [
+                                            'class' => 'gray-dark',
+                                            'onclick' => "rfTwiceAffirm(this, '确认拉入黑名单吗？', '请谨慎操作');return false;"
                                         ]) . '<br>';
                                 },
                                 'destroy' => function ($url, $model, $key) {

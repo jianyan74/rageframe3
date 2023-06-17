@@ -19,8 +19,8 @@ class AddonConfig extends BaseAddonConfig
      */
     public $info = [
         'name' => 'Wechat',
-        'title' => '微信',
-        'brief_introduction' => '微信公众号基础功能管理',
+        'title' => '微信公众号',
+        'brief_introduction' => '微信公众号基础功能管理, 搭配「渠道」插件使用',
         'description' => '',
         'author' => '简言',
         'version' => '1.0.1',

@@ -47,8 +47,29 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'install' => 'install/index',
             ],
         ],
+    ],
+    'container' => [
+        'definitions' => [
+            \yii\widgets\LinkPager::class => \yii\bootstrap4\LinkPager::class,
+            'yii\bootstrap4\LinkPager' => [
+                'options' => [
+                    'class' => ['clearfix'],
+                ],
+                'listOptions' => [
+                    'class' => ['pagination float-right hide'],
+                ],
+                'nextPageLabel' => '<i class="icon ion-ios-arrow-right"></i>',
+                'prevPageLabel' => '<i class="icon ion-ios-arrow-left"></i>',
+                'lastPageLabel' => '<i class="icon ion-ios-arrow-right"></i><i class="icon ion-ios-arrow-right"></i>',
+                'firstPageLabel' => '<i class="icon ion-ios-arrow-left"></i><i class="icon ion-ios-arrow-left"></i>',
+            ]
+        ],
+        'singletons' => [
+            // 依赖注入容器单例配置
+        ]
     ],
     'params' => $params,
 ];

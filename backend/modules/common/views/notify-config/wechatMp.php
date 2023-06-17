@@ -20,8 +20,9 @@ $form = ActiveForm::begin([
         <h4 class="modal-title"><?= $nameMap[$model['name']] . ' - ' . $typeMap[$model['type']]; ?></h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
+
     <div class="modal-body">
-        <?= $form->field($model, 'template_id')->textInput()->hint('注意：请自行去小程序后台申请微信模板消息ID'); ?>
+        <?= $form->field($model, 'template_id')->textInput()->hint('注意：请自行去微信公众号后台申请微信模板消息ID'); ?>
         <?= $form->field($model, 'content')->widget(MultipleInput::class, [
             'iconSource' => 'fa',
             'max' => 10,
@@ -53,7 +54,7 @@ $form = ActiveForm::begin([
             ]
         ])->label(false);
         ?>
-        <?= $form->field($model, 'url')->textInput()->hint('例如：index?foo=bar'); ?>
+        <?= $form->field($model, 'url')->textInput()->hint('例如: https://www.baidu.com/index?foo=bar'); ?>
         <?= $form->field($model, 'status')->radioList(StatusEnum::getMap()); ?>
     </div>
     <div class="modal-footer">

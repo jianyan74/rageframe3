@@ -2,9 +2,9 @@
 
 namespace common\components;
 
-use common\enums\AppEnum;
 use Yii;
 use yii\base\Module;
+use common\enums\AppEnum;
 use common\helpers\ExecuteHelper;
 
 /**

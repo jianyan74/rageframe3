@@ -57,7 +57,7 @@ class NotifyConfigController extends BaseController
             $map[NotifyConfigTypeEnum::DING_TALK],
             $map[NotifyConfigTypeEnum::EMAIL],
             $map[NotifyConfigTypeEnum::APP_PUSH],
-            $map[NotifyConfigTypeEnum::WECHAT_MP],
+            $map[NotifyConfigTypeEnum::WECHAT_MINI],
         );
 
         return $map;

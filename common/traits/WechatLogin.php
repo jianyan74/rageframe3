@@ -4,7 +4,7 @@ namespace common\traits;
 
 use Yii;
 use yii\helpers\Json;
-use common\enums\MemberAuthOauthClientEnum;
+use common\enums\AccessTokenGroupEnum;
 
 /**
  * WechatLogin
@@ -55,10 +55,10 @@ trait WechatLogin
         }
 
         // 插入微信关联表
-        if (!($memberAuthInfo = Yii::$app->services->memberAuth->findOauthClient(MemberAuthOauthClientEnum::WECHAT, $this->openid))) {
+        if (!($memberAuthInfo = Yii::$app->services->memberAuth->findOauthClient(AccessTokenGroupEnum::WECHAT_MP, $this->openid))) {
             $original = Yii::$app->params['wechatMember']['raw'];
             Yii::$app->services->memberAuth->create([
-                'oauth_client' => MemberAuthOauthClientEnum::WECHAT,
+                'oauth_client' => AccessTokenGroupEnum::WECHAT_MP,
                 'oauth_client_user_id' => $original['openid'],
                 'gender' => $original['sex'],
                 'nickname' => $original['nickname'],

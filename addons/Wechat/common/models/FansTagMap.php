@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property int $fans_id 粉丝id
  * @property int $tag_id 标签id
  */
@@ -29,7 +29,7 @@ class FansTagMap extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['merchant_id', 'shop_id', 'fans_id', 'tag_id'], 'integer'],
+            [['merchant_id', 'store_id', 'fans_id', 'tag_id'], 'integer'],
             [['fans_id', 'tag_id'], 'unique', 'targetAttribute' => ['fans_id', 'tag_id']],
         ];
     }
@@ -42,7 +42,7 @@ class FansTagMap extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'fans_id' => '粉丝id',
             'tag_id' => '标签id',
         ];

@@ -12,6 +12,7 @@ use common\enums\MemberTypeEnum;
 use common\helpers\TreeHelper;
 use common\helpers\EchantsHelper;
 use common\enums\MemberLevelBuyTypeEnum;
+use common\enums\AccessTokenGroupEnum;
 
 /**
  * Class MemberService
@@ -157,6 +158,66 @@ class MemberService extends Service
                 ->asArray()
                 ->all();
         }, $fields, $time, $format);
+    }
+
+    /**
+     * 会员来源
+     *
+     * @return array
+     */
+    public function getSourceStat()
+    {
+        $fields = AccessTokenGroupEnum::getMap();
+
+        // 获取时间和格式化
+        list($time, $format) = EchantsHelper::getFormatTime('all');
+        // 获取数据
+        return EchantsHelper::pie(function ($start_time, $end_time) use ($fields) {
+            $data = Member::find()
+                ->select(['count(id) as value', 'source'])
+                ->where(['status' => StatusEnum::ENABLED])
+                ->andWhere(['merchant_id' => Yii::$app->services->merchant->getNotNullId()])
+                ->groupBy(['source'])
+                ->asArray()
+                ->all();
+
+            foreach ($data as &$datum) {
+                $name = AccessTokenGroupEnum::getValue($datum['source']);
+                $datum['name'] = !empty($name) ? $name : '未知';
+            }
+
+            return [$data, $fields];
+        }, $time);
+    }
+
+    /**
+     * 会员来源
+     *
+     * @return array
+     */
+    public function getLevelStat()
+    {
+        $fields = Yii::$app->services->memberLevel->getMap();
+
+        // 获取时间和格式化
+        list($time, $format) = EchantsHelper::getFormatTime('all');
+        // 获取数据
+        return EchantsHelper::pie(function ($start_time, $end_time) use ($fields) {
+            $data = Member::find()
+                ->select(['count(id) as value', 'current_level'])
+                ->where(['status' => StatusEnum::ENABLED])
+                ->andWhere(['merchant_id' => Yii::$app->services->merchant->getNotNullId()])
+                ->groupBy(['current_level'])
+                ->asArray()
+                ->all();
+
+            foreach ($data as &$datum) {
+                $name = $fields[$datum['current_level']] ?? '';
+                $datum['name'] = !empty($name) ? $name : '未知';
+            }
+
+            return [$data, $fields];
+        }, $time);
     }
 
     /**

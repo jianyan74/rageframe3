@@ -1,44 +1,40 @@
 <?php
 
 use yii\widgets\ActiveForm;
-use common\widgets\webuploader\Files;
 use common\helpers\Url;
+use common\widgets\ueditor\UEditor;
 
-$this->title = '参数设置';
+$this->title = '注销协议';
 $this->params['breadcrumbs'][] = ['label' => $this->title];
 
 ?>
 
-
 <div class="row">
-    <div class="col-lg-12">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">微信分享设置</h3>
-            </div>
-            <?php $form = ActiveForm::begin([]); ?>
-            <div class="box-body">
-                 <div class="col-sm-12">
-                    <?= $form->field($model, 'share_title')->textInput(); ?>
-                    <?= $form->field($model, 'share_cover')->widget(Files::class, [
-                        'type' => 'images',
-                        'theme' => 'default',
-                        'themeConfig' => [],
-                        'config' => [
-                            'pick' => [
-                                'multiple' => false,
-                            ],
-                        ]
-                    ]); ?>
-                    <?= $form->field($model, 'share_desc')->textarea(); ?>
-                    <?= $form->field($model, 'share_link')->textInput(); ?>
+    <div class="col-12">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li><a href="<?= Url::to(['cancel/index'])?>">会员注销(<?= Yii::$app->services->memberCancel->getApplyCount(); ?>)</a></li>
+                <li><a href="<?= Url::to(['setting/config'])?>">注销设置</a></li>
+                <li class="active"><a href="<?= Url::to(['setting/display'])?>">注销协议</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active">
+                    <div class="box">
+                        <!-- /.box-header -->
+                        <?php $form = ActiveForm::begin([]); ?>
+                        <div class="box-body table-responsive">
+                            <?= $form->field($model, 'cancel_protocol_title')->textInput(); ?>
+                            <?= $form->field($model, 'cancel_protocol')->widget(UEditor::class) ?>
+                            <!-- /.box-body -->
+                        </div>
+                        <div class="box-footer text-center">
+                            <button class="btn btn-primary" type="submit">保存</button>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+                        <!-- /.box -->
+                    </div>
                 </div>
             </div>
-            <div class="box-footer text-center">
-                <button class="btn btn-primary" type="submit">保存</button>
-                <span class="btn btn-white" onclick="history.go(-1)">返回</span>
-            </div>
-            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>

@@ -13,7 +13,7 @@ class m220227_143429_rbac_auth_role extends Migration
         $this->createTable('{{%rbac_auth_role}}', [
             'id' => "int(10) NOT NULL AUTO_INCREMENT COMMENT '主键'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'title' => "varchar(50) NOT NULL DEFAULT '' COMMENT '标题'",
             'app_id' => "varchar(20) NOT NULL DEFAULT '' COMMENT '应用'",
             'pid' => "int(10) unsigned NULL DEFAULT '0' COMMENT '上级id'",

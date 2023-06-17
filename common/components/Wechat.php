@@ -45,10 +45,10 @@ class Wechat extends \jianyan\easywechat\Wechat
             /**
              * 账号基本信息，请从微信公众平台/开放平台获取
              */
-            'app_id' => $config['wechat_appid'] ?? '',
-            'secret' => $config['wechat_appsecret'] ?? '',
-            'token' => $config['wechat_token'] ?? '',
-            'aes_key' => $config['wechat_encodingaeskey'] ?? '', // 兼容与安全模式下请一定要填写！！！
+            'app_id' => $config['wechat_mp_app_id'] ?? '',
+            'secret' => $config['wechat_mp_appsecret'] ?? '',
+            'token' => $config['wechat_mp_token'] ?? '',
+            'aes_key' => $config['wechat_mp_encodingaeskey'] ?? '', // 兼容与安全模式下请一定要填写！！！
             /**
              * 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
              * 使用自定义类名时，构造函数将会接收一个 `EasyWeChat\Kernel\Http\Response` 实例
@@ -109,14 +109,13 @@ class Wechat extends \jianyan\easywechat\Wechat
 
         // 微信支付
         Yii::$app->params['wechatPaymentConfig'] = ArrayHelper::merge([
-            'app_id' => $config['wechat_appid'] ?? '',
-            'secret' => $config['wechat_appsecret'] ?? '',
-            'mch_id' => $config['wechat_mchid'] ?? '',
-            'key' => $config['wechat_api_key'] ?? '', // API 密钥
+            'app_id' => $config['wechat_mp_app_id'] ?? '',
+            'secret' => $config['wechat_mp_appsecret'] ?? '',
+            'mch_id' => $config['wechat_mch_id'] ?? '',
+            'key' => $config['wechat_mch_secret_key'] ?? '', // API 密钥
             // 如需使用敏感接口（如退款、发送红包等）需要配置 API 证书路径(登录商户平台下载 API 证书)
-            'cert_path' => $config['wechat_cert_path'] ?? '', // XXX: 绝对路径！！！！
-            'key_path' => $config['wechat_key_path'] ?? '', // XXX: 绝对路径！！！！
-            'rsa_public_key_path' => $config['wechat_rsa_public_key_path'] ?? '', // XXX: 绝对路径！！！！
+            'cert_path' => $config['wechat_mch_public_cert_path'] ?? '', // XXX: 绝对路径！！！！
+            'key_path' => $config['wechat_mch_secret_cert'] ?? '', // XXX: 绝对路径！！！！
             // 支付回调地址
             'notify_url' => $notifyUrl,
             'sandbox' => false, // 设置为 false 或注释则关闭沙箱模式
@@ -141,8 +140,8 @@ class Wechat extends \jianyan\easywechat\Wechat
 
         // 小程序
         Yii::$app->params['wechatMiniProgramConfig'] = ArrayHelper::merge([
-            'app_id' => $config['miniprogram_appid'] ?? '',
-            'secret' => $config['miniprogram_secret'] ?? '',
+            'app_id' => $config['wechat_mini_app_id'] ?? '',
+            'secret' => $config['wechat_mini_secret'] ?? '',
             // 下面为可选项
             // 指定 API 调用返回结果的类型：array(default)/collection/object/raw/自定义类名
             'response_type' => 'array',

@@ -76,7 +76,7 @@ class Map extends InputWidget
             'latitude' => $value['latitude'] ?? '39.919990',
         ];
 
-        return $this->render('index', [
+        return $this->render('map/index', [
             'name' => $name,
             'value' => $defaultValue,
             'type' => $this->type,

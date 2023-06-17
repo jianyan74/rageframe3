@@ -48,13 +48,13 @@ trait BaseAction
      *
      * @return int
      */
-    protected function getShopId()
+    protected function getStoreId()
     {
         if (in_array(Yii::$app->id, [AppEnum::CONSOLE, AppEnum::BACKEND])) {
             return '';
         }
 
-        return Yii::$app->services->merchantShop->getId();
+        return Yii::$app->services->store->getId();
     }
 
     /**

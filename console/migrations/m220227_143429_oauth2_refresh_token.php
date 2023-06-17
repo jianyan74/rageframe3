@@ -8,12 +8,12 @@ class m220227_143429_oauth2_refresh_token extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%oauth2_refresh_token}}', [
             'refresh_token' => "varchar(80) NOT NULL",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'client_id' => "varchar(64) NOT NULL COMMENT '授权ID'",
             'member_id' => "varchar(100) NULL DEFAULT '' COMMENT '用户ID'",
             'expires' => "timestamp NOT NULL COMMENT '有效期'",
@@ -24,13 +24,13 @@ class m220227_143429_oauth2_refresh_token extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`refresh_token`)'
         ], "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='oauth2_授权令牌'");
-        
+
         /* 索引设置 */
         $this->createIndex('client_id','{{%oauth2_refresh_token}}','client_id',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

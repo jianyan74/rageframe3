@@ -14,7 +14,7 @@ class m220227_143427_common_notify_config extends Migration
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
             'member_id' => "int(10) NULL DEFAULT '0' COMMENT '用户id'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'app_id' => "varchar(50) NULL DEFAULT '' COMMENT '应用id'",
             'name' => "varchar(100) NULL DEFAULT '' COMMENT '标识'",
             'title' => "varchar(100) NULL DEFAULT '' COMMENT '标题'",

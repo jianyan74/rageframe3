@@ -45,18 +45,8 @@ class ConfigService
      */
     public function configAll($noCache = false, $merchant_id = '')
     {
-        if (Yii::$app->services->devPattern->isSAAS()) {
-            !$merchant_id && $merchant_id = Yii::$app->services->merchant->getNotNullId();
-            if ($merchant_id > 0) {
-                $app_id = AppEnum::MERCHANT;
-            } else {
-                $merchant_id = 0;
-                $app_id = AppEnum::BACKEND;
-            }
-        } else {
-            $merchant_id = 0;
-            $app_id = AppEnum::BACKEND;
-        }
+        $merchant_id = 0;
+        $app_id = AppEnum::BACKEND;
 
         $info = $this->baseConfigAll($app_id, $merchant_id, $noCache);
 

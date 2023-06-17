@@ -34,6 +34,7 @@ trait PayNotify
             $result = Yii::$app->pay->alipay->callback();
 
             $message = Yii::$app->request->post();
+            unset($message['app_id']);
             $message['pay_fee'] = $message['total_amount'];
             $message['transaction_id'] = $message['trade_no'];
             $message['mch_id'] = $message['auth_app_id'];
@@ -54,7 +55,7 @@ trait PayNotify
     }
 
     /**
-     * 公用支付回调 - 微信
+     * 公用支付回调 - 微信(v3)
      *
      * @return bool|string
      */
@@ -65,17 +66,21 @@ trait PayNotify
             // 记录日志
             FileHelper::writeLog($this->getLogPath('wechat'), Json::encode(ArrayHelper::toArray($result)));
 
-            if ($this->pay($result)) {
-                return WechatHelper::success();
+            if (
+                $result['event_type'] === 'TRANSACTION.SUCCESS' &&
+                $result['resource_type'] === 'encrypt-resource' &&
+                $this->pay($result['resource']['ciphertext'])
+            ) {
+                return Yii::$app->pay->wechat->success();
             }
+
+            throw new UnprocessableEntityHttpException($result['summary']);
         } catch (\Exception $e) {
             // 记录日志
             FileHelper::writeLog($this->getLogPath('wechat-error-sign'), Json::encode($e->getMessage()).date('Y-m-d H:i:s'));
-
-            return WechatHelper::fail();
         }
 
-        return $pay->success();
+        return WechatHelper::fail();
     }
 
     /**
@@ -83,7 +88,7 @@ trait PayNotify
      */
     public function actionUnion()
     {
-        $response = Yii::$app->pay->union->notify();
+        $response = Yii::$app->pay->unipay->notify();
         if ($response->isPaid()) {
             //pay success
         } else {
@@ -99,14 +104,6 @@ trait PayNotify
     public function actionByteDance()
     {
         $response = Json::decode(file_get_contents('php://input'));
-        // 写入配置
-        if (
-            Yii::$app->services->devPattern->isSAAS() &&
-            ($logData = Yii::$app->services->extendPay->findByOutTradeNo($response['cp_orderno']))
-        ) {
-            Yii::$app->services->merchant->setId($logData['merchant_id']);
-        }
-
         $logPath = $this->getLogPath('byte-dance');
         FileHelper::writeLog($logPath, Json::encode($response));
         if (!Yii::$app->extendPay->byteDance->isPaid($response)) {

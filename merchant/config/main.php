@@ -80,6 +80,12 @@ return [
         'definitions' => [
             \yii\widgets\LinkPager::class => \yii\bootstrap4\LinkPager::class,
             'yii\bootstrap4\LinkPager' => [
+                'options' => [
+                    'class' => ['clearfix'],
+                ],
+                'listOptions' => [
+                    'class' => ['pagination float-right hide'],
+                ],
                 'nextPageLabel' => '<i class="icon ion-ios-arrow-right"></i>',
                 'prevPageLabel' => '<i class="icon ion-ios-arrow-left"></i>',
                 'lastPageLabel' => '<i class="icon ion-ios-arrow-right"></i><i class="icon ion-ios-arrow-right"></i>',
@@ -94,6 +100,7 @@ return [
         'files' => 'common\widgets\webuploader\FilesController', // 文件上传公共控制器
         'ueditor' => 'common\widgets\ueditor\UEditorController', // 百度编辑器
         'map' => 'common\widgets\map\MapController', // 经纬度选择
+        'map-overlay' => 'common\widgets\map\MapOverlayController', // 地图范围设置
         'cropper' => 'common\widgets\cropper\CropperController', // 图片裁剪
         'provinces' => 'common\controllers\ProvincesController', // 省市区
         'notify' => 'common\widgets\notify\NotifyController', // 消息

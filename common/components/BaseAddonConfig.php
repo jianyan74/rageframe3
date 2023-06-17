@@ -17,6 +17,16 @@ class BaseAddonConfig
     public $info = [];
 
     /**
+     * 前置插件
+     *
+     * @var array
+     */
+    public $preposition = [
+        // 'Wechat' => '微信公众号',
+        // 'WechatMini' => '微信小程序',
+    ];
+
+    /**
      * 应用配置
      *
      * 例如：菜单设置/权限设置/快捷入口

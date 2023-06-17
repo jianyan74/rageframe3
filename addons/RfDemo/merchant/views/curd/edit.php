@@ -3,6 +3,7 @@
 use common\widgets\cropper\Cropper;
 use common\widgets\linkage\Linkage;
 use common\widgets\map\Map;
+use common\widgets\map\MapOverlay;
 use common\widgets\ueditor\UEditor;
 use yii\widgets\ActiveForm;
 use common\enums\StatusEnum;
@@ -164,6 +165,10 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     <?= $form->field($model, 'longitude_and_latitude')->widget(Map::class, [
                         'type' => 'amap', // amap高德;tencent:腾讯;baidu:百度
                     ])->hint('点击地图某处才会获取到经纬度，否则默认北京'); ?>
+                    <?= $form->field($model, 'map_overlay')->widget(MapOverlay::class, [
+                        'longitude' => '116.456270',
+                        'latitude' => '39.919990',
+                    ]); ?>
                     <?= $form->field($model, 'head_portrait')->widget(Cropper::class, [
                         // 'theme' => 'default',
                         'config' => [

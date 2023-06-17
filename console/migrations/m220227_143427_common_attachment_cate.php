@@ -13,7 +13,7 @@ class m220227_143427_common_attachment_cate extends Migration
         $this->createTable('{{%common_attachment_cate}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT COMMENT '主键'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'title' => "varchar(100) NULL DEFAULT '' COMMENT '标题'",
             'sort' => "int(5) NULL DEFAULT '0' COMMENT '排序'",
             'level' => "tinyint(1) NULL DEFAULT '1' COMMENT '级别'",

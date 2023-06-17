@@ -8,7 +8,7 @@ use common\enums\NotifyConfigTypeEnum;
 use common\helpers\ArrayHelper;
 use common\enums\StatusEnum;
 use common\models\common\NotifyConfig;
-use common\enums\MemberAuthOauthClientEnum;
+use common\enums\AccessTokenGroupEnum;
 
 /**
  * Class NotifyConfigService
@@ -34,7 +34,7 @@ class NotifyConfigService
                 /** @var NotifyConfig $notifyConfig */
                 foreach ($notifyConfigs as $notifyConfig) {
                     // ios 推送
-                    if ($notifyConfig->type == NotifyConfigTypeEnum::APP_PUSH && $auth['oauth_client'] == MemberAuthOauthClientEnum::APP_IOS) {
+                    if ($notifyConfig->type == NotifyConfigTypeEnum::APP_PUSH && $auth['oauth_client'] == AccessTokenGroupEnum::IOS) {
                         $this->appIosRemind(
                             $notifyConfig,
                             $auth['oauth_client_user_id'],
@@ -44,7 +44,7 @@ class NotifyConfigService
                         );
                     }
                     // 安卓 推送
-                    if ($notifyConfig->type == NotifyConfigTypeEnum::APP_PUSH && $auth['oauth_client'] == MemberAuthOauthClientEnum::APP_ANDROID) {
+                    if ($notifyConfig->type == NotifyConfigTypeEnum::APP_PUSH && $auth['oauth_client'] == AccessTokenGroupEnum::ANDROID) {
                         $this->appAndroidRemind(
                             $notifyConfig,
                             $auth['oauth_client_user_id'],
@@ -54,7 +54,7 @@ class NotifyConfigService
                         );
                     }
                     // 微信推送
-                    if ($notifyConfig->type == NotifyConfigTypeEnum::WECHAT && $auth['oauth_client'] == MemberAuthOauthClientEnum::WECHAT) {
+                    if ($notifyConfig->type == NotifyConfigTypeEnum::WECHAT_MP && $auth['oauth_client'] == AccessTokenGroupEnum::WECHAT_MP) {
                         $this->wechatRemind(
                             $notifyConfig,
                             $auth['oauth_client_user_id'],
@@ -62,7 +62,7 @@ class NotifyConfigService
                         );
                     }
                     // 微信小程序推送
-                    if ($notifyConfig->type == NotifyConfigTypeEnum::WECHAT_MP && $auth['oauth_client'] == MemberAuthOauthClientEnum::WECHAT_MP) {
+                    if ($notifyConfig->type == NotifyConfigTypeEnum::WECHAT_MINI && $auth['oauth_client'] == AccessTokenGroupEnum::WECHAT_MINI) {
                         $this->wechatMiniProgramRemind(
                             $notifyConfig,
                             $auth['oauth_client_user_id'],
@@ -193,6 +193,26 @@ class NotifyConfigService
                 'merchant_id' => $merchant_id
             ])
             ->andFilterWhere(['addon_name' => $addon_name])
+            ->all();
+    }
+
+    /**
+     * @param $addon_name
+     * @param $type
+     * @param $merchant_id
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function findByAddonName($addon_name, $type = AccessTokenGroupEnum::WECHAT_MINI, $merchant_id = 0)
+    {
+        return NotifyConfig::find()
+            ->select(['name', 'title', 'template_id'])
+            ->where([
+                'type' => $type,
+                'status' => StatusEnum::ENABLED,
+                'merchant_id' => $merchant_id,
+                'addon_name' => $addon_name
+            ])
+            ->asArray()
             ->all();
     }
 

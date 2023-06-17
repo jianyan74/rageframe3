@@ -8,7 +8,6 @@ use api\modules\v1\forms\MiniProgramLoginForm;
 use common\models\member\Member;
 use common\enums\AccessTokenGroupEnum;
 use common\helpers\ResultHelper;
-use common\enums\MemberAuthOauthClientEnum;
 
 /**
  * 小程序授权验证
@@ -50,10 +49,10 @@ class MiniProgramController extends OnAuthController
         $userinfo = $model->getUser();
 
         // 插入到用户授权表
-        if (!($memberAuthInfo = Yii::$app->services->memberAuth->findOauthClient(MemberAuthOauthClientEnum::WECHAT_MP, $model->getOpenid()))) {
+        if (!($memberAuthInfo = Yii::$app->services->memberAuth->findOauthClient(AccessTokenGroupEnum::WECHAT_MINI, $model->getOpenid()))) {
             $memberAuthInfo = Yii::$app->services->memberAuth->create([
                 'unionid' => $userinfo['unionId'] ?? '',
-                'oauth_client' => MemberAuthOauthClientEnum::WECHAT_MP,
+                'oauth_client' => AccessTokenGroupEnum::WECHAT_MINI,
                 'oauth_client_user_id' => $model->getOpenid(),
                 'gender' => $userinfo['gender'],
                 'nickname' => $userinfo['nickName'],
@@ -85,7 +84,7 @@ class MiniProgramController extends OnAuthController
             $memberAuthInfo->save();
         }
 
-        return Yii::$app->services->apiAccessToken->getAccessToken($member, AccessTokenGroupEnum::WECHAT_MP);
+        return Yii::$app->services->apiAccessToken->getAccessToken($member, AccessTokenGroupEnum::WECHAT_MINI);
     }
 
     /**

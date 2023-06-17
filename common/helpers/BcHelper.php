@@ -72,7 +72,7 @@ class BcHelper
      * @param $left_operand
      * @param $right_operand
      * @param int $scale
-     * @return string
+     * @return string|double
      */
     public static function sub($left_operand, $right_operand, $scale = 2)
     {

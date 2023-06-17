@@ -365,6 +365,61 @@ function openMapIframe(width, height, content, offset) {
     return false;
 }
 
+// 地图覆盖物选择
+$(document).on("click", ".map-overlay", function (e) {
+    var parent = $(this).parent().parent().parent();
+    var url = parent.find('.rfMap').attr('href');
+    var overlay = parent.find('.overlay').val();
+    console.log(overlay)
+    overlay = $.base64.btoa(overlay, true);
+    console.log(overlay)
+    url = url + "&overlay=" + overlay;
+
+    openMapOverlayIframe('92%', '85%', url, "7%");
+});
+
+// 打一个新窗口
+function openMapOverlayIframe(width, height, content, offset) {
+    layer.open({
+        type: 2,
+        title: '地图范围选择',
+        shade: 0.3,
+        offset: offset,
+        shadeClose: true,
+        btn: ['确认', '关闭'],
+        yes: function (index, layero) {
+            // 调用子页面的方法
+            var body = layer.getChildFrame('body', index);
+            var boxId = $(body).find('#boxId').val();
+            var data = $(layero).find('iframe')[0].contentWindow.mapVue.getData();
+            if (data && data.length > 0) {
+                $(document).trigger('map-' + boxId, [boxId, data]);
+                layer.closeAll();
+            }
+        },
+        btn2: function () {
+            layer.closeAll();
+        },
+        area: [width, height],
+        content: content
+    });
+
+    return false;
+}
+
+// ----------------------------------- Input ----------------------------------- //
+
+function createKey(num, id) {
+    let letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let token = '';
+    for (let i = 0; i < num; i++) {
+        let j = parseInt(Math.random() * 61 + 1);
+        token += letters[j];
+    }
+
+    $("#" + id).val(token);
+}
+
 // ----------------------------------- JsTree ----------------------------------- //
 
 /**

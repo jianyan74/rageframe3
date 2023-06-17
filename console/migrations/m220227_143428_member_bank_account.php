@@ -13,7 +13,7 @@ class m220227_143428_member_bank_account extends Migration
         $this->createTable('{{%member_bank_account}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(11) NULL DEFAULT '0' COMMENT '会员id'",
             'member_type' => "tinyint(4) NULL DEFAULT '1' COMMENT '1:会员;2:后台管理员;3:商家管理员'",
             'realname' => "varchar(50) NOT NULL DEFAULT '' COMMENT '真实姓名'",

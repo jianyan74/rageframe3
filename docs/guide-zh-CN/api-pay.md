@@ -26,9 +26,9 @@ tradeType
 > 根据对应的支付类型，选择支持的交易类型即可，例如：app
 
 ```
-支付宝：'web', 'app', 'scan', 'wap'
-微信：'scan', 'mp'(公众号), 'app', 'pos', 'wap'(手机H5),'mini'(小程序)
-银联：'app', 'html'
+支付宝：'web', 'wap', 'app', 'mini', 'sacn'， 'pos'
+微信： 'mp'(公众号), 'mini'(小程序), 'sacn', 'app', 'wap'(手机H5)
+银联：'web', 'wap', 'sacn'， 'pos'
 字节跳动：'byte-dance'
 余额：'default'
 ```

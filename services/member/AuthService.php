@@ -63,6 +63,18 @@ class AuthService extends Service
     }
 
     /**
+     * @param $memberId
+     * @return bool|int|string
+     */
+    public function getCountByMemberId($memberId)
+    {
+        return Auth::find()
+            ->where(['member_id' => $memberId])
+            ->andWhere(['status' => StatusEnum::ENABLED])
+            ->count() ?? 0;
+    }
+
+    /**
      * @param int $merchant_id
      * @param int $memberType
      * @return array|\yii\db\ActiveRecord[]
@@ -151,6 +163,19 @@ class AuthService extends Service
             ->andWhere(['status' => StatusEnum::ENABLED])
             ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
             ->orderBy('id desc')
+            ->one();
+    }
+
+    /**
+     * @param $memberId
+     * @param $oauthClient
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function findByMemberIdAndOauthClient($memberId, $oauthClient)
+    {
+        return Auth::find()
+            ->where(['member_id' => $memberId, 'oauth_client' => $oauthClient])
+            ->andWhere(['status' => StatusEnum::ENABLED])
             ->one();
     }
 

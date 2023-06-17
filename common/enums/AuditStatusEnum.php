@@ -23,7 +23,7 @@ class AuditStatusEnum extends BaseEnum
         return [
             self::ENABLED => '已通过',
             self::DISABLED => '审核中',
-             self::DELETE => '已拒绝',
+            self::DELETE => '已拒绝',
         ];
     }
 

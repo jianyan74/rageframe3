@@ -11,7 +11,7 @@ use Yii;
  * @property string $app_id 应用
  * @property int $config_id 配置id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property string|null $data 配置内
  */
 class ConfigValue extends \yii\db\ActiveRecord
@@ -30,7 +30,7 @@ class ConfigValue extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['config_id', 'merchant_id', 'shop_id'], 'integer'],
+            [['config_id', 'merchant_id', 'store_id'], 'integer'],
             [['data'], 'string'],
             [['app_id'], 'string', 'max' => 20],
         ];
@@ -46,7 +46,7 @@ class ConfigValue extends \yii\db\ActiveRecord
             'app_id' => '应用',
             'config_id' => '配置id',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'data' => '配置内',
         ];
     }

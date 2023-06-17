@@ -77,6 +77,7 @@ BaseAsset::register($this);
     </div>
 
     <?= $this->render('_footer') ?>
+    <?= $this->render('_common') ?>
     <script>
         // 配置
         let config = {

@@ -8,12 +8,12 @@ class m220227_143428_member extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%member}}', [
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) NULL DEFAULT '0' COMMENT '商户ID'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'username' => "varchar(20) NOT NULL DEFAULT '' COMMENT '帐号'",
             'password_hash' => "varchar(150) NOT NULL DEFAULT '' COMMENT '密码'",
             'auth_key' => "varchar(32) NOT NULL DEFAULT '' COMMENT '授权令牌'",
@@ -33,6 +33,8 @@ class m220227_143428_member extends Migration
             'address' => "varchar(100) NULL DEFAULT '' COMMENT '默认地址'",
             'mobile' => "varchar(20) NULL DEFAULT '' COMMENT '手机号码'",
             'tel_no' => "varchar(20) NULL DEFAULT '' COMMENT '电话号码'",
+            'bg_image' => "varchar(200) NULL DEFAULT '' COMMENT '个人背景图'",
+            'description' => "varchar(200) NULL DEFAULT '' COMMENT '个人说明'",
             'visit_count' => "smallint(5) unsigned NULL DEFAULT '0' COMMENT '访问次数'",
             'last_time' => "int(10) NULL DEFAULT '0' COMMENT '最后一次登录时间'",
             'last_ip' => "varchar(40) NULL DEFAULT '' COMMENT '最后一次登录ip'",
@@ -45,18 +47,19 @@ class m220227_143428_member extends Migration
             'tree' => "varchar(2000) NULL DEFAULT '' COMMENT '树'",
             'promoter_code' => "varchar(50) NULL DEFAULT '' COMMENT '推广码'",
             'certification_type' => "tinyint(4) NULL DEFAULT '0' COMMENT '认证类型'",
+            'source' => "varchar(50) NULL DEFAULT '' COMMENT '注册来源'",
             'status' => "tinyint(4) NULL DEFAULT '1' COMMENT '状态[-1:删除;0:禁用;1启用]'",
             'created_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '创建时间'",
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='会员表'");
-        
+
         /* 索引设置 */
-        
-        
+
+
         /* 表数据 */
-        $this->insert('{{%member}}',['id'=>'1','merchant_id'=>'0','shop_id'=>'0','username'=>'Q2dGP','password_hash'=>'$2y$13$L4waegfC3ABCW97DfiRRbe69WBZDC6kqc0TN3aPq7Rej/5H8RknjK','auth_key'=>'','password_reset_token'=>'','mobile_reset_token'=>'','type'=>'2','realname'=>'简言','nickname'=>'','head_portrait'=>'','gender'=>'0','qq'=>'','email'=>'751393839@qq.com','birthday'=>NULL,'province_id'=>'330000','city_id'=>'330200','area_id'=>NULL,'address'=>'','mobile'=>'','tel_no'=>'','visit_count'=>'128','last_time'=>'1645967024','last_ip'=>'127.0.0.1','role'=>'10','current_level'=>'1','level_expiration_time'=>'0','level_buy_type'=>'1','pid'=>'0','level'=>'1','tree'=>'','promoter_code'=>'','certification_type'=>'0','status'=>'1','created_at'=>'0','updated_at'=>'1645968229']);
-        
+        $this->insert('{{%member}}',['id'=>'1','merchant_id'=>'0','store_id'=>'0','username'=>'Q2dGP','password_hash'=>'$2y$13$L4waegfC3ABCW97DfiRRbe69WBZDC6kqc0TN3aPq7Rej/5H8RknjK','auth_key'=>'','password_reset_token'=>'','mobile_reset_token'=>'','type'=>'2','realname'=>'简言','nickname'=>'','head_portrait'=>'','gender'=>'0','qq'=>'','email'=>'751393839@qq.com','birthday'=>NULL,'province_id'=>'330000','city_id'=>'330200','area_id'=>NULL,'address'=>'','mobile'=>'','tel_no'=>'','visit_count'=>'128','last_time'=>'1645967024','last_ip'=>'127.0.0.1','role'=>'10','current_level'=>'1','level_expiration_time'=>'0','level_buy_type'=>'1','pid'=>'0','level'=>'1','tree'=>'','promoter_code'=>'','certification_type'=>'0','status'=>'1','created_at'=>'0','updated_at'=>'1645968229']);
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

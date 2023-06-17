@@ -52,14 +52,17 @@ class MemberController extends BaseController
         $dataProvider = $searchModel
             ->search(Yii::$app->request->queryParams);
         $dataProvider->query
-            ->andWhere(['>=', 'status', StatusEnum::DISABLED])
-            ->andWhere(['type' => MemberTypeEnum::MEMBER])
+            ->andWhere([
+                'type' => MemberTypeEnum::MEMBER,
+                'status' => StatusEnum::ENABLED
+            ])
             ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
             ->with(['account', 'memberLevel', 'tag']);
 
         return $this->render($this->action->id, [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'levelMap' => Yii::$app->services->memberLevel->getMap(),
         ]);
     }
 
@@ -213,6 +216,26 @@ class MemberController extends BaseController
             'model' => $member,
             'rechargeForm' => $rechargeForm,
         ]);
+    }
+
+    /**
+     * 黑名单
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function actionBlacklist($id)
+    {
+        if (!($model = $this->modelClass::findOne($id))) {
+            return $this->message("找不到数据", $this->redirect(Yii::$app->request->referrer), 'error');
+        }
+
+        $model->status = StatusEnum::DISABLED;
+        if ($model->save()) {
+            return $this->message("拉入黑名单成功", $this->redirect(Yii::$app->request->referrer));
+        }
+
+        return $this->message("拉入黑名单失败", $this->redirect(Yii::$app->request->referrer), 'error');
     }
 
     /**

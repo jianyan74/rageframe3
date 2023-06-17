@@ -34,30 +34,4 @@ class BaseAddonConfigService extends Service
 
         return $setting;
     }
-
-    /**
-     * 自动获取配置
-     *
-     * @return mixed
-     */
-    public function autoSetting()
-    {
-        $merchant_id = Yii::$app->services->merchant->getAutoId();
-
-        return $this->setting($merchant_id);
-    }
-
-    /**
-     * 根据ID自动获取配置
-     *
-     * @return mixed
-     */
-    public function settingByMerchantId($merchant_id)
-    {
-        if ($merchant_id > 0 && Yii::$app->services->devPattern->isSAAS()) {
-            return $this->setting($merchant_id);
-        }
-
-        return $this->setting();
-    }
 }

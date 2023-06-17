@@ -47,7 +47,7 @@ AppAsset::register($this);
         }
 
         .rf-subfield-left nav .nav-item {
-            margin: 0 20px 2px;
+            margin: 0 5px 2px 20px;
             display: flex;
             cursor: pointer;
             white-space: nowrap;

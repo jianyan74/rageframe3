@@ -45,8 +45,8 @@ class ByteDance extends Component
         $directory = Yii::getAlias("@app") . '/runtime/';
         $appConfig = [
             'debug' => true,
-            'access_key' => Yii::$app->services->config->backendConfig('byte_dance_app_id'),
-            'secret_key' => Yii::$app->services->config->backendConfig('byte_dance_app_secret'),
+            'access_key' => Yii::$app->services->config->backendConfig('byte_dance_mini_app_id'),
+            'secret_key' => Yii::$app->services->config->backendConfig('byte_dance_mini_app_secret'),
             'payment_app_id' => '',
             'payment_merchant_id' => '',
             'payment_secret' => '',

@@ -5,6 +5,7 @@ use common\helpers\Html;
 use common\enums\GenderEnum;
 use common\helpers\ImageHelper;
 use common\helpers\MemberHelper;
+use common\enums\AccessTokenGroupEnum;
 
 $this->title = '第三方授权';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
@@ -50,7 +51,17 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                                 ]
                             )
                         ],
-                        'oauth_client',
+                        [
+                            'attribute' => 'oauth_client',
+                            'value' => function ($model, $key, $index, $column) {
+                                return AccessTokenGroupEnum::getValue($model->oauth_client);
+                            },
+                            'filter' => Html::activeDropDownList($searchModel, 'oauth_client', AccessTokenGroupEnum::getThirdPartyMap(), [
+                                    'prompt' => '全部',
+                                    'class' => 'form-control'
+                                ]
+                            )
+                        ],
                         'oauth_client_user_id',
                         MemberHelper::gridView($searchModel, '关联用户'),
                         [

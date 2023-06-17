@@ -1,13 +1,14 @@
 <?php
 
+use yii\grid\GridView;
 use common\helpers\Url;
 use common\helpers\Html;
-use yii\grid\GridView;
-use common\enums\ExtendConfigNameEnum;
 use common\enums\WhetherEnum;
+use common\enums\ExtendConfigNameEnum;
 
 $this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => $this->title];
+
 ?>
 
 <div class="row">
@@ -25,7 +26,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         </button>
                         <div class="dropdown-menu dropdown-menu-right text-center" role="menu" style="">
                             <?php foreach ($nameMap as $key => $item){ ?>
-                                <a class="dropdown-item" href="<?= Url::to(['edit', 'name' => $key])?>"><?= $item ?></a>
+                                <a class="dropdown-item p-xs" href="<?= Url::to(['edit', 'name' => $key])?>"><?= $item ?></a>
                             <?php } ?>
                         </div>
                     </div>

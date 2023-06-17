@@ -7,6 +7,7 @@ use common\enums\WhetherEnum;
 $this->title = '收货地址';
 $this->params['breadcrumbs'][] = ['label' => '会员信息', 'url' => ['member/index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title];
+
 ?>
 
 <div class="row">

@@ -15,7 +15,7 @@ class m220227_143427_common_addons_config extends Migration
             'app_id' => "varchar(20) NOT NULL DEFAULT '' COMMENT '应用'",
             'addon_name' => "varchar(100) NOT NULL DEFAULT '' COMMENT '插件名或标识'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'data' => "json NULL COMMENT '配置'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='公用_插件配置值表'");

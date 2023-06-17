@@ -60,6 +60,30 @@ class MainController extends BaseController
     }
 
     /**
+     * 会员来源
+     *
+     * @return array|mixed
+     */
+    public function actionMemberSource()
+    {
+        $data = Yii::$app->services->member->getSourceStat();
+
+        return ResultHelper::json(200, '获取成功', $data);
+    }
+
+    /**
+     * 会员等级
+     *
+     * @return array|mixed
+     */
+    public function actionMemberLevel()
+    {
+        $data = Yii::$app->services->member->getLevelStat();
+
+        return ResultHelper::json(200, '获取成功', $data);
+    }
+
+    /**
      * 充值统计
      *
      * @param $type

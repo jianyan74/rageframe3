@@ -31,11 +31,11 @@ $menuCates = Yii::$app->services->menuCate->findAllInAuth(Yii::$app->id)
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- 自动隐藏菜单 -->
-        <li class="nav-item dropdown hide-menu hide">
+        <li class="nav-item dropdown hide">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fas fa-outdent"></i>
             </a>
-            <div class="dropdown-menu dropdown-menu"></div>
+            <div class=""></div>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link" href="#">
@@ -44,7 +44,7 @@ $menuCates = Yii::$app->services->menuCate->findAllInAuth(Yii::$app->id)
                     'class' => 'form-control',
                 ]);?>
             </a>
-            <div class="dropdown-menu dropdown-menu"></div>
+            <div class="dropdown-menu"></div>
         </li>
         <!-- 通知公告 -->
         <?= Notify::widget(); ?>
@@ -53,7 +53,7 @@ $menuCates = Yii::$app->services->menuCate->findAllInAuth(Yii::$app->id)
                 <img src="<?= ImageHelper::defaultHeaderPortrait(Yii::$app->user->identity->head_portrait); ?>" class="img-circle head_portrait" width="30px">
                 <?= Yii::$app->user->identity->username; ?>
             </a>
-            <div class="dropdown-menu dropdown-menu">
+            <div class="dropdown-menu">
                 <a href="<?= BaseUrl::to(['personal/index'])?>" class="dropdown-item text-center J_menuItem">
                     <!-- Message Start -->
                     <div class="media">

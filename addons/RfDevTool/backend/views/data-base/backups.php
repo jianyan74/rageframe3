@@ -53,9 +53,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         </thead>
                         <tbody id="list">
                         <?php foreach ($models as $model) { ?>
-                            <tr name="<?= $model['name'] ?>">
+                            <tr data-name="<?= $model['name'] ?>">
                                 <td><input type="checkbox" name="table[]" checked="checked" value="<?= $model['name'] ?>"></td>
-                                <td><?= $model['comment'] ?></td>
+                                <td data-table="<?= $model['name'] ?>">
+                                    <span class="table <?= $model['name'] ?>"><?= $model['comment'] ?></span> <i class="icon ion-compose" data-toggle="modal" data-target="#editTitle"></i>
+                                </td>
                                 <td><?= $model['name'] ?></td>
                                 <td><?= $model['engine'] ?></td>
                                 <td><?= $model['rows'] ?></td>
@@ -78,6 +80,24 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">表备注</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <textarea type="text" class="form-control" id="tableComment"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary submit-name" data-dismiss="modal">确定</button>
             </div>
         </div>
     </div>
@@ -112,14 +132,14 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 
         // 优化表单击
         $(".table-list-optimize").click(function () {
-            tablename = $(this).parent().parent().attr('name');
+            tablename = $(this).parent().parent().data('name');
             rfAffirm('优化中,请不要关闭本页面');
             optimize();
         });
 
         // 修复表表单击
         $(".table-list-repair").click(function () {
-            tablename = $(this).parent().parent().attr('name');
+            tablename = $(this).parent().parent().data('name');
             repair();
         });
 
@@ -233,4 +253,30 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             }
         });
     })
+
+    var table;
+    $(document).on("click",".ion-compose",function(){
+        table = $(this).parent().data('table');
+        var comment = $(this).parent().find('.table').text();
+        $('#tableComment').val(comment);
+    });
+
+    // 标题编辑
+    $(document).on("click",".submit-name",function(){
+        var comment = $('#tableComment').val();
+        url = "<?= Url::to(['update-table-comment'])?>" + '?table=' + table + '&comment=' + comment;
+        $.ajax({
+            type: "post",
+            url: url,
+            dataType: "json",
+            success: function (data) {
+                if (parseInt(data.code) === 200) {
+                    $('.' + table).text(comment);
+                    rfMsg('修改成功');
+                } else {
+                    rfWarning(data.message);
+                }
+            }
+        });
+    });
 </script>

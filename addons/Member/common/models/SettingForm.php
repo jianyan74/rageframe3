@@ -10,10 +10,9 @@ use yii\base\Model;
  */
 class SettingForm extends Model
 {
-    public $share_title;
-    public $share_cover;
-    public $share_desc;
-    public $share_link;
+    public $cancel_audit_status = 0;
+    public $cancel_protocol_title = '会员注销协议';
+    public $cancel_protocol = '暂无';
 
     /**
      * {@inheritdoc}
@@ -21,9 +20,10 @@ class SettingForm extends Model
     public function rules()
     {
         return [
-            [['share_title', 'share_cover'], 'string', 'max' => 100],
-            [['share_link', 'share_desc'], 'string', 'max' => 255],
-            [['share_link'], 'url'],
+            [['cancel_audit_status'], 'string', 'max' => 255],
+            [['cancel_protocol_title'], 'string', 'max' => 100],
+            [['cancel_protocol'], 'string'],
+            [['cancel_protocol_title', 'cancel_protocol'], 'required'],
         ];
     }
 
@@ -33,10 +33,9 @@ class SettingForm extends Model
     public function attributeLabels()
     {
         return [
-            'share_title' => '分享标题',
-            'share_cover' => '分享封面',
-            'share_desc' => '分享描述',
-            'share_link' => '分享链接',
+            'cancel_audit_status' => '注销审核',
+            'cancel_protocol_title' => '注销协议标题',
+            'cancel_protocol' => '注销协议内容',
         ];
     }
 }

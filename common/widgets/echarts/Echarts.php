@@ -52,6 +52,24 @@ class Echarts extends Widget
     ];
 
     /**
+     * 字段
+     *
+     * @var array
+     */
+    public $columns = [
+//        [
+//            'name' => 'test',
+//            'value' => 2022,
+//            'type' => 'radioList',
+//            'items' => [
+//                2022 => '2022年',
+//                2023 => '2023年'
+//            ],
+//            'col' => 4,
+//        ]
+    ];
+
+    /**
      * 盒子ID
      *
      * @var
@@ -93,6 +111,7 @@ class Echarts extends Widget
             'config' => $this->config,
             'themeJs' => $this->themeJs,
             'themeConfig' => $this->themeConfig,
+            'columns' => $this->columns,
         ]);
     }
 

@@ -2,6 +2,7 @@
 
 use common\helpers\Html;
 use common\enums\StatusEnum;
+use common\widgets\input\SecretKeyInput;
 
 ?>
 
@@ -10,11 +11,13 @@ use common\enums\StatusEnum;
     <?php if ($row['is_hide_remark'] != StatusEnum::ENABLED) { ?>
         <small><?= \yii\helpers\HtmlPurifier::process($row['remark']) ?></small>
     <?php } ?>
-    <div class="input-group">
-        <?= Html::input('text', 'config[' . $row['name'] . ']', $row['value']['data'] ?? $row['default_value'],
-            ['class' => 'form-control', 'id' => $row['id']]); ?>
-        <span class="input-group-btn">
-            <span class="btn btn-white" onclick="createKey(<?= $row['extra'] ?>, <?= $row['id'] ?>)">生成新的</span>
-        </span>
-    </div>
+    <?= SecretKeyInput::widget([
+        'name' => 'config[' . $row['name'] . ']',
+        'value' => $row['value']['data'] ?? $row['default_value'],
+        'options' => [
+            'id' => $row['id'],
+            'class' => 'form-control',
+        ],
+        'number' => $row['extra'],
+    ])?>
 </div>

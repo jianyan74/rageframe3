@@ -3,10 +3,11 @@
 namespace backend\modules\common\controllers;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 use common\models\common\AttachmentCate;
+use common\enums\AttachmentUploadTypeEnum;
 use backend\controllers\BaseController;
 use common\traits\MerchantCurd;
-use yii\data\ActiveDataProvider;
 
 /**
  * Class AttachmentCateController
@@ -28,14 +29,22 @@ class AttachmentCateController extends BaseController
      */
     public function actionIndex()
     {
+        $type = Yii::$app->request->get('type', AttachmentUploadTypeEnum::IMAGES);
+
         $dataProvider = new ActiveDataProvider([
             'query' => $this->modelClass::find()
+                ->where(['type' => $type])
+                ->andWhere([
+                    'merchant_id' => Yii::$app->services->merchant->getNotNullId(),
+                    'store_id' => Yii::$app->services->store->getNotNullId(),
+                ])
                 ->orderBy('sort asc, created_at asc'),
             'pagination' => false
         ]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            'type' => $type,
         ]);
     }
 
@@ -47,17 +56,19 @@ class AttachmentCateController extends BaseController
      */
     public function actionAjaxEdit()
     {
-        $request = Yii::$app->request;
-        $id = $request->get('id', '');
+        $id = Yii::$app->request->get('id', '');
+        $type = Yii::$app->request->get('type');
         $model = $this->findModel($id);
-        $model->pid = $request->get('pid', null) ?? $model->pid; // 父id
+        $model->pid = Yii::$app->request->get('pid', null) ?? $model->pid; // 父id
 
         // ajax 校验
         $this->activeFormValidate($model);
-        if ($model->load($request->post())) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->type = $type;
+
             return $model->save()
-                ? $this->redirect(['index'])
-                : $this->message($this->getError($model), $this->redirect(['index']), 'error');
+                ? $this->redirect(['index', 'type' => $type])
+                : $this->message($this->getError($model), $this->redirect(['index', 'type' => $type]), 'error');
         }
 
         return $this->renderAjax('ajax-edit', [

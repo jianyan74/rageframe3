@@ -8,7 +8,7 @@
 
 ### 环境要求
 
-- PHP >= 7.4 (建议 7.4)
+- PHP >= 7.4 (不支持8.0)
 - PHP cURL 扩展
 - PHP OpenSSL 扩展
 - PHP fileinfo 拓展 素材管理模块需要用到

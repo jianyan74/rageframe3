@@ -9,7 +9,7 @@ use common\enums\StatusEnum;
  *
  * @property int $id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property int|null $member_id 用户id
  * @property string|null $title 公司抬头
  * @property string|null $duty_paragraph 公司税号
@@ -41,7 +41,7 @@ class Invoice extends \common\models\base\BaseModel
     {
         return [
             [['title', 'type'], 'required'],
-            [['merchant_id', 'shop_id', 'member_id', 'is_default', 'type', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'member_id', 'is_default', 'type', 'status', 'created_at', 'updated_at'], 'integer'],
             [['title', 'duty_paragraph', 'opening_bank'], 'string', 'max' => 200],
             [['opening_bank_account'], 'string', 'max' => 100],
             [['address', 'remark'], 'string', 'max' => 255],
@@ -57,7 +57,7 @@ class Invoice extends \common\models\base\BaseModel
         return [
             'id' => 'ID',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'member_id' => '用户id',
             'title' => '抬头', // 公司抬头
             'duty_paragraph' => '公司税号', // 公司税号

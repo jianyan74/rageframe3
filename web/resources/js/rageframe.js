@@ -357,7 +357,7 @@ function rfSort(obj) {
 function openUploadIframe(width, height, content, offset) {
     layer.open({
         type: 2,
-        title: '资源选择',
+        title: '素材选择',
         shade: 0.3,
         offset: offset,
         shadeClose: true,

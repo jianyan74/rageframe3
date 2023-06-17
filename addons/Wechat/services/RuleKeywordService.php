@@ -174,7 +174,7 @@ class RuleKeywordService extends Service
         $rows = [];
 
         $merchant_id = Yii::$app->services->merchant->getNotNullId();
-        $shop_id = Yii::$app->services->merchantShop->getNotNullId();
+        $store_id = Yii::$app->services->store->getNotNullId();
         foreach ($ruleKeywords as $key => &$vo) {
             // 去重
             $keyword = array_unique($vo);
@@ -195,12 +195,12 @@ class RuleKeywordService extends Service
 
             // 插入数据
             foreach ($keyword as $content) {
-                $rows[] = [$rule->id, $rule->module, $content, $rule->sort, $rule->status, $key, $merchant_id, $shop_id];
+                $rows[] = [$rule->id, $rule->module, $content, $rule->sort, $rule->status, $key, $merchant_id, $store_id];
             }
         }
 
         // 插入数据
-        $field = ['rule_id', 'module', 'content', 'sort', 'status', 'type', 'merchant_id', 'shop_id'];
+        $field = ['rule_id', 'module', 'content', 'sort', 'status', 'type', 'merchant_id', 'store_id'];
         !empty($rows) && Yii::$app->db->createCommand()->batchInsert(RuleKeyword::tableName(), $field, $rows)->execute();
     }
 

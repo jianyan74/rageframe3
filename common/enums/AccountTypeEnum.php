@@ -16,7 +16,7 @@ class AccountTypeEnum extends BaseEnum
     const BALANCE = 1;
     const UNION = 10;
     const WECHAT = 20;
-    const WECHAT_MP = 21;
+    const WECHAT_MINI = 21;
     const ALI = 30;
 
     /**
@@ -27,7 +27,7 @@ class AccountTypeEnum extends BaseEnum
         return [
             self::UNION => '银联卡',
             self::WECHAT => '微信',
-            self::WECHAT_MP => '微信小程序',
+            self::WECHAT_MINI => '微信小程序',
             self::ALI => '支付宝',
             self::BALANCE => '余额',
         ];
@@ -74,7 +74,7 @@ class AccountTypeEnum extends BaseEnum
                     'class' => "green",
                 ]
             )),
-            self::WECHAT_MP => Html::tag('span', self::getValue(self::WECHAT_MP), array_merge(
+            self::WECHAT_MINI => Html::tag('span', self::getValue(self::WECHAT_MINI), array_merge(
                 [
                     'class' => "green",
                 ]

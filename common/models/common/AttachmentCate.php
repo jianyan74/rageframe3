@@ -3,6 +3,7 @@
 namespace common\models\common;
 
 use common\traits\Tree;
+use common\behaviors\MerchantStoreBehavior;
 
 /**
  * This is the model class for table "{{%common_attachment_cate}}".
@@ -20,7 +21,7 @@ use common\traits\Tree;
  */
 class AttachmentCate extends \common\models\base\BaseModel
 {
-    use Tree;
+    use Tree, MerchantStoreBehavior;
 
     /**
      * {@inheritdoc}
@@ -36,7 +37,7 @@ class AttachmentCate extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'sort', 'level', 'pid', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'sort', 'level', 'pid', 'status', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'string', 'max' => 100],
             [['title'], 'required'],
             [['tree'], 'string', 'max' => 500],
@@ -51,6 +52,7 @@ class AttachmentCate extends \common\models\base\BaseModel
         return [
             'id' => '主键',
             'merchant_id' => '商户id',
+            'store_id' => '店铺id',
             'title' => '标题',
             'sort' => '排序',
             'level' => '级别',

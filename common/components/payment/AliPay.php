@@ -2,7 +2,10 @@
 
 namespace common\components\payment;
 
+use common\helpers\ArrayHelper;
+use yii\web\UnprocessableEntityHttpException;
 use Yansongda\Pay\Pay;
+use Yansongda\Pay\Exception\InvalidResponseException;
 
 /**
  * Class AliPay
@@ -52,7 +55,7 @@ class AliPay
      */
     public function web($order)
     {
-        return Pay::alipay()->web($order);
+        return Pay::alipay()->web($order)->getBody()->getContents();
     }
 
     /**
@@ -63,7 +66,21 @@ class AliPay
      */
     public function wap($order)
     {
-        return Pay::alipay()->wap($order);
+        return Pay::alipay()->wap($order)->getBody()->getContents();
+    }
+
+
+    /**
+     * 小程序
+     *
+     * @param $order
+     * @return mixed
+     */
+    public function mini($order)
+    {
+        $result = Pay::alipay()->mini($order);
+
+        return $result->get('trade_no');  // 支付宝交易号
     }
 
     /**
@@ -90,7 +107,7 @@ class AliPay
      */
     public function app($order)
     {
-        return Pay::alipay()->app($order);
+        return Pay::alipay()->app($order)->getBody()->getContents();
     }
 
     /**
@@ -102,6 +119,8 @@ class AliPay
     public function scan($order)
     {
         $result = Pay::alipay()->scan($order);
+
+        $this->getError(ArrayHelper::toArray($result));
 
         return $result->qr_code; // 二维码 url
     }
@@ -157,7 +176,7 @@ class AliPay
      * 订单查询
      *
      * $info = [
-     *     'out_trade_no' => '转账单号',
+     *     'out_biz_no' => '转账单号',
      *  ]
      *
      * or
@@ -183,5 +202,27 @@ class AliPay
     public function refund(array $info)
     {
         return Pay::alipay()->refund($info);
+    }
+
+    /**
+     * @param $error
+     * @return mixed
+     * @throws UnprocessableEntityHttpException
+     */
+    protected function getError($error)
+    {
+        if (!is_array($error)) {
+            return false;
+        }
+
+        if ($error['code'] != '10000') {
+            if (isset($error['sub_msg'])) {
+                throw new UnprocessableEntityHttpException($error['sub_msg']);
+            }
+
+            throw new UnprocessableEntityHttpException($error['msg']);
+        }
+
+        return true;
     }
 }

@@ -8,13 +8,13 @@ class m220227_143428_member_credits_log extends Migration
     {
         /* 取消外键约束 */
         $this->execute('SET foreign_key_checks = 0');
-        
+
         /* 创建表 */
         $this->createTable('{{%member_credits_log}}', [
             'id' => "int(10) NOT NULL AUTO_INCREMENT",
             'app_id' => "varchar(50) NULL DEFAULT '' COMMENT '应用id'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(11) unsigned NULL DEFAULT '0' COMMENT '用户id'",
             'member_type' => "tinyint(4) NULL DEFAULT '1' COMMENT '1:会员;2:后台管理员;3:商家管理员'",
             'pay_type' => "tinyint(4) NULL DEFAULT '0' COMMENT '支付类型'",
@@ -33,14 +33,14 @@ class m220227_143428_member_credits_log extends Migration
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
             'PRIMARY KEY (`id`)'
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='会员_积分等变动表'");
-        
+
         /* 索引设置 */
         $this->createIndex('member_id','{{%member_credits_log}}','member_id',0);
         $this->createIndex('member_type','{{%member_credits_log}}','member_type, status',0);
-        
-        
+
+
         /* 表数据 */
-        
+
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');
     }

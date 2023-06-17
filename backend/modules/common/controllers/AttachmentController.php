@@ -7,6 +7,7 @@ use common\traits\MerchantCurd;
 use common\models\base\SearchModel;
 use common\models\common\Attachment;
 use common\enums\StatusEnum;
+use common\enums\AttachmentUploadTypeEnum;
 use backend\controllers\BaseController;
 
 /**
@@ -31,6 +32,8 @@ class AttachmentController extends BaseController
      */
     public function actionIndex()
     {
+        $type = Yii::$app->request->get('type', AttachmentUploadTypeEnum::IMAGES);
+
         $searchModel = new SearchModel([
             'model' => $this->modelClass,
             'scenario' => 'default',
@@ -44,13 +47,15 @@ class AttachmentController extends BaseController
         $dataProvider = $searchModel
             ->search(Yii::$app->request->queryParams);
         $dataProvider->query
+            ->andWhere(['upload_type' => $type])
             ->andWhere(['>=', 'status', StatusEnum::DISABLED])
             ->andFilterWhere(['merchant_id' => $this->getMerchantId()]);
 
         return $this->render($this->action->id, [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'cateMap' => Yii::$app->services->attachmentCate->getMap(),
+            'cateMap' => Yii::$app->services->attachmentCate->getMap($type),
+            'type' => $type,
         ]);
     }
 
@@ -61,19 +66,20 @@ class AttachmentController extends BaseController
     public function actionUpdate()
     {
         $id = Yii::$app->request->get('id');
+        $type = Yii::$app->request->get('type');
         $model = $this->findModel($id);
 
         // ajax 校验
         $this->activeFormValidate($model);
         if ($model->load(Yii::$app->request->post())) {
             return $model->save()
-                ? $this->redirect(['index'])
-                : $this->message($this->getError($model), $this->redirect(['index']), 'error');
+                ? $this->redirect(['index', 'type' => $type])
+                : $this->message($this->getError($model), $this->redirect(['index', 'type' => $type]), 'error');
         }
 
         return $this->renderAjax($this->action->id, [
             'model' => $model,
-            'cateMap' => Yii::$app->services->attachmentCate->getMap(),
+            'cateMap' => Yii::$app->services->attachmentCate->getMap($type),
         ]);
     }
 

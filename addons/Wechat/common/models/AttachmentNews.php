@@ -9,7 +9,7 @@ use common\behaviors\MerchantBehavior;
  *
  * @property int $id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property int|null $attachment_id 关联的资源id
  * @property string $title 标题
  * @property string|null $thumb_media_id 图文消息的封面图片素材id（必须是永久mediaID）
@@ -48,7 +48,7 @@ class AttachmentNews extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'shop_id', 'attachment_id', 'show_cover_pic', 'need_open_comment', 'only_fans_can_comment', 'sort', 'year', 'month', 'day', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'attachment_id', 'show_cover_pic', 'need_open_comment', 'only_fans_can_comment', 'sort', 'year', 'month', 'day', 'status', 'created_at', 'updated_at'], 'integer'],
             [['content'], 'string'],
             [['title'], 'string', 'max' => 50],
             [['thumb_url', 'media_url'], 'string', 'max' => 500],
@@ -65,7 +65,7 @@ class AttachmentNews extends \common\models\base\BaseModel
         return [
             'id' => 'ID',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'attachment_id' => '关联的资源id',
             'title' => '标题',
             'thumb_media_id' => '图文消息的封面图片素材id（必须是永久mediaID）',

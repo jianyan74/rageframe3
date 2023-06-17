@@ -23,7 +23,7 @@ use common\widgets\webuploader\assets\AppAsset;
 class Files extends InputWidget
 {
     /**
-     * webuploader参数配置
+     * webuploader 参数配置
      *
      * @var array
      */

@@ -13,7 +13,7 @@ class m220227_143429_member_tag extends Migration
         $this->createTable('{{%member_tag}}', [
             'id' => "int(10) NOT NULL AUTO_INCREMENT COMMENT '主键'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'title' => "varchar(50) NOT NULL DEFAULT '' COMMENT '标题'",
             'sort' => "int(10) NULL DEFAULT '0' COMMENT '排序'",
             'status' => "tinyint(4) NULL DEFAULT '1' COMMENT '状态'",

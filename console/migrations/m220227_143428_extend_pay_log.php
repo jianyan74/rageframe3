@@ -13,7 +13,7 @@ class m220227_143428_extend_pay_log extends Migration
         $this->createTable('{{%extend_pay_log}}', [
             'id' => "int(10) NOT NULL AUTO_INCREMENT COMMENT '主键'",
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
-            'shop_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
+            'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
             'member_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '用户id'",
             'app_id' => "varchar(50) NULL DEFAULT '' COMMENT '应用id'",
             'out_trade_no' => "varchar(32) NULL DEFAULT '' COMMENT '商户订单号'",

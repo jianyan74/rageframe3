@@ -9,7 +9,7 @@ use common\models\member\Auth;
  *
  * @property int $id
  * @property int|null $merchant_id 商户id
- * @property int|null $shop_id 店铺ID
+ * @property int|null $store_id 店铺ID
  * @property int|null $qrcord_id 二维码id
  * @property string|null $openid 微信openid
  * @property int|null $type 1:关注;2:扫描
@@ -36,7 +36,7 @@ class QrcodeStat extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'shop_id', 'qrcord_id', 'type', 'scene_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'qrcord_id', 'type', 'scene_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['openid', 'name'], 'string', 'max' => 50],
             [['scene_str'], 'string', 'max' => 64],
         ];
@@ -50,7 +50,7 @@ class QrcodeStat extends \common\models\base\BaseModel
         return [
             'id' => 'ID',
             'merchant_id' => '商户id',
-            'shop_id' => '店铺ID',
+            'store_id' => '店铺ID',
             'qrcord_id' => '二维码id',
             'openid' => '微信openid',
             'type' => '1:关注;2:扫描',

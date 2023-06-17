@@ -37,6 +37,7 @@ use common\helpers\StringHelper;
  * @property string|null $color 颜色
  * @property string|null $longitude 经纬度
  * @property string|null $latitude 经纬度
+ * @property string|null $map_overlay 地图范围
  * @property int|null $status 状态
  * @property int $created_at 创建时间
  * @property int $updated_at 更新时间

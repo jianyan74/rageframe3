@@ -12,7 +12,22 @@ use common\helpers\ArrayHelper;
 class Migration extends \yii\db\Migration
 {
     /**
-     * 修改字段
+     * 修改字段名称
+     *
+     * @param string $table
+     * @param string $column
+     * @param string $type
+     * @throws \yii\db\Exception
+     */
+    public function renameColumn($table, $name, $newName)
+    {
+        if (!empty($data = Yii::$app->db->createCommand("SHOW COLUMNS FROM $table LIKE '$name'")->queryAll())) {
+            parent::renameColumn($table, $name, $newName);
+        }
+    }
+
+    /**
+     * 修改字段类型
      *
      * @param string $table
      * @param string $column

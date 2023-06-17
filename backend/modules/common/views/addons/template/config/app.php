@@ -20,7 +20,7 @@ return [
         'menu' => [
             'location' => 'addons', // default:系统顶部菜单;addons:应用中心菜单
             'icon' => 'fa fa-puzzle-piece',
-            'pattern' => [], // 可见开发模式 b2c、b2b2c、saas 不填默认全部可见
+            'pattern' => [], // 可见开发模式 b2c、b2b2c、saas 不填默认全部可见, 可设置为 blank 为全部不可见
         ],
         // 子模块配置
         'modules' => [
@@ -46,7 +46,7 @@ return [
             'title' => '<?= trim($menus['title'][$i]); ?>',
             'name' => '<?= trim($menus['name'][$i]); ?>',
             'icon' => '<?= trim($menus['icon'][$i]); ?>',
-            'pattern' => [], // 可见开发模式 b2c、b2b2c、saas 不填默认全部可见
+            'pattern' => [], // 可见开发模式 b2c、b2b2c、saas 不填默认全部可见, 可设置为 blank 为全部不可见
             'params' => [
             <?php foreach ($params as $key => $param) { ?>
     '<?= trim($key); ?>' => '<?= trim($param); ?>',

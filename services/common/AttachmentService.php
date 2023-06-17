@@ -87,4 +87,15 @@ class AttachmentService extends Service
 
         return [$files, $countModel->count()];
     }
+
+    /**
+     * @param $id
+     * @return array|\yii\db\ActiveRecord|null
+     */
+    public function findById($id)
+    {
+        return Attachment::find()
+            ->where(['id' => $id])
+            ->one();
+    }
 }

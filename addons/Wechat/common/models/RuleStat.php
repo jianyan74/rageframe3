@@ -34,7 +34,7 @@ class RuleStat extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'shop_id', 'rule_id', 'hit', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'rule_id', 'hit', 'status', 'created_at', 'updated_at'], 'integer'],
             [['rule_name'], 'string', 'max' => 50],
         ];
     }
@@ -101,9 +101,9 @@ class RuleStat extends \common\models\base\BaseModel
             [
                 'class' => BlameableBehavior::class,
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['shop_id'],
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['store_id'],
                 ],
-                'value' => Yii::$app->services->merchantShop->getNotNullId(),
+                'value' => Yii::$app->services->store->getNotNullId(),
             ]
         ];
     }

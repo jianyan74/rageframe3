@@ -47,6 +47,8 @@ class m220227_143429_member_withdraw_deposit extends Migration
             'service_charge_total' => "decimal(10,2) NULL DEFAULT '0.00' COMMENT '总手续费'",
             'refusal_cause' => "varchar(200) NULL DEFAULT '' COMMENT '拒绝原因'",
             'notify_url' => "varchar(255) NULL DEFAULT '' COMMENT '通知地址'",
+            'is_addon' => "tinyint(4) unsigned NULL DEFAULT '0' COMMENT '是否插件'",
+            'addon_name' => "varchar(200) NULL DEFAULT '' COMMENT '插件名称'",
             'status' => "tinyint(4) NULL DEFAULT '1' COMMENT '状态[-1:删除;0:禁用;1启用]'",
             'created_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '创建时间'",
             'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",

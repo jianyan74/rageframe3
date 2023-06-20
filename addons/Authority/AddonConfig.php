@@ -1,14 +1,14 @@
 <?php
 
-namespace addons\Authority;
+namespace addons\AppVersions;
 
 use common\components\BaseAddonConfig;
-use addons\Authority\services\Application;
-use addons\Authority\common\components\Bootstrap;
+use addons\AppVersions\services\Application;
+use addons\AppVersions\common\components\Bootstrap;
 
 /**
  * Class Addon
- * @package addons\Authority
+ * @package addons\AppVersions
  */
 class AddonConfig extends BaseAddonConfig
 {
@@ -18,21 +18,21 @@ class AddonConfig extends BaseAddonConfig
      * @var array
      */
     public $info = [
-        'name' => 'Authority',
-        'title' => '系统更新',
-        'brief_introduction' => 'RageFrame 官方在线升级工具',
+        'name' => 'AppVersions',
+        'title' => 'App 版本',
+        'brief_introduction' => 'Android 和 iOS 版本检测更新',
         'description' => '',
         'author' => '简言',
-        'version' => '3.1.16',
+        'version' => '1.0.0',
     ];
 
     /**
-    * 应用配置
-    *
-    * 例如：菜单设置/权限设置/快捷入口
-    *
-    * @var array
-    */
+     * 应用配置
+     *
+     * 例如：菜单设置/权限设置/快捷入口
+     *
+     * @var array
+     */
     public $appsConfig = [
         'backend' => 'common/config/backend.php',
         'frontend' => 'common/config/frontend.php',
@@ -43,39 +43,39 @@ class AddonConfig extends BaseAddonConfig
     ];
 
     /**
-    * 引导文件
-    *
-    * 设置后系统会在执行插件控制器前执行
-    *
-    * @var Bootstrap
-    */
-    public $bootstrap = Bootstrap::class;
+     * 引导文件
+     *
+     * 设置后系统会在执行插件控制器前执行
+     *
+     * @var Bootstrap
+     */
+    // public $bootstrap = Bootstrap::class;
 
     /**
-    * 服务层
-    *
-    * 设置后系统会自动注册
-    *
-    * 调用方式
-    *
-    * Yii::$app->插件名称 + Services
-    *
-    * 例如
-    *
-    * Yii::$app->tinyShopServices;
-    *
-    * @var Application
-    */
-    public $service = Application::class;
+     * 服务层
+     *
+     * 设置后系统会自动注册
+     *
+     * 调用方式
+     *
+     * Yii::$app->插件名称 + Services
+     *
+     * 例如
+     *
+     * Yii::$app->tinyShopServices;
+     *
+     * @var Application
+     */
+    // public $service = Application::class;
 
     /**
-    * 商户路由映射
-    *
-    * 开启后无需再去后台应用端去开发程序，直接映射商家应用的控制器方法过去，菜单权限还需要单独配置
-    *
-    * @var bool
-    */
-    public $isMerchantRouteMap = false;
+     * 商户路由映射
+     *
+     * 开启后无需再去后台应用端去开发程序，直接映射商家应用的控制器方法过去，菜单权限还需要单独配置
+     *
+     * @var bool
+     */
+    public $isMerchantRouteMap = true;
 
     /**
      * 类别
@@ -92,7 +92,7 @@ class AddonConfig extends BaseAddonConfig
      *      'other'     => "其他",
      * ]
      */
-    public $group = 'business';
+    public $group = 'plug';
 
     /**
      * 保存在当前模块的根目录下面

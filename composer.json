@@ -52,9 +52,9 @@
         "hashids/hashids": "^3.0",
         "mobiledetect/mobiledetectlib": "^2.8",
         "jaeger/querylist": "^4.1",
-        "finecho/logistics": "^3.0",
         "tencentcloud/tencentcloud-sdk-php": "~3.0.94",
         "ext-bcmath": "*",
+        "ext-json": "*",
         "dueros/bot-sdk": "^2.2",
         "griffinledingham/php-apple-signin": "^1.1",
         "firebase/php-jwt": "^5.2",
@@ -66,7 +66,8 @@
         "workerman/workerman": "^4.0",
         "workerman/mysql": "^1.0",
         "workerman/gateway-worker": "^3.0",
-        "yansongda/pay": "~3.1.0",
+        "workerman/gatewayclient": "^3.0",
+        "yansongda/pay": "~3.2.0",
         "guzzlehttp/guzzle": "^7.0",
         "php-di/php-di": "^6.4"
     },
@@ -88,7 +89,8 @@
         },
         "allow-plugins": {
             "yiisoft/yii2-composer": true,
-            "easywechat-composer/easywechat-composer": true
+            "easywechat-composer/easywechat-composer": true,
+            "php-http/discovery": true
         }
     },
     "repositories": [

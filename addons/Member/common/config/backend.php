@@ -47,6 +47,11 @@ return [
                     'title' => '黑名单',
                     'name' => 'blacklist/index',
                     'pattern' => ['b2c', 'b2b2c'],
+                ],
+                [
+                    'title' => '会员注销',
+                    'name' => 'cancel/index',
+                    'pattern' => ['b2c', 'b2b2c'],
                 ]
             ]
         ],

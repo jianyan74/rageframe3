@@ -34,7 +34,7 @@ use yii\helpers\Html;
             <dd>
                 <ul class="tagslist">
                     <?php foreach ($tags as $tag){ ?>
-                        <a href="<?= Url::to(['index/tag', 'tag_id' => $item['id']]); ?>"><?= Html::encode($tag['title']); ?></a>
+                        <a href="<?= Url::to(['index/tag', 'tag' => $tag['title']]); ?>"><?= Html::encode($tag['title']); ?></a>
                     <?php } ?>
                 </ul>
             </dd>

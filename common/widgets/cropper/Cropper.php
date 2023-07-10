@@ -55,7 +55,8 @@ class Cropper extends InputWidget
     {
         parent::init();
 
-        $this->boxId = md5($this->name) . StringHelper::uuid('uniqid');
+        $name = $this->hasModel() ? Html::getInputName($this->model, $this->attribute) : $this->name;
+        $this->boxId = md5($name) . StringHelper::uuid('uniqid');
         $this->config = ArrayHelper::merge([
             'aspectRatio' => '1',
             'multiple' => false,

@@ -2,9 +2,11 @@
 
 namespace addons\TinyBlog\common\models;
 
+use common\forms\PostQueryForm;
 use common\helpers\StringHelper;
 use common\traits\HasOneMerchant;
 use common\behaviors\MerchantStoreBehavior;
+use common\behaviors\TaggableBehavior;
 
 /**
  * This is the model class for table "{{%addon_tiny_blog_article}}".
@@ -56,6 +58,8 @@ class Article extends \yii\db\ActiveRecord
             [['description'], 'string', 'max' => 140],
             [['link'], 'string', 'max' => 255],
             [['author'], 'string', 'max' => 40],
+            // 标签
+            [['tagValues'], 'safe'],
         ];
     }
 
@@ -80,10 +84,29 @@ class Article extends \yii\db\ActiveRecord
             'author' => '作者',
             'view' => '浏览量',
             'sort' => '排序',
+            'tagValues' => '标签',
             'status' => '状态',
             'created_at' => '创建时间',
             'updated_at' => '更新时间',
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
+    }
+
+    /**
+     * @return PostQueryForm
+     */
+    public static function find()
+    {
+        return new PostQueryForm(get_called_class());
     }
 
     /**
@@ -113,8 +136,29 @@ class Article extends \yii\db\ActiveRecord
     public function getTags()
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])
-            ->viaTable(TagMap::tableName(), ['article_id' => 'id'])
-            ->asArray();
+            ->viaTable(TagMap::tableName(), ['article_id' => 'id']);
+    }
+
+    /**
+     * 生成推荐位的值
+     * @return int|mixed
+     */
+    protected function getPosition()
+    {
+        $position = $this->position;
+        $pos = 0;
+        if (!is_array($position)) {
+            if ($position > 0) {
+                return $position;
+            }
+        } else {
+            foreach ($position as $key => $value) {
+                // 将各个推荐位的值相加
+                $pos += $value;
+            }
+        }
+
+        return $pos;
     }
 
     /**
@@ -123,9 +167,28 @@ class Article extends \yii\db\ActiveRecord
      */
     public function beforeSave($insert)
     {
+        // 推荐位
+        $this->position = $this->getPosition();
         $this->created_at = StringHelper::dateToInt($this->created_at);
         $this->updated_at = time();
 
         return parent::beforeSave($insert);
+    }
+
+    /**
+     * @return \string[][]
+     */
+    public function behaviors()
+    {
+        return [
+            'taggable' => [
+                'class' => TaggableBehavior::class,
+                'tagValuesAsArray' => true,
+                'tagRelation' => 'tags', // 关联表
+                'tagAssnRelation' => 'tagMap', // 关联中间表属性
+                'tagValueAttribute' => 'title', // 标签字段
+                'tagFrequencyAttribute' => 'frequency', // 标签数量字段
+            ],
+        ];
     }
 }

@@ -23,7 +23,7 @@ class AddonConfig extends BaseAddonConfig
         'brief_introduction' => '会员账号信息管理',
         'description' => '',
         'author' => '简言',
-        'version' => '1.0.2',
+        'version' => '1.0.3',
     ];
 
     /**

@@ -14,7 +14,6 @@ use common\components\Service;
  * @property CateService $cate 分类
  * @property AdvService $adv 幻灯片
  * @property TagService $tag 标签
- * @property TagMapService $tagMap 标签关联
  * @property FriendlyLinkService $friendlyLink 友情链接
  */
 class Application extends Service
@@ -29,7 +28,6 @@ class Application extends Service
         'single' => SingleService::class,
         'adv' => AdvService::class,
         'tag' => TagService::class,
-        'tagMap' => TagMapService::class,
         'friendlyLink' => FriendlyLinkService::class,
     ];
 }

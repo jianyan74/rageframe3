@@ -18,7 +18,7 @@ trait HasOneMember
      */
     public function getMember()
     {
-        return $this->hasOne(Member::class, ['id' => 'member_id'])->andWhere(['status' => StatusEnum::ENABLED]);
+        return $this->hasOne(Member::class, ['id' => 'member_id']);
     }
 
     /**

@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <?= $form->field($model, 'tags')->checkboxList(Yii::$app->tinyBlogService->tag->getMapList()); ?>
+                        <?= $form->field($model, 'tagValues')->checkboxList(Yii::$app->tinyBlogService->tag->getTitleMapList()); ?>
                     </div>
                 </div>
                 <?= $form->field($model, 'link')->textInput(); ?>

@@ -96,7 +96,9 @@ class Cascader extends InputWidget
             'style' => 'width:420px',
             'placeholder' => '搜索或点击下拉选择'
         ], $this->options);
-        $this->boxId = md5($this->name) . StringHelper::uuid('uniqid');
+
+        $name = $this->hasModel() ? Html::getInputName($this->model, $this->attribute) : $this->name;
+        $this->boxId = md5($name) . StringHelper::uuid('uniqid');
     }
 
     /**

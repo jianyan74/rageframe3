@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             'class' => 'yii\grid\SerialColumn',
                         ],
                         'title',
+                        'frequency',
                         [
                             'attribute' => 'sort',
                             'value' => function ($model) {

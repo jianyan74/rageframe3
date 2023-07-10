@@ -124,6 +124,43 @@ trait NotifyConfigTrait
     }
 
     /**
+     * 辅助表格信息
+     *
+     * @return mixed|string|\yii\web\Response
+     * @throws \yii\base\ExitException
+     */
+    public function actionHelpTable()
+    {
+        $name = Yii::$app->request->get('name');
+        $default = $this->getNameDefaultData($name);
+        $tables = $default['tables'];
+        $data = [];
+        foreach ($tables as $table) {
+            $tableSchema = Yii::$app->db->getTableSchema($table['tableName']);
+            $table['fields'] = [];
+            foreach ($tableSchema->columns as $column) {
+                // 过滤不显示的字段
+                if (isset($table['filterFields']) && in_array($column->name, $table['filterFields'])) {
+                    continue;
+                }
+
+                $table['fields'][] = [
+                    'name' => '{' . $table['prefix'] . '.' . $column->name . '}',
+                    'comment' => $column->comment,
+                ];
+            }
+
+            $data[] = $table;
+        }
+
+        return $this->renderAjax($this->viewPrefix . $this->action->id, [
+            'data' => $data,
+            'name' => $name,
+            'nameMap' => $this->getNameMap(),
+        ]);
+    }
+
+    /**
      * 返回模型
      *
      * @param $id

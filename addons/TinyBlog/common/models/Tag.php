@@ -34,7 +34,7 @@ class Tag extends \common\models\base\BaseModel
     public function rules()
     {
         return [
-            [['merchant_id', 'store_id', 'sort', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['merchant_id', 'store_id', 'frequency', 'sort', 'status', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'string', 'max' => 30],
             [['title', 'sort'], 'required'],
         ];
@@ -50,6 +50,7 @@ class Tag extends \common\models\base\BaseModel
             'merchant_id' => '商户id',
             'store_id' => '店铺id',
             'title' => '标题',
+            'frequency' => '使用次数',
             'sort' => '排序',
             'status' => '状态',
             'created_at' => '创建时间',

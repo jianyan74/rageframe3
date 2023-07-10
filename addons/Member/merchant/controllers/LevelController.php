@@ -50,7 +50,7 @@ class LevelController extends BaseController
             ->andWhere(['>=', 'status', StatusEnum::DISABLED])
             ->andWhere(['merchant_id' => $merchant_id]);
 
-        $levelConfig = Yii::$app->services->memberLevelConfig->findModel($merchant_id);
+        $levelConfig = Yii::$app->services->memberLevelConfig->one($merchant_id);
 
         return $this->render($this->action->id, [
             'dataProvider' => $dataProvider,

@@ -82,7 +82,8 @@ class Files extends InputWidget
             $this->typeConfig['drive'] = $storageDefault;
         }
 
-        $this->boxId = md5($this->name) . StringHelper::uuid('uniqid');
+        $name = $this->hasModel() ? Html::getInputName($this->model, $this->attribute) : $this->name;
+        $this->boxId = md5($name) . StringHelper::uuid('uniqid');
         $this->themeConfig = ArrayHelper::merge([
             'select' => true, // 显示选择文件
             'sortable' => true, // 是否开启排序

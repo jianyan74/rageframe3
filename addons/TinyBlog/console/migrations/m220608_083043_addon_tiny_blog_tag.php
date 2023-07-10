@@ -15,6 +15,7 @@ class m220608_083043_addon_tiny_blog_tag extends Migration
             'merchant_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '商户id'",
             'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺id'",
             'title' => "varchar(30) NOT NULL DEFAULT '' COMMENT '标题'",
+            'frequency' => "int(10) NULL DEFAULT '0' COMMENT '使用次数'",
             'sort' => "int(10) NULL DEFAULT '0' COMMENT '排序'",
             'status' => "tinyint(4) NULL DEFAULT '1' COMMENT '状态'",
             'created_at' => "int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间'",

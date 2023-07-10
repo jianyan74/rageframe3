@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <ul class="nav nav-tabs">
                 <li class="active"><a href="<?= Url::to(['cancel/index'])?>">会员注销(<?= Yii::$app->services->memberCancel->getApplyCount(); ?>)</a></li>
                 <li><a href="<?= Url::to(['setting/config'])?>">注销设置</a></li>
-                <li><a href="<?= Url::to(['setting/display'])?>">注销协议</a></li>
+                <li class="hide"><a href="<?= Url::to(['setting/display'])?>">注销协议</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active">

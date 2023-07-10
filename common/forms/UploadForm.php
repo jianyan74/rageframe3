@@ -356,7 +356,7 @@ class UploadForm extends \common\models\common\Attachment
             throw new UnprocessableEntityHttpException('警告这是非法文件');
         }
 
-        if ($this->isCut == false && $this->writeTable) {
+        if ($this->isCut == false && $this->writeTable && Yii::$app->params['fileWriteTable']) {
             $this->superAddition == true ? $this->save(false) : $this->save();
         }
 

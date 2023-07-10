@@ -33,6 +33,14 @@ class TagService
     }
 
     /**
+     * @return array
+     */
+    public function getTitleMapList()
+    {
+        return ArrayHelper::map($this->findAll(), 'title', 'title');
+    }
+
+    /**
      * @return array|\yii\db\ActiveRecord[]
      */
     public function findAll()

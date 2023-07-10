@@ -27,7 +27,7 @@ class LevelConfigController extends BaseController
     public function actionEdit()
     {
         $id = Yii::$app->services->merchant->getNotNullId();
-        $model = Yii::$app->services->memberLevelConfig->findModel($id);
+        $model = Yii::$app->services->memberLevelConfig->one($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->message('保存成功', $this->redirect(['edit']));
         }

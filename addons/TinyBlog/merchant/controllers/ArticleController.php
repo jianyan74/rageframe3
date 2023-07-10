@@ -7,7 +7,6 @@ use common\models\base\SearchModel;
 use common\traits\MerchantCurd;
 use common\enums\StatusEnum;
 use addons\TinyBlog\common\models\Article;
-use addons\TinyBlog\merchant\forms\ArticleForm;
 use addons\TinyBlog\common\enums\ArticlePositionEnum;
 
 /**
@@ -128,9 +127,9 @@ class ArticleController extends BaseController
     public function actionEdit()
     {
         $id = Yii::$app->request->get('id', null);
-        $model = $this->findFormModel($id);
+        $model = $this->findModel($id);
         // 设置选中标签
-        $model->tags = Yii::$app->tinyBlogService->tagMap->findTagId($id);
+        $model->tagValues = $model->getTagValues(true);
         // 推荐位
         $positionExplain = ArticlePositionEnum::getMap();
         $keys = [];
@@ -141,33 +140,14 @@ class ArticleController extends BaseController
         }
         $model->position = $keys;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->referrer();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                return $this->referrer();
+            }
         }
 
         return $this->render($this->action->id, [
             'model' => $model,
         ]);
-    }
-
-    /**
-     * 返回模型
-     *
-     * @param $id
-     * @return \yii\db\ActiveRecord
-     */
-    protected function findFormModel($id)
-    {
-        /* @var $model \yii\db\ActiveRecord */
-        if (empty($id) || empty($model = ArticleForm::find()
-                ->where(['id' => $id])
-                ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
-                ->one())
-        ) {
-            $model = new ArticleForm();
-            return $model->loadDefaultValues();
-        }
-
-        return $model;
     }
 }

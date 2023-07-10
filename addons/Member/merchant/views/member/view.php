@@ -7,6 +7,7 @@ use common\enums\GenderEnum;
 use common\helpers\ImageHelper;
 use common\helpers\DebrisHelper;
 use common\enums\CreditsLogTypeEnum;
+use common\enums\MemberStatusEnum;
 
 $this->title = '个人资料';
 
@@ -77,16 +78,19 @@ $this->title = '个人资料';
                         <td>推广码：<?= $member['promoter_code'] ?></td>
                     </tr>
                     <tr>
-                        <td colspan="6">手机号码：<?= $member['mobile'] ?></td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">
+                        <td colspan="2">手机号码：<?= $member['mobile'] ?></td>
+                        <td colspan="2">
                             推荐人：
                             <?php if ($member->parent) { ?>
                                 <a href="<?= Url::toRoute(['/member/member/view', 'id' => $member->pid]) ?>" class="openIframeView blue"><?= Html::encode($member->parent->nickname) ?></a>
                             <?php } else { ?>
                                 无
                             <?php } ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            会员状态：<?= MemberStatusEnum::html($member['status']) ?>
                         </td>
                     </tr>
                     <tr>

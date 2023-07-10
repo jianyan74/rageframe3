@@ -53,6 +53,8 @@ return [
             'allow_self_signed' => false, // 如果是自签名证书需要开启此选项
         ],
         // ---------------- gateway worker ----------------
+        // 如果一个服务器需要跑多个服务，改端口的同时需要改大一点，避免启动冲突
+        'gatewayStartPort' => 2900,
         // 负责网络 IO 进程数量; 最好设置为 CPU 核数
         'gatewayCount' => 2,
         // 业务处理进程数量; 根据业务是否有阻塞式 IO 设置进程数为CPU核数的 1倍 - 3倍
@@ -69,6 +71,8 @@ return [
         ],
     ],
 
+    // 记录上传到表里
+    'fileWriteTable' => true,
     // 百度编辑器默认上传驱动
     'UEditorUploadDrive' => 'local',
     // 全局上传配置

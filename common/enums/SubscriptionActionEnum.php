@@ -2,6 +2,8 @@
 
 namespace common\enums;
 
+use common\models\member\Member;
+
 /**
  * Class SubscriptionActionEnum
  * @package common\enums
@@ -36,10 +38,22 @@ class SubscriptionActionEnum extends BaseEnum
             self::ERROR => [
                 'title' => '有一条 500 错误日志',
                 'content' => '具体看全局日志',
+                // 辅助说明表
+                'tables' => [
+                    // [
+                    //     'title' => '用户',
+                    //     'prefix' => 'member',
+                    //     'tableName' => Member::tableName(),
+                    //     'filterField' => []
+                    // ]
+                ],
             ],
             self::ABNORMAL_LOGIN => [
                 'title' => '有一条异常错误日志',
                 'content' => '{username} 连续 {attempts} 次错误输入账号密码',
+                'tables' => [
+
+                ]
             ],
         ];
 

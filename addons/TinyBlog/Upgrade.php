@@ -19,6 +19,7 @@ class Upgrade extends Migration implements AddonWidget
      */
     public $versions = [
         '1.0.0', // 默认版本
+        '1.0.1',
     ];
 
     /**
@@ -30,7 +31,7 @@ class Upgrade extends Migration implements AddonWidget
     {
         switch ($addon->version) {
             case '1.0.1' :
-
+                $this->addColumn('{{%addon_tiny_blog_tag}}', 'frequency', "int(10) NULL DEFAULT '0' COMMENT '使用次数'");
                 break;
         }
     }

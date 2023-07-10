@@ -23,7 +23,7 @@ class AddonConfig extends BaseAddonConfig
         'brief_introduction' => '个人简洁自适应响应式博客',
         'description' => '',
         'author' => '简言',
-        'version' => '1.0.0',
+        'version' => '1.0.1',
     ];
 
     /**

@@ -4,7 +4,6 @@ namespace addons\TinyBlog\frontend\controllers;
 
 use Yii;
 use yii\data\Pagination;
-use yii\db\ActiveQuery;
 use yii\web\UnprocessableEntityHttpException;
 use common\enums\StatusEnum;
 use addons\TinyBlog\common\models\Article;
@@ -36,7 +35,7 @@ class IndexController extends BaseController
             ->asArray()
             ->all();
 
-        return $this->render($this->action->id,[
+        return $this->render($this->action->id, [
             'keyword' => $keyword,
             'models' => $models,
             'pages' => $pages,
@@ -68,7 +67,7 @@ class IndexController extends BaseController
             throw new UnprocessableEntityHttpException('找不到分类内容...');
         }
 
-        return $this->render($this->action->id,[
+        return $this->render($this->action->id, [
             'models' => $models,
             'cate' => $cate,
             'pages' => $pages,
@@ -80,19 +79,26 @@ class IndexController extends BaseController
      */
     public function actionTag()
     {
-        $tagId = Yii::$app->request->get('tag_id');
-        $tag = Yii::$app->tinyBlogService->tag->findById($tagId);
+        $tag = Yii::$app->request->get('tag');
         $data = Article::find()
-            ->select(['id', 'merchant_id', 'cate_id', 'title', 'description', 'cover', 'author', 'view', 'created_at'])
-            ->where(['status' => StatusEnum::ENABLED])
-            ->joinWith(['tagMap' => function (ActiveQuery $query) use ($tagId) {
-                return $query->andWhere(['tag_id' => $tagId]);
-            }])
+            ->select([
+                Article::tableName().'.id',
+                Article::tableName().'.merchant_id',
+                'cate_id',
+                Article::tableName().'.title',
+                'description',
+                'cover',
+                'author',
+                'view',
+                Article::tableName().'.created_at',
+            ])
+            ->where([Article::tableName().'.status' => StatusEnum::ENABLED])
             ->with(['cate', 'merchant'])
+            ->anyTagValues($tag)
             ->andFilterWhere(['merchant_id' => $this->getMerchantId()]);
         $pages = new Pagination(['totalCount' => $data->count(), 'pageSize' => $this->pageSize]);
         $models = $data->offset($pages->offset)
-            ->orderBy('sort asc, id desc')
+            ->orderBy(Article::tableName().'.sort asc, id desc')
             ->limit($pages->limit)
             ->asArray()
             ->all();
@@ -101,7 +107,7 @@ class IndexController extends BaseController
             throw new UnprocessableEntityHttpException('找不到标签...');
         }
 
-        return $this->render($this->action->id,[
+        return $this->render($this->action->id, [
             'models' => $models,
             'tag' => $tag,
             'pages' => $pages,
@@ -121,7 +127,7 @@ class IndexController extends BaseController
         $model->view += 1;
         Article::updateAllCounters(['view' => 1], ['id' => $model['id']]);
 
-        return $this->render($this->action->id,[
+        return $this->render($this->action->id, [
             'model' => $model,
             'prev' => Yii::$app->tinyBlogService->article->getPrev($id),
             'next' => Yii::$app->tinyBlogService->article->getNext($id),

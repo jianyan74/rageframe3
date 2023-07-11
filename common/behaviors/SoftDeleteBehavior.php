@@ -6,6 +6,7 @@ use yii\base\Behavior;
 use yii\base\Event;
 use yii\db\BaseActiveRecord;
 use yii\db\Expression;
+use common\models\base\BaseModel;
 
 /**
  * 伪删除行为
@@ -32,10 +33,10 @@ class SoftDeleteBehavior extends Behavior
     /**
      * @inheritdoc
      */
-    public function events()
-    {
-        return [BaseActiveRecord::EVENT_BEFORE_DELETE => 'softDeleteEvent'];
-    }
+    // public function events()
+    // {
+    //     return [BaseActiveRecord::EVENT_BEFORE_DELETE => 'softDeleteEvent'];
+    // }
 
     /**
      * Set the attribute with the current -1 to mark as deleted
@@ -81,6 +82,7 @@ class SoftDeleteBehavior extends Behavior
     public function hardDelete()
     {
         // store model so that we can detach the behavior
+        /** @var BaseModel $model */
         $model = $this->owner;
         $this->detach();
         // delete as normal

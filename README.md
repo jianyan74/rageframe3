@@ -31,7 +31,7 @@ RageFrame 创建于 2016 年 4 月 16 日，一个基于 Yii2 高级框架的快
 
 ### 思维导图
 
-![image](https://s1.ax1x.com/2023/07/29/pPSNx2T.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSwsJI.png)
 
 ### 应用架构流程
 
@@ -40,7 +40,7 @@ RageFrame 创建于 2016 年 4 月 16 日，一个基于 Yii2 高级框架的快
 ### 系统快照
 
 【系统 - 首页】
-![image](docs/guide-zh-CN/images/sys-index.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSwyWt.png)
 【系统 - 配置管理】
 ![image](https://s1.ax1x.com/2023/07/29/pPSNvGV.png)
 【系统 - 角色编辑】

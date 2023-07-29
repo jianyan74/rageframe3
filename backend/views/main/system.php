@@ -28,7 +28,7 @@ $prefix = !RegularHelper::verify('url', Yii::getAlias('@attachurl')) ? Yii::$app
                     </tr>
                     <tr>
                         <td>解析引擎</td>
-                        <td><?= $_SERVER['SERVER_SOFTWARE']; ?></td>
+                        <td><?= Html::encode($_SERVER['SERVER_SOFTWARE']); ?></td>
                     </tr>
                     <tr>
                         <td>数据库大小</td>

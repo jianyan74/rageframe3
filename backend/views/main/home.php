@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
     <div class="col-md-2 col-sm-6 col-xs-12">
         <div class="info-box">
             <div class="info-box-content p-md">
-                <span class="info-box-number"><i class="icon ion-ios-pulse orange"></i> <?= abs($memberAccount['consume_money']) ?? 0 ?></span>
+                <span class="info-box-number"><i class="icon ion-ios-pulse orange"></i> <?= abs($memberAccount['consume_money'] ?? 0) ?? 0 ?></span>
                 <span class="info-box-text">会员总消费(元)</span>
             </div>
             <!-- /.info-box-content -->

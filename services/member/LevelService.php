@@ -59,7 +59,7 @@ class LevelService extends Service
         }
 
         // 未开启自动升级
-        $config = Yii::$app->services->memberLevelConfig->findModel(0);
+        $config = Yii::$app->services->memberLevelConfig->one(0);
         if ($config->auto_upgrade_type == MemberLevelAutoUpgradeTypeEnum::CLOSE) {
             return false;
         }

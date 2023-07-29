@@ -683,16 +683,16 @@
         },
         {
             "name": "defuse/php-encryption",
-            "version": "v2.3.1",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/defuse/php-encryption.git",
-                "reference": "77880488b9954b7884c25555c2a0ea9e7053f9d2"
+                "reference": "f53396c2d34225064647a05ca76c1da9d99e5828"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/defuse/php-encryption/zipball/77880488b9954b7884c25555c2a0ea9e7053f9d2",
-                "reference": "77880488b9954b7884c25555c2a0ea9e7053f9d2",
+                "url": "https://api.github.com/repos/defuse/php-encryption/zipball/f53396c2d34225064647a05ca76c1da9d99e5828",
+                "reference": "f53396c2d34225064647a05ca76c1da9d99e5828",
                 "shasum": ""
             },
             "require": {
@@ -701,7 +701,8 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4|^5|^6|^7|^8|^9"
+                "phpunit/phpunit": "^5|^6|^7|^8|^9|^10",
+                "yoast/phpunit-polyfills": "^2.0.0"
             },
             "bin": [
                 "bin/generate-defuse-key"
@@ -743,9 +744,9 @@
             ],
             "support": {
                 "issues": "https://github.com/defuse/php-encryption/issues",
-                "source": "https://github.com/defuse/php-encryption/tree/v2.3.1"
+                "source": "https://github.com/defuse/php-encryption/tree/v2.4.0"
             },
-            "time": "2021-04-09T23:57:26+00:00"
+            "time": "2023-06-19T06:10:36+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -2738,17 +2739,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "f554b1c5cadb36f00949a9df7aa79395754cb667"
+                "reference": "4b8ef7dd9780531fc997fa23a53a38a1f7674bec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/f554b1c5cadb36f00949a9df7aa79395754cb667",
-                "reference": "f554b1c5cadb36f00949a9df7aa79395754cb667",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/4b8ef7dd9780531fc997fa23a53a38a1f7674bec",
+                "reference": "4b8ef7dd9780531fc997fa23a53a38a1f7674bec",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/yii2-krajee-base": ">=3.0.4",
-                "select2/select2": ">=4.0"
+                "select2/select2": ">=4.0.0"
             },
             "default-branch": true,
             "type": "yii2-extension",
@@ -2787,7 +2788,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kartik-v/yii2-widget-select2/issues",
-                "source": "https://github.com/kartik-v/yii2-widget-select2/tree/master"
+                "source": "https://github.com/kartik-v/yii2-widget-select2/tree/v2.2.5"
             },
             "funding": [
                 {
@@ -2795,7 +2796,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2023-03-30T13:17:08+00:00"
+            "time": "2023-06-22T07:43:31+00:00"
         },
         {
             "name": "kartik-v/yii2-widget-timepicker",
@@ -2914,16 +2915,16 @@
         },
         {
             "name": "laravel/serializable-closure",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/serializable-closure.git",
-                "reference": "f23fe9d4e95255dacee1bf3525e0810d1a1b0f37"
+                "reference": "e5a3057a5591e1cfe8183034b0203921abe2c902"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/f23fe9d4e95255dacee1bf3525e0810d1a1b0f37",
-                "reference": "f23fe9d4e95255dacee1bf3525e0810d1a1b0f37",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/e5a3057a5591e1cfe8183034b0203921abe2c902",
+                "reference": "e5a3057a5591e1cfe8183034b0203921abe2c902",
                 "shasum": ""
             },
             "require": {
@@ -2970,7 +2971,7 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
-            "time": "2023-01-30T18:31:20+00:00"
+            "time": "2023-07-14T13:56:28+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -5218,16 +5219,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.18.1",
+            "version": "1.19.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "f258b3a1d16acb7b21f3b42d7a2494a733365237"
+                "reference": "57f3de01d32085fea20865f9b16fb0e69347c39e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/f258b3a1d16acb7b21f3b42d7a2494a733365237",
-                "reference": "f258b3a1d16acb7b21f3b42d7a2494a733365237",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/57f3de01d32085fea20865f9b16fb0e69347c39e",
+                "reference": "57f3de01d32085fea20865f9b16fb0e69347c39e",
                 "shasum": ""
             },
             "require": {
@@ -5290,9 +5291,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.18.1"
+                "source": "https://github.com/php-http/discovery/tree/1.19.1"
             },
-            "time": "2023-05-17T08:53:10+00:00"
+            "time": "2023-07-11T07:02:26+00:00"
         },
         {
             "name": "php-http/guzzle7-adapter",
@@ -5763,16 +5764,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.20",
+            "version": "3.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "543a1da81111a0bfd6ae7bbc2865c5e89ed3fc67"
+                "reference": "4580645d3fc05c189024eb3b834c6c1e4f0f30a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/543a1da81111a0bfd6ae7bbc2865c5e89ed3fc67",
-                "reference": "543a1da81111a0bfd6ae7bbc2865c5e89ed3fc67",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/4580645d3fc05c189024eb3b834c6c1e4f0f30a1",
+                "reference": "4580645d3fc05c189024eb3b834c6c1e4f0f30a1",
                 "shasum": ""
             },
             "require": {
@@ -5853,7 +5854,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.20"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.21"
             },
             "funding": [
                 {
@@ -5869,7 +5870,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-13T06:30:34+00:00"
+            "time": "2023-07-09T15:24:48+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -6334,16 +6335,16 @@
         },
         {
             "name": "qcloud/cos-sdk-v5",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tencentyun/cos-php-sdk-v5.git",
-                "reference": "dd1b7a096cbdcafc9de265cb2bb1b4222ac60136"
+                "reference": "06ccc95599635abd3f431f470b79b8fb8ddbd6a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tencentyun/cos-php-sdk-v5/zipball/dd1b7a096cbdcafc9de265cb2bb1b4222ac60136",
-                "reference": "dd1b7a096cbdcafc9de265cb2bb1b4222ac60136",
+                "url": "https://api.github.com/repos/tencentyun/cos-php-sdk-v5/zipball/06ccc95599635abd3f431f470b79b8fb8ddbd6a0",
+                "reference": "06ccc95599635abd3f431f470b79b8fb8ddbd6a0",
                 "shasum": ""
             },
             "require": {
@@ -6396,22 +6397,22 @@
             ],
             "support": {
                 "issues": "https://github.com/tencentyun/cos-php-sdk-v5/issues",
-                "source": "https://github.com/tencentyun/cos-php-sdk-v5/tree/v2.6.3"
+                "source": "https://github.com/tencentyun/cos-php-sdk-v5/tree/v2.6.4"
             },
-            "time": "2023-06-14T03:18:14+00:00"
+            "time": "2023-07-12T03:41:07+00:00"
         },
         {
             "name": "qiniu/php-sdk",
-            "version": "v7.9.0",
+            "version": "v7.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/qiniu/php-sdk.git",
-                "reference": "3c0ebeee6a7439a0d2874f24b56dfe43545a1d2e"
+                "reference": "59f7b387d95ff1187f15bf6bf1639817ab4b07a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/3c0ebeee6a7439a0d2874f24b56dfe43545a1d2e",
-                "reference": "3c0ebeee6a7439a0d2874f24b56dfe43545a1d2e",
+                "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/59f7b387d95ff1187f15bf6bf1639817ab4b07a0",
+                "reference": "59f7b387d95ff1187f15bf6bf1639817ab4b07a0",
                 "shasum": ""
             },
             "require": {
@@ -6453,9 +6454,9 @@
             ],
             "support": {
                 "issues": "https://github.com/qiniu/php-sdk/issues",
-                "source": "https://github.com/qiniu/php-sdk/tree/v7.9.0"
+                "source": "https://github.com/qiniu/php-sdk/tree/v7.10.0"
             },
-            "time": "2023-05-06T04:36:16+00:00"
+            "time": "2023-07-25T01:46:35+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -6732,16 +6733,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v5.4.23",
+            "version": "v5.4.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "983c79ff28612cdfd66d8e44e1a06e5afc87e107"
+                "reference": "e2013521c0f07473ae69a01fce0af78fc3ec0f23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/983c79ff28612cdfd66d8e44e1a06e5afc87e107",
-                "reference": "983c79ff28612cdfd66d8e44e1a06e5afc87e107",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/e2013521c0f07473ae69a01fce0af78fc3ec0f23",
+                "reference": "e2013521c0f07473ae69a01fce0af78fc3ec0f23",
                 "shasum": ""
             },
             "require": {
@@ -6809,7 +6810,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v5.4.23"
+                "source": "https://github.com/symfony/cache/tree/v5.4.25"
             },
             "funding": [
                 {
@@ -6825,7 +6826,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-21T15:38:51+00:00"
+            "time": "2023-06-22T08:06:06+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -7139,16 +7140,16 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v5.4.24",
+            "version": "v5.4.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "3c59f97f6249ce552a44f01b93bfcbd786a954f5"
+                "reference": "f66be2706075c5f6325d2fe2b743a57fb5d23f6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/3c59f97f6249ce552a44f01b93bfcbd786a954f5",
-                "reference": "3c59f97f6249ce552a44f01b93bfcbd786a954f5",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/f66be2706075c5f6325d2fe2b743a57fb5d23f6b",
+                "reference": "f66be2706075c5f6325d2fe2b743a57fb5d23f6b",
                 "shasum": ""
             },
             "require": {
@@ -7195,7 +7196,7 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-foundation/tree/v5.4.24"
+                "source": "https://github.com/symfony/http-foundation/tree/v5.4.25"
             },
             "funding": [
                 {
@@ -7211,7 +7212,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-19T07:21:23+00:00"
+            "time": "2023-06-22T08:06:06+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -7934,21 +7935,22 @@
         },
         {
             "name": "symfony/psr-http-message-bridge",
-            "version": "v2.2.0",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/psr-http-message-bridge.git",
-                "reference": "28a732c05bbad801304ad5a5c674cf2970508993"
+                "reference": "581ca6067eb62640de5ff08ee1ba6850a0ee472e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/28a732c05bbad801304ad5a5c674cf2970508993",
-                "reference": "28a732c05bbad801304ad5a5c674cf2970508993",
+                "url": "https://api.github.com/repos/symfony/psr-http-message-bridge/zipball/581ca6067eb62640de5ff08ee1ba6850a0ee472e",
+                "reference": "581ca6067eb62640de5ff08ee1ba6850a0ee472e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
                 "psr/http-message": "^1.0 || ^2.0",
+                "symfony/deprecation-contracts": "^2.5 || ^3.0",
                 "symfony/http-foundation": "^5.4 || ^6.0"
             },
             "require-dev": {
@@ -7967,7 +7969,7 @@
             "type": "symfony-bridge",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.2-dev"
+                    "dev-main": "2.3-dev"
                 }
             },
             "autoload": {
@@ -8002,7 +8004,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/psr-http-message-bridge/issues",
-                "source": "https://github.com/symfony/psr-http-message-bridge/tree/v2.2.0"
+                "source": "https://github.com/symfony/psr-http-message-bridge/tree/v2.3.1"
             },
             "funding": [
                 {
@@ -8018,7 +8020,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-21T08:40:19+00:00"
+            "time": "2023-07-26T11:53:26+00:00"
         },
         {
             "name": "symfony/service-contracts",
@@ -8105,16 +8107,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.4.24",
+            "version": "v5.4.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "8e12706bf9c68a2da633f23bfdc15b4dce5970b3"
+                "reference": "82269f73c0f0f9859ab9b6900eebacbe54954ede"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/8e12706bf9c68a2da633f23bfdc15b4dce5970b3",
-                "reference": "8e12706bf9c68a2da633f23bfdc15b4dce5970b3",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/82269f73c0f0f9859ab9b6900eebacbe54954ede",
+                "reference": "82269f73c0f0f9859ab9b6900eebacbe54954ede",
                 "shasum": ""
             },
             "require": {
@@ -8173,7 +8175,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v5.4.24"
+                "source": "https://github.com/symfony/var-dumper/tree/v5.4.25"
             },
             "funding": [
                 {
@@ -8189,7 +8191,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-25T13:05:00+00:00"
+            "time": "2023-06-20T20:56:26+00:00"
         },
         {
             "name": "symfony/var-exporter",
@@ -8266,16 +8268,16 @@
         },
         {
             "name": "tencentcloud/tencentcloud-sdk-php",
-            "version": "3.0.909",
+            "version": "3.0.940",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TencentCloud/tencentcloud-sdk-php.git",
-                "reference": "f372829e46d6abf8b3192192a8aab442a061cb84"
+                "reference": "885a592d01487ed9c741f33c52e13c159710d9c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TencentCloud/tencentcloud-sdk-php/zipball/f372829e46d6abf8b3192192a8aab442a061cb84",
-                "reference": "f372829e46d6abf8b3192192a8aab442a061cb84",
+                "url": "https://api.github.com/repos/TencentCloud/tencentcloud-sdk-php/zipball/885a592d01487ed9c741f33c52e13c159710d9c4",
+                "reference": "885a592d01487ed9c741f33c52e13c159710d9c4",
                 "shasum": ""
             },
             "require": {
@@ -8310,9 +8312,9 @@
             "homepage": "https://github.com/TencentCloud/tencentcloud-sdk-php",
             "support": {
                 "issues": "https://github.com/TencentCloud/tencentcloud-sdk-php/issues",
-                "source": "https://github.com/TencentCloud/tencentcloud-sdk-php/tree/3.0.909"
+                "source": "https://github.com/TencentCloud/tencentcloud-sdk-php/tree/3.0.940"
             },
-            "time": "2023-06-16T00:04:30+00:00"
+            "time": "2023-07-27T01:55:35+00:00"
         },
         {
             "name": "tightenco/collect",
@@ -8423,16 +8425,16 @@
         },
         {
             "name": "workerman/gateway-worker",
-            "version": "v3.0.28",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/walkor/GatewayWorker.git",
-                "reference": "a7dffc53403133131a51b9fd3c6c6d70869cb6d3"
+                "reference": "3364be5524f3ac49fa2356377ce4c0151371d063"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/GatewayWorker/zipball/a7dffc53403133131a51b9fd3c6c6d70869cb6d3",
-                "reference": "a7dffc53403133131a51b9fd3c6c6d70869cb6d3",
+                "url": "https://api.github.com/repos/walkor/GatewayWorker/zipball/3364be5524f3ac49fa2356377ce4c0151371d063",
+                "reference": "3364be5524f3ac49fa2356377ce4c0151371d063",
                 "shasum": ""
             },
             "require": {
@@ -8456,7 +8458,7 @@
             ],
             "support": {
                 "issues": "https://github.com/walkor/GatewayWorker/issues",
-                "source": "https://github.com/walkor/GatewayWorker/tree/v3.0.28"
+                "source": "https://github.com/walkor/GatewayWorker/tree/v3.1.0"
             },
             "funding": [
                 {
@@ -8468,7 +8470,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-03-24T03:56:27+00:00"
+            "time": "2023-07-19T10:30:49+00:00"
         },
         {
             "name": "workerman/gatewayclient",
@@ -8545,16 +8547,16 @@
         },
         {
             "name": "workerman/workerman",
-            "version": "v4.1.10",
+            "version": "v4.1.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/walkor/workerman.git",
-                "reference": "e967b79f95b9251a72acb971be05623ec1a51e83"
+                "reference": "54aaf7f2a161f24f3339a722e0d3224ede466516"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/workerman/zipball/e967b79f95b9251a72acb971be05623ec1a51e83",
-                "reference": "e967b79f95b9251a72acb971be05623ec1a51e83",
+                "url": "https://api.github.com/repos/walkor/workerman/zipball/54aaf7f2a161f24f3339a722e0d3224ede466516",
+                "reference": "54aaf7f2a161f24f3339a722e0d3224ede466516",
                 "shasum": ""
             },
             "require": {
@@ -8604,7 +8606,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-05-01T02:12:20+00:00"
+            "time": "2023-07-19T11:53:24+00:00"
         },
         {
             "name": "xj/yii2-oauth",
@@ -9234,12 +9236,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-elasticsearch.git",
-                "reference": "740e5b8f29839d395400c00c68c9cf5d7ea97b05"
+                "reference": "b15c7950844b6e13658a98021140a4f3bee990a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-elasticsearch/zipball/740e5b8f29839d395400c00c68c9cf5d7ea97b05",
-                "reference": "740e5b8f29839d395400c00c68c9cf5d7ea97b05",
+                "url": "https://api.github.com/repos/yiisoft/yii2-elasticsearch/zipball/b15c7950844b6e13658a98021140a4f3bee990a4",
+                "reference": "b15c7950844b6e13658a98021140a4f3bee990a4",
                 "shasum": ""
             },
             "require": {
@@ -9283,11 +9285,11 @@
                 "yii2"
             ],
             "support": {
-                "forum": "http://www.yiiframework.com/forum/",
+                "forum": "https://www.yiiframework.com/forum/",
                 "irc": "ircs://irc.libera.chat:6697/yii",
                 "issues": "https://github.com/yiisoft/yii2-elasticsearch/issues",
                 "source": "https://github.com/yiisoft/yii2-elasticsearch",
-                "wiki": "http://www.yiiframework.com/wiki/"
+                "wiki": "https://www.yiiframework.com/wiki/"
             },
             "funding": [
                 {
@@ -9299,7 +9301,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-17T07:06:02+00:00"
+            "time": "2023-07-10T16:42:24+00:00"
         },
         {
             "name": "yiisoft/yii2-httpclient",
@@ -9445,12 +9447,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-queue.git",
-                "reference": "29d745080118c8cc830dd694112985cd4d131f55"
+                "reference": "726a4fd55aecb4ccefd4957b42d28d35c3ea653e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-queue/zipball/29d745080118c8cc830dd694112985cd4d131f55",
-                "reference": "29d745080118c8cc830dd694112985cd4d131f55",
+                "url": "https://api.github.com/repos/yiisoft/yii2-queue/zipball/726a4fd55aecb4ccefd4957b42d28d35c3ea653e",
+                "reference": "726a4fd55aecb4ccefd4957b42d28d35c3ea653e",
                 "shasum": ""
             },
             "require": {
@@ -9544,7 +9546,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-18T21:16:58+00:00"
+            "time": "2023-06-28T15:34:23+00:00"
         },
         {
             "name": "yiisoft/yii2-redis",
@@ -12508,16 +12510,16 @@
         },
         {
             "name": "yiisoft/yii2-debug",
-            "version": "2.1.23",
+            "version": "2.1.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "73af53bd1b99d40f983ba57386ac6c374d9ef177"
+                "reference": "e15e954d0beb82b0b532f998f55e7275083de592"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/73af53bd1b99d40f983ba57386ac6c374d9ef177",
-                "reference": "73af53bd1b99d40f983ba57386ac6c374d9ef177",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/e15e954d0beb82b0b532f998f55e7275083de592",
+                "reference": "e15e954d0beb82b0b532f998f55e7275083de592",
                 "shasum": ""
             },
             "require": {
@@ -12594,7 +12596,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-22T19:44:57+00:00"
+            "time": "2023-07-10T06:07:43+00:00"
         },
         {
             "name": "yiisoft/yii2-faker",

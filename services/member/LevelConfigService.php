@@ -29,7 +29,7 @@ class LevelConfigService extends Service
     /**
      * @return LevelConfig
      */
-    public function findModel($merchant_id)
+    public function one($merchant_id)
     {
         if (!empty($this->models[$merchant_id])) {
             return $this->models[$merchant_id];
@@ -39,6 +39,7 @@ class LevelConfigService extends Service
         if (empty($model = $this->findOne($merchant_id))) {
             $model = new LevelConfig();
             $model = $model->loadDefaultValues();
+            $model->save();
         }
 
         $this->models[$merchant_id] = $model;

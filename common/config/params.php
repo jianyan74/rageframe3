@@ -14,7 +14,7 @@ return [
     // 无需授权的路由别名
     'noAuthRoute' => [],
     // 开发模式
-    'devPattern' => 'b2b2c',
+    'devPattern' => 'b2c',
     // 多店铺 (saas、连锁)
     'multiShop' => false,
     // 请求全局唯一ID

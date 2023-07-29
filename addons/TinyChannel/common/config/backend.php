@@ -116,32 +116,6 @@ return [
                     'name' => 'wechat-mini/live/live/index',
                 ],
                 [
-                    'title' => '视频号',
-                    'name' => 'wechat-mini/video',
-                    'child' => [
-                        [
-                            'title' => '商品管理',
-                            'name' => 'wechat-mini/video/spu/index',
-                        ],
-                        [
-                            'title' => '类目管理',
-                            'name' => 'wechat-mini/video/cate/index',
-                        ],
-                        [
-                            'title' => '快递物流',
-                            'name' => 'wechat-mini/video/company/index',
-                        ],
-                        [
-                            'title' => '商家信息',
-                            'name' => 'wechat-mini/video/account/index',
-                        ],
-                        [
-                            'title' => '视频号接入',
-                            'name' => 'wechat-mini/video/register/index',
-                        ],
-                    ]
-                ],
-                [
                     'title' => '小程序配置',
                     'name' => 'wechat-mini/config/index',
                 ],

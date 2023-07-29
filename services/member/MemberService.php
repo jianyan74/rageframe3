@@ -138,7 +138,7 @@ class MemberService extends Service
      *
      * @return array|\yii\db\ActiveRecord|null
      */
-    public function getBetweenCountStat($type)
+    public function getBetweenCountStat($type, $memberType = MemberTypeEnum::MEMBER)
     {
         $fields = [
             'count' => '注册会员人数',
@@ -147,13 +147,13 @@ class MemberService extends Service
         // 获取时间和格式化
         list($time, $format) = EchantsHelper::getFormatTime($type);
         // 获取数据
-        return EchantsHelper::lineOrBarInTime(function ($start_time, $end_time, $formatting) {
+        return EchantsHelper::lineOrBarInTime(function ($start_time, $end_time, $formatting) use ($memberType) {
             return Member::find()
                 ->select(['count(id) as count', "from_unixtime(created_at, '$formatting') as time"])
                 ->where(['>', 'status', StatusEnum::DISABLED])
                 ->andWhere(['between', 'created_at', $start_time, $end_time])
                 ->andWhere(['merchant_id' => Yii::$app->services->merchant->getNotNullId()])
-                ->andWhere(['type' => MemberTypeEnum::MEMBER])
+                ->andWhere(['type' => $memberType])
                 ->groupBy(['time'])
                 ->asArray()
                 ->all();
@@ -163,19 +163,20 @@ class MemberService extends Service
     /**
      * 会员来源
      *
+     * @param $type
      * @return array
      */
-    public function getSourceStat()
+    public function getSourceStat($memberType = MemberTypeEnum::MEMBER)
     {
         $fields = AccessTokenGroupEnum::getMap();
 
         // 获取时间和格式化
         list($time, $format) = EchantsHelper::getFormatTime('all');
         // 获取数据
-        return EchantsHelper::pie(function ($start_time, $end_time) use ($fields) {
+        return EchantsHelper::pie(function ($start_time, $end_time) use ($fields, $memberType) {
             $data = Member::find()
                 ->select(['count(id) as value', 'source'])
-                ->where(['status' => StatusEnum::ENABLED])
+                ->where(['type' => $memberType, 'status' => StatusEnum::ENABLED])
                 ->andWhere(['merchant_id' => Yii::$app->services->merchant->getNotNullId()])
                 ->groupBy(['source'])
                 ->asArray()
@@ -191,21 +192,21 @@ class MemberService extends Service
     }
 
     /**
-     * 会员来源
+     * 会员等级
      *
      * @return array
      */
-    public function getLevelStat()
+    public function getLevelStat($memberType = MemberTypeEnum::MEMBER)
     {
         $fields = Yii::$app->services->memberLevel->getMap();
 
         // 获取时间和格式化
         list($time, $format) = EchantsHelper::getFormatTime('all');
         // 获取数据
-        return EchantsHelper::pie(function ($start_time, $end_time) use ($fields) {
+        return EchantsHelper::pie(function ($start_time, $end_time) use ($fields, $memberType) {
             $data = Member::find()
                 ->select(['count(id) as value', 'current_level'])
-                ->where(['status' => StatusEnum::ENABLED])
+                ->where(['type' => $memberType, 'status' => StatusEnum::ENABLED])
                 ->andWhere(['merchant_id' => Yii::$app->services->merchant->getNotNullId()])
                 ->groupBy(['current_level'])
                 ->asArray()

@@ -18,7 +18,7 @@ $level >= 5 &&$villageId = Html::getInputId($model, $five['name']);
         <?php if ($level >= 1){ ?>
             <?= $form->field($model, $one['name'])->dropDownList($one['list'], [
                 'prompt' => $one['title'],
-                'onchange' => "widgetProvinces(this, 1, '$cityId', '$areaId', '$townshipId', '$villageId')",
+                'onchange' => "widgetProvinces" . $random . "(this, 1, '$cityId', '$areaId', '$townshipId', '$villageId')",
             ]); ?>
         <?php }?>
     </div>
@@ -26,7 +26,7 @@ $level >= 5 &&$villageId = Html::getInputId($model, $five['name']);
         <?php if ($level >= 2){ ?>
             <?= $form->field($model, $two['name'])->dropDownList($two['list'], [
                 'prompt' => $two['title'],
-                'onchange' => "widgetProvinces(this, 2, '$cityId', '$areaId', '$townshipId', '$villageId')",
+                'onchange' => "widgetProvinces" . $random . "(this, 2, '$cityId', '$areaId', '$townshipId', '$villageId')",
             ]); ?>
         <?php }?>
     </div>
@@ -34,7 +34,7 @@ $level >= 5 &&$villageId = Html::getInputId($model, $five['name']);
         <?php if ($level >= 3){ ?>
             <?= $form->field($model, $three['name'])->dropDownList($three['list'], [
                 'prompt' => $three['title'],
-                'onchange' => "widgetProvinces(this, 3, '$cityId', '$areaId', '$townshipId', '$villageId')",
+                'onchange' => "widgetProvinces" . $random . "(this, 3, '$cityId', '$areaId', '$townshipId', '$villageId')",
             ]) ?>
         <?php }?>
     </div>
@@ -42,7 +42,7 @@ $level >= 5 &&$villageId = Html::getInputId($model, $five['name']);
         <?php if ($level >= 4){ ?>
             <?= $form->field($model, $four['name'])->dropDownList($four['list'], [
                 'prompt' => $four['title'],
-                'onchange' => "widgetProvinces(this, 4, '$cityId', '$areaId', '$townshipId', '$villageId')",
+                'onchange' => "widgetProvinces" . $random . "(this, 4, '$cityId', '$areaId', '$townshipId', '$villageId')",
             ]) ?>
         <?php }?>
     </div>
@@ -50,14 +50,14 @@ $level >= 5 &&$villageId = Html::getInputId($model, $five['name']);
         <?php if ($level >= 5){ ?>
             <?= $form->field($model, $five['name'])->dropDownList($five['list'], [
                 'prompt' => $five['title'],
-                'onchange' => "widgetProvinces(this, 5, '$cityId', '$areaId', '$townshipId', '$villageId')",
+                'onchange' => "widgetProvinces" . $random . "(this, 5, '$cityId', '$areaId', '$townshipId', '$villageId')",
             ]) ?>
         <?php }?>
     </div>
 </div>
 
 <script>
-    function widgetProvinces(obj, type_id, cityId, areaId, townshipId, villageId) {
+    function widgetProvinces<?= $random ?>(obj, type_id, cityId, areaId, townshipId, villageId) {
         switch (type_id) {
             case 1 :
                 $(".form-group.field-" + areaId).hide();

@@ -38,7 +38,7 @@ class CancelService extends Service
         $model->member_id = $member->id;
         // 获取配置
         $config = Yii::$app->services->addonsConfig->findConfigByCache('Member', $member->merchant_id, true);
-        if (isset($config['cancel_audit_status']) && $config['cancel_audit_status'] == StatusEnum::ENABLED) {
+        if (isset($config['cancel_audit_status']) && $config['cancel_audit_status'] == StatusEnum::DISABLED) {
             $model->audit_status = AuditStatusEnum::ENABLED;
             $model->audit_time = time();
             $model->save();

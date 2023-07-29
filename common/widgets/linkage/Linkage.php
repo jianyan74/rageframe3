@@ -2,6 +2,7 @@
 
 namespace common\widgets\linkage;
 
+use common\helpers\StringHelper;
 use Yii;
 use yii\base\Widget;
 
@@ -145,6 +146,7 @@ class Linkage extends Widget
         return $this->render('index', [
             'form' => $this->form,
             'model' => $this->model,
+            'random' => StringHelper::random(20),
             'one' => $this->one,
             'two' => $this->two,
             'three' => $this->three,

@@ -14,7 +14,7 @@ class m220227_143428_member extends Migration
             'id' => "int(11) NOT NULL AUTO_INCREMENT",
             'merchant_id' => "int(10) NULL DEFAULT '0' COMMENT '商户ID'",
             'store_id' => "int(10) unsigned NULL DEFAULT '0' COMMENT '店铺ID'",
-            'username' => "varchar(20) NOT NULL DEFAULT '' COMMENT '帐号'",
+            'username' => "varchar(20) NOT NULL DEFAULT '' COMMENT '账号'",
             'password_hash' => "varchar(150) NOT NULL DEFAULT '' COMMENT '密码'",
             'auth_key' => "varchar(32) NOT NULL DEFAULT '' COMMENT '授权令牌'",
             'password_reset_token' => "varchar(150) NULL DEFAULT '' COMMENT '密码重置令牌'",

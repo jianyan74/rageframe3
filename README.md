@@ -31,30 +31,30 @@ RageFrame 创建于 2016 年 4 月 16 日，一个基于 Yii2 高级框架的快
 
 ### 思维导图
 
-![image](docs/guide-zh-CN/images/RageFrame3.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSNx2T.png)
 
 ### 应用架构流程
 
-![image](docs/guide-zh-CN/images/app-flow.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSNIxS.png)
 
 ### 系统快照
 
 【系统 - 首页】
 ![image](docs/guide-zh-CN/images/sys-index.png)
 【系统 - 配置管理】
-![image](docs/guide-zh-CN/images/sys-config.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSNvGV.png)
 【系统 - 角色编辑】
-![image](docs/guide-zh-CN/images/rbac-role.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSNzxU.png)
 【系统 - 日志统计】
-![image](docs/guide-zh-CN/images/log-stat.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSNO5q.png)
 【会员 - 信息】
-![image](docs/guide-zh-CN/images/member-info.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSNjP0.png)
 【插件模块 - 列表】
-![image](docs/guide-zh-CN/images/addon-list.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSNHbj.png)
 【插件模块 - CURD】
-![image](docs/guide-zh-CN/images/addon-curd.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSNTKg.png)
 【插件模块 - 系统监控】
-![image](docs/guide-zh-CN/images/addon-system.png)
+![image](https://s1.ax1x.com/2023/07/29/pPSN7rQ.png)
 
 ### 开始之前
 

@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'allowClear' => false,
                                 'tags' => true,
                             ],
-                        ])->hint('注意：这里是自动回复设置的关键字，设置用户添加公众帐号好友时，发送的欢迎信息。');?>
+                        ])->hint('注意：这里是自动回复设置的关键字，设置用户添加公众账号好友时，发送的欢迎信息。');?>
 
                         <?= $form->field($model, 'default_content')->widget(\kartik\select2\Select2::class, [
                             'data' => $keyword,

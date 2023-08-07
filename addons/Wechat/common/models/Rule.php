@@ -129,7 +129,7 @@ class Rule extends \common\models\base\BaseModel
     public function afterSave($insert, $changedAttributes)
     {
         // 更新状态和排序
-        RuleKeyword::updateAll(['sort' => $this->sort, 'status' => $this->status], ['rule_id' => $this->id]);
+        RuleKeyword::updateAll(['module' => $this->module, 'sort' => $this->sort, 'status' => $this->status], ['rule_id' => $this->id]);
 
         parent::afterSave($insert, $changedAttributes);
     }

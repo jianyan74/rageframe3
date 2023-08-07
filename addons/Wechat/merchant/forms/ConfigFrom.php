@@ -39,7 +39,7 @@ class ConfigFrom extends Model
     {
         return [
             'wechat_mp_id' => '原始ID',
-            'wechat_mp_account' => '公众号帐号',
+            'wechat_mp_account' => '公众号账号',
             'wechat_mp_qrcode' => '公众号二维码',
             'wechat_mp_app_id' => 'App ID',
             'wechat_mp_appsecret' => 'App Secret',

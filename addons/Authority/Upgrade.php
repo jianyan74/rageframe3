@@ -22,7 +22,7 @@ class Upgrade extends Migration implements AddonWidget
     public $versions = [
         '3.0.0', // 默认版本
         '3.0.3', '3.0.10', '3.0.12', '3.0.18', '3.0.25',
-        '3.1.35',
+        '3.1.38',
     ];
 
     /**

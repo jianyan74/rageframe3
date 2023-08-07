@@ -22,8 +22,8 @@ class RuleKeywordTypeEnum extends BaseEnum
     {
         return [
             self::MATCH => '直接匹配关键字',
-            self::INCLUDE => '正则表达式',
-            self::REGULAR => '包含关键字',
+            self::INCLUDE => '包含关键字',
+            self::REGULAR => '正则表达式',
             self::TAKE => '直接接管',
         ];
     }

@@ -38,7 +38,7 @@ class m220227_143427_common_addons extends Migration
 
 
         /* 表数据 */
-        $this->insert('{{%common_addons}}',['id'=>'1','title'=>'系统更新','name'=>'Authority','title_initial'=>'X','bootstrap'=>'addons\\Authority\\common\\components\\Bootstrap','service'=>'addons\\Authority\\services\\Application','cover'=>'','group'=>'business','brief_introduction'=>'RageFrame 官方在线升级工具','description'=>'','author'=>'简言','version'=>'3.1.35','is_merchant_route_map'=>'0','default_config'=>'[]','console'=>'[]','status'=>'1','created_at'=>'1635410282','updated_at'=>'1635410282']);
+        $this->insert('{{%common_addons}}',['id'=>'1','title'=>'系统更新','name'=>'Authority','title_initial'=>'X','bootstrap'=>'addons\\Authority\\common\\components\\Bootstrap','service'=>'addons\\Authority\\services\\Application','cover'=>'','group'=>'business','brief_introduction'=>'RageFrame 官方在线升级工具','description'=>'','author'=>'简言','version'=>'3.1.38','is_merchant_route_map'=>'0','default_config'=>'[]','console'=>'[]','status'=>'1','created_at'=>'1635410282','updated_at'=>'1635410282']);
 
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');

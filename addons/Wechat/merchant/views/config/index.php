@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     <blockquote>
                         <p>微信公众号设置</p>
                     </blockquote>
-                    <?= $form->field($model, 'wechat_mp_account')->textInput()->hint('填写公众号的帐号，一般为英文帐号'); ?>
+                    <?= $form->field($model, 'wechat_mp_account')->textInput()->hint('填写公众号的账号，一般为英文账号'); ?>
                     <?= $form->field($model, 'wechat_mp_id')->textInput()->hint('在给粉丝发送客服消息时,原始ID不能为空。建议您完善该选项'); ?>
                     <?= $form->field($model, 'wechat_mp_qrcode')->widget(Files::class, [
                         'type' => 'images',

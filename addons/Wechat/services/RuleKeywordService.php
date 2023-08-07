@@ -123,10 +123,9 @@ class RuleKeywordService extends Service
                 break;
             // 模块回复
             case RuleModuleEnum::ADDON :
-                Yii::$app->params['messageHistory']['addon_name'] = $model->data;
-
-                $class = AddonHelper::getAddonMessage($model->data);
-                return ExecuteHelper::map($class, 'run', Yii::$app->wechatService->message->getMessage());
+                // Yii::$app->params['messageHistory']['addon_name'] = $model->data;
+                // $class = AddonHelper::getAddonMessage($model->data);
+                // return ExecuteHelper::map($class, 'run', Yii::$app->wechatService->message->getMessage());
                 break;
             default :
                 return false;
@@ -175,7 +174,7 @@ class RuleKeywordService extends Service
 
         $merchant_id = Yii::$app->services->merchant->getNotNullId();
         $store_id = Yii::$app->services->store->getNotNullId();
-        foreach ($ruleKeywords as $key => &$vo) {
+        foreach ($ruleKeywords as $key => $vo) {
             // 去重
             $keyword = array_unique($vo);
 

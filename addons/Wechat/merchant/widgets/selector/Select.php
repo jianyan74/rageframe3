@@ -36,7 +36,8 @@ class Select extends InputWidget
     {
         parent::init();
 
-        $this->boxId = md5($this->name) . StringHelper::uuid('uniqid');
+        $name = $this->hasModel() ? \yii\helpers\Html::getInputName($this->model, $this->attribute) : $this->name;
+        $this->boxId = md5($name) . StringHelper::uuid('uniqid');
         $this->value = $this->hasModel() ? Html::getAttributeValue($this->model, $this->attribute) : $this->value;
         $this->name = $this->hasModel() ? Html::getInputName($this->model, $this->attribute) : $this->name;
     }

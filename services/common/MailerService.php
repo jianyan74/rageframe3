@@ -45,6 +45,7 @@ class MailerService
                 'email' => $email,
                 'subject' => $subject,
                 'template' => $template,
+                'data' => $data,
             ]));
 
             return $messageId;

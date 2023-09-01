@@ -62,14 +62,15 @@ class BeforeSend extends Behavior
 
         // 提取系统 300-499 的报错信息
         if ($response->statusCode >= 300 && $response->statusCode <= 499) {
-            if (isset($response->data['data']['message']) && isset($response->data['data']['status'])) {
-                $response->data['message'] = $response->data['data']['message'];
+            if (is_array($response->statusText)) {
+                $response->data['message'] = $errData['errorMessage'];
             }
 
             if (isset($errData['errorMessage'])) {
                 $response->data['message'] = $errData['errorMessage'];
-                $response->data['message'] == $response->data['data'] && $response->data['data'] = [];
             }
+
+            $response->data['message'] == $response->data['data'] && $response->data['data'] = [];
         }
 
         // 加入ip黑名单

@@ -42,6 +42,9 @@ class PayController extends OnAuthController
         $payForm->attributes = Yii::$app->request->post();
         $payForm->member_id = Yii::$app->user->identity->member_id;
         $payForm->code = Yii::$app->request->get('code');
+        if (!$payForm->validate()) {
+            return ResultHelper::json(422, $this->getError($payForm));
+        }
 
         // 非余额支付
         if ($payForm->pay_type != PayTypeEnum::USER_MONEY) {

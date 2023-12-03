@@ -43,7 +43,7 @@ class PayService
         ];
 
         //  判断如果是公众号/小程序支付
-        if (in_array($payLog->trade_type, [PayTradeTypeEnum::WECHAT_MINI, PayTradeTypeEnum::WECHAT_MINI])) {
+        if (in_array($payLog->trade_type, [PayTradeTypeEnum::WECHAT_MP, PayTradeTypeEnum::WECHAT_MINI])) {
             $order['payer'] = [
                 'openid' => $payLog->openid
             ];

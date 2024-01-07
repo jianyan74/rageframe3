@@ -2,12 +2,12 @@
 
 namespace common\widgets\cropper;
 
+use Yii;
 use yii\helpers\Url;
 use yii\widgets\InputWidget;
 use common\helpers\ArrayHelper;
 use common\helpers\Html;
 use common\helpers\StringHelper;
-use common\enums\AttachmentDriveEnum;
 
 /**
  * Class Cropper
@@ -64,7 +64,7 @@ class Cropper extends InputWidget
         ], $this->config);
 
         $this->formData = ArrayHelper::merge([
-            'drive' => AttachmentDriveEnum::LOCAL,
+            'drive' => Yii::$app->services->config->backendConfig('storage_default'),
             'image' => '',
         ], $this->formData);
 

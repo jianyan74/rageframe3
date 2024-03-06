@@ -172,6 +172,10 @@ class StringHelper extends BaseStringHelper
      */
     public static function parseAttr($string)
     {
+        if (empty($string)) {
+            return [];
+        }
+
         $array = preg_split('/[,;\r\n]+/', trim($string, ",;\r\n"));
         if (strpos($string, ':')) {
             $value = [];

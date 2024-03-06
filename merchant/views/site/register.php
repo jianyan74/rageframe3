@@ -78,7 +78,7 @@ $this->title = '商家入驻';
             <?= Html::submitButton('马上注册', ['class' => 'btn btn-primary btn-block']) ?>
         </div>
         <?php ActiveForm::end(); ?>
-        <div class="social-auth-links text-center">已有帐号？<?= Html::a('立即登录', ['login'], [
+        <div class="social-auth-links text-center">已有账号？<?= Html::a('立即登录', ['login'], [
                 'class' => 'blue'
             ]); ?></div>
         <div class="social-auth-links text-center">

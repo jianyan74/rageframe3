@@ -5,7 +5,7 @@ use common\helpers\Html;
 ?>
 
 <div class="input-group">
-        <span class="input-group-prepend">
+    <span class="input-group-prepend">
         <span class="input-group-text"><?= $prepend?></span>
     </span>
     <?= Html::textInput($name, $value, $options); ?>

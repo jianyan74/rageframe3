@@ -137,7 +137,7 @@ class ProvinceJobController extends BaseController
                             'title' => $datum,
                             'level' => 2,
                             'pid' => $Hongkong,
-                            'tree' => "0-$Hongkong",
+                            'tree' => "0-$Hongkong-",
                         ];
                     } elseif ($key < $i + 100 && $key > $i) {
                         $data[] = [
@@ -145,7 +145,7 @@ class ProvinceJobController extends BaseController
                             'title' => $datum,
                             'level' => 3,
                             'pid' => $i,
-                            'tree' => "0-$Hongkong-$i",
+                            'tree' => "0-$Hongkong-$i-",
                         ];
                     }
                 }
@@ -158,7 +158,7 @@ class ProvinceJobController extends BaseController
                             'title' => $datum,
                             'level' => 2,
                             'pid' => $Macao,
-                            'tree' => "0-$Macao ",
+                            'tree' => "0-$Macao-",
                         ];
                     } elseif ($key < $i + 100 && $key > $i) {
                         $data[] = [
@@ -166,7 +166,7 @@ class ProvinceJobController extends BaseController
                             'title' => $datum,
                             'level' => 3,
                             'pid' => $i,
-                            'tree' => "0-$Macao-$i",
+                            'tree' => "0-$Macao-$i-",
                         ];
                     }
                 }
@@ -180,7 +180,7 @@ class ProvinceJobController extends BaseController
                             'title' => $datum,
                             'level' => 2,
                             'pid' => $Taiwan,
-                            'tree' => "0-$Taiwan",
+                            'tree' => "0-$Taiwan-",
                         ];
                     } elseif ($key < $i + 100 && $key > $i) {
                         $data[] = [
@@ -188,7 +188,7 @@ class ProvinceJobController extends BaseController
                             'title' => $datum,
                             'level' => 3,
                             'pid' => $i,
-                            'tree' => "0-$Taiwan-$i",
+                            'tree' => "0-$Taiwan-$i-",
                         ];
                     }
                 }

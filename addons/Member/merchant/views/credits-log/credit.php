@@ -3,9 +3,10 @@
 use yii\grid\GridView;
 use common\helpers\Html;
 use common\helpers\MemberHelper;
+use kartik\daterange\DateRangePicker;
 
 $this->title = $title;
-$this->params['breadcrumbs'][] = ['label' => $this->title];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => [$action]];
 
 ?>
 
@@ -15,6 +16,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
             <div class="box-header">
                 <h3 class="box-title"><?= $this->title; ?></h3>
                 <div class="box-tools">
+                    <?= Html::export(['export', 'type' => $type], '导出', [
+                        'title' => '根据搜索结果导出表格',
+                        'data-toggle' => 'tooltip',
+                        'data-placement' => 'bottom',
+                    ]) ?>
                 </div>
             </div>
             <div class="box-body table-responsive">
@@ -56,7 +62,33 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                         'remark',
                         [
                             'attribute' => 'created_at',
-                            'filter' => false, //不显示搜索框
+                            'filter' => DateRangePicker::widget([
+                                'language' => 'zh-CN',
+                                'name' => 'queryDate',
+                                'value' => (!empty($startTime) && !empty($endTime)) ? ($startTime . '-' . $endTime) : '',
+                                'readonly' => 'readonly',
+                                'useWithAddon' => false,
+                                'convertFormat' => true,
+                                'startAttribute' => 'start_time',
+                                'endAttribute' => 'end_time',
+                                'startInputOptions' => ['value' => $startTime],
+                                'endInputOptions' => ['value' => $endTime],
+                                'presetDropdown' => true,
+                                'containerTemplate' => <<< HTML
+        <div class="kv-drp-dropdown">
+            <span class="left-ind">{pickerIcon}</span>
+            <input type="text" readonly class="form-control range-value" value="{value}">
+        </div>
+        {input}
+HTML,
+                                'pluginOptions' => [
+                                    'locale' => ['format' => 'Y-m-d H:i:s'],
+                                    'timePicker' => true,
+                                    'timePicker24Hour' => true,
+                                    'timePickerSeconds' => true,
+                                    'timePickerIncrement' => 1
+                                ]
+                            ]),
                             'format' => ['date', 'php:Y-m-d H:i:s'],
                         ],
                     ],

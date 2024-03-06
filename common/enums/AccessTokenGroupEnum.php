@@ -37,6 +37,7 @@ class AccessTokenGroupEnum extends BaseEnum
 
     // 其他
     const WEB_SOCKET = 'webSocket';
+    const EXCEL_IMPORT = 'import';
 
     /**
      * @return array
@@ -59,6 +60,7 @@ class AccessTokenGroupEnum extends BaseEnum
             self::DING_TALK_MINI => '钉钉小程序',
             self::BYTEDANCE_MINI => '字节跳动小程序',
             self::WEB_SOCKET => 'WebSocket',
+            self::EXCEL_IMPORT => '表格导入',
         ];
     }
 

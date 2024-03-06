@@ -46,7 +46,7 @@ $(window).resize(function () {
     }
 
     // 初始化table
-    initTable();
+    // initTable();
 });
 
 function autoFontColor() {
@@ -159,7 +159,8 @@ function buildTable($el, fixedNumber, fixedRightNumber) {
         classes: 'table table-hover',
         fixedColumns: true,
         fixedNumber: fixedNumber,
-        fixedRightNumber: fixedRightNumber
+        fixedRightNumber: fixedRightNumber,
+        showFooter: true
     })
 }
 
@@ -181,6 +182,7 @@ function initTable() {
                             // 去掉input
                             $(val).find('input').attr('name', '');
                             $(val).find('select').attr('name', '');
+                            $(val).html('');
                         }
                     });
                     break;
@@ -191,6 +193,7 @@ function initTable() {
                             // 去掉input
                             $(val).find('input').attr('name', '');
                             $(val).find('select').attr('name', '');
+                            $(val).html('');
                         }
                     });
                     break;
@@ -201,6 +204,7 @@ function initTable() {
                             // 去掉input
                             $(val).find('input').attr('name', '');
                             $(val).find('select').attr('name', '');
+                            $(val).html('');
                         }
                     });
                     break;

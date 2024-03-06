@@ -823,12 +823,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-size: 16px;
 }
 
-.table > thead > tr > th {
+.table > thead > tr > th,
+.table > tfoot > tr > th {
     font-weight: 500;
     color: #526069;
 }
 
-.table > thead > tr > th > a {
+.table > thead > tr > th > a,
+.table > tfoot > tr > th > a {
     font-weight: 500;
     color: #526069;
 }

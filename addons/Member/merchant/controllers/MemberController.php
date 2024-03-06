@@ -6,14 +6,21 @@ use Yii;
 use common\models\base\SearchModel;
 use common\enums\StatusEnum;
 use common\enums\MemberTypeEnum;
+use common\enums\AccessTokenGroupEnum;
 use common\enums\CreditsLogTypeEnum;
+use common\enums\GenderEnum;
 use common\forms\MemberForm as Member;
+use common\helpers\BcHelper;
+use common\helpers\ExcelHelper;
+use common\helpers\ResultHelper;
 use common\traits\MemberMobileSelect;
 use common\traits\MerchantCurd;
 use common\models\member\CreditsLog;
+use common\models\member\Account;
 use addons\Member\merchant\forms\RechargeForm;
 use addons\Member\merchant\forms\MemberEditForm;
 use addons\Member\merchant\forms\MemberCreateForm;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 /**
  * 会员管理
@@ -39,6 +46,9 @@ class MemberController extends BaseController
      */
     public function actionIndex()
     {
+        $startTime = Yii::$app->request->get('start_time');
+        $endTime = Yii::$app->request->get('end_time');
+
         $searchModel = new SearchModel([
             'model' => $this->modelClass,
             'scenario' => 'default',
@@ -57,11 +67,27 @@ class MemberController extends BaseController
                 'status' => StatusEnum::ENABLED
             ])
             ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+            ->andFilterWhere(['between', 'created_at', !empty($startTime) ? strtotime($startTime) : '', !empty($endTime) ? strtotime($endTime) : ''])
             ->with(['account', 'memberLevel', 'tag']);
+
+        $models = $dataProvider->getModels();
+        $pageAccountTotal = [
+            'user_money' => 0,
+            'user_integral' => 0,
+            'user_growth' => 0,
+        ];
+        foreach ($models as $model) {
+            $pageAccountTotal['user_money'] = BcHelper::add($pageAccountTotal['user_money'], $model->account->user_money);
+            $pageAccountTotal['user_integral'] = BcHelper::add($pageAccountTotal['user_integral'], $model->account->user_integral);
+            $pageAccountTotal['user_growth'] = BcHelper::add($pageAccountTotal['user_growth'], $model->account->user_growth);
+        }
 
         return $this->render($this->action->id, [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'startTime' => $startTime,
+            'endTime' => $endTime,
+            'pageAccountTotal' => $pageAccountTotal,
             'levelMap' => Yii::$app->services->memberLevel->getMap(),
         ]);
     }
@@ -111,7 +137,7 @@ class MemberController extends BaseController
             }
 
             return $model->save()
-                ? $this->redirect(Yii::$app->request->referrer)
+                ? $this->message('操作成功', $this->redirect(Yii::$app->request->referrer))
                 : $this->message($this->getError($model), $this->redirect(Yii::$app->request->referrer), 'error');
         }
 
@@ -236,6 +262,63 @@ class MemberController extends BaseController
         }
 
         return $this->message("拉入黑名单失败", $this->redirect(Yii::$app->request->referrer), 'error');
+    }
+
+    /**
+     * 全部备货完成
+     *
+     * @param $id
+     * @return mixed|string
+     */
+    public function actionImportMember()
+    {
+        if (Yii::$app->request->isPost) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $file = $_FILES['excelFile'];
+                if (empty($file['tmp_name'])) {
+                    return $this->message('请上传需要导入的文件', $this->redirect(['member/index']), 'error');
+                }
+
+                $defaultData = ExcelHelper::import($file['tmp_name'], 2);
+                foreach ($defaultData as $datum) {
+                    $member = new Member();
+                    $member->merchant_id = Yii::$app->services->merchant->getNotNullId();
+                    $member->nickname = $datum[0];
+                    $member->mobile = $datum[1];
+                    $member->password = $datum[2];
+                    $member->realname = $datum[3];
+                    $member->gender = $datum[4] == '男' ? GenderEnum::MAN : GenderEnum::WOMAN;
+                    $member->head_portrait = $datum[5];
+                    $member->qq = $datum[6];
+                    $member->email = $datum[7];
+                    $member->birthday = date('Y-m-d', Date::excelToTimestamp($datum[8]));
+                    $member->source = AccessTokenGroupEnum::EXCEL_IMPORT;
+                    $member->save();
+
+                    Account::updateAll(['user_money' => (float)$datum[9], 'user_integral' => (int)$datum[10], 'user_growth' => (int)$datum[11]], ['member_id' => $member->id]);
+                }
+
+                $transaction->commit();
+
+                return $this->message('导入成功', $this->redirect(['member/index']));
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                return ResultHelper::json(422, $e->getMessage());
+            }
+        }
+
+        return $this->renderAjax($this->action->id);
+    }
+
+    /**
+     * 下载模板
+     */
+    public function actionTemplateDownload()
+    {
+        $path = Yii::getAlias('@addons') . '/Member/common/file/member.xls';
+
+        Yii::$app->response->sendFile($path, '一键导入会员模板_' . time() . '.xls');
     }
 
     /**

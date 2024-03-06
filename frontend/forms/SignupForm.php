@@ -34,7 +34,7 @@ class SignupForm extends MemberForm
     public function attributeLabels()
     {
         return [
-            'username' => '登录帐号',
+            'username' => '登录账号',
             'password' => '登录密码',
             'email' => '电子邮箱',
         ];

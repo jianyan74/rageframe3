@@ -133,7 +133,7 @@ class AddonsService extends Service
                     $model->save();
 
                     // 输出日志
-                    Console::output('updating...' . $model->version . '...' . date('Y-m-d H:i:s'));
+                    Yii::$app->id == AppEnum::CONSOLE && Console::output('updating...' . $model->version . '...' . date('Y-m-d H:i:s'));
 
                     // 完成事务
                     $transaction->commit();
@@ -247,7 +247,7 @@ class AddonsService extends Service
 
     /**
      * @param $name
-     * @return array|null|\yii\db\ActiveRecord
+     * @return array|null|\yii\db\ActiveRecord|Addons
      */
     public function findByName($name)
     {

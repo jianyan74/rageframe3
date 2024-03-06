@@ -27,11 +27,11 @@ class MemberHelper
         $url = Url::toRoute(['/member/member/view', 'id' => $member->id]);
         switch ($member['type']) {
             case MemberTypeEnum::MEMBER :
-                $name = '昵称: ' . Html::encode($member['nickname']);
+                $name = '昵称: '.Html::encode($member['nickname']);
                 $hideName = Html::encode(StringHelper::textNewLine($member->nickname, 6, 1)[0]);
                 break;
             default;
-                $name = '账号: ' . Html::encode($member['username']);
+                $name = '账号: '.Html::encode($member['username']);
                 $hideName = Html::encode(StringHelper::textNewLine($member->username, 6, 1)[0]);
                 break;
         }
@@ -45,17 +45,17 @@ class MemberHelper
                 ]);
 
                 $toggle = [];
-                $toggle[] = 'ID: ' . $member->id;
+                $toggle[] = 'ID: '.$member->id;
                 $toggle[] = $name;
-                $toggle[] = '手机: ' . (!empty($member['mobile']) ? StringHelper::hideStr($member['mobile'], 3, 4) : '-');
-                $toggle = "<div class='text-left'>" . implode('<br>', $toggle) ."</div>";
+                $toggle[] = '手机: '.(!empty($member['mobile']) ? StringHelper::hideStr($member['mobile'], 3, 4) : '-');
+                $toggle = "<div class='text-left'>".implode('<br>', $toggle)."</div>";
 
-                return '<div class="text-center openIframeView" href="' . $url . '">' . $head_portrait . '<a class="users-list-name pt-1" data-toggle="tooltip" data-placement="bottom" data-html="true" title="' . $toggle . '" href="javascript: void(0)">' . $hideName . '</a></div>';
+                return '<div class="text-center openIframeView" href="'.$url.'">'.$head_portrait.'<a class="users-list-name pt-1" data-toggle="tooltip" data-placement="bottom" data-html="true" title="'.$toggle.'" href="javascript: void(0)">'.$hideName.'</a></div>';
             case self::TWO :
                 $array = [];
-                $array[] = 'ID: ' . $member['id'];
+                $array[] = 'ID: '.$member['id'];
                 $array[] = $name;
-                $array[] = '手机: ' . (!empty($member['mobile']) ? StringHelper::hideStr($member['mobile'], 3, 4) : '-');
+                $array[] = '手机: '.(!empty($member['mobile']) ? StringHelper::hideStr($member['mobile'], 3, 4) : '-');
 
                 return implode('<br>', $array);
         }
@@ -66,8 +66,14 @@ class MemberHelper
      * @param $model
      * @return array
      */
-    public static function gridView($searchModel, $label = '用户', $attribute = 'member_id', $relevancy = 'member', $default = '游客', $style = 'one')
-    {
+    public static function gridView(
+        $searchModel,
+        $label = '用户',
+        $attribute = 'member_id',
+        $relevancy = 'member',
+        $default = '游客',
+        $style = 'one'
+    ) {
         return [
             'label' => $label,
             'attribute' => $attribute,
@@ -75,7 +81,7 @@ class MemberHelper
             'contentOptions' => ['class' => 'text-align-center'],
             'filter' => Html::activeTextInput($searchModel, $attribute, [
                     'class' => 'form-control',
-                    'placeholder' => '用户 ID'
+                    'placeholder' => '用户 ID',
                 ]
             ),
             'value' => function ($model) use ($relevancy, $default, $style) {

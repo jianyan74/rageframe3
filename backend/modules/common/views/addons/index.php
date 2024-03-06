@@ -5,6 +5,7 @@ use common\helpers\Url;
 use common\helpers\Html;
 use common\helpers\AddonHelper;
 use common\enums\OfficialEnum;
+use common\helpers\StringHelper;
 
 $this->title = '已安装的插件';
 $this->params['breadcrumbs'][] = ['label' => $this->title];
@@ -91,13 +92,31 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                             ],
                             [
                                 'attribute' => 'version',
+                                'format' => 'raw',
                                 'filter' => false, //不显示搜索框
+                                'value' => function ($model) use ($newestVersion) {
+                                    $str = $model->version;
+                                    if (
+                                            isset($newestVersion[$model->name]) &&
+                                            StringHelper::strToInt($newestVersion[$model->name]) > StringHelper::strToInt($model->version)
+                                    ) {
+                                        $str .= ' <span class="label label-outline-warning">' . $newestVersion[$model->name] . '</span>';
+                                    }
+
+                                    return $str;
+                                },
                             ],
                             [
                                 'header' => "操作",
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => '{upgrade} {upgradeSql} {edit} {status} {delete}',
+                                'template' => '{onLineUpgrade} {upgrade} {upgradeSql} {edit} {status} {delete}',
                                 'buttons' => [
+                                    'onLineUpgrade' => function ($url, $model, $key) {
+                                        return Html::linkButton(['on-line-upgrade', 'name' => $model->name], '在线升级', [
+                                            'data-name' => $model->name,
+                                            'onclick' => "onLineUpgrade(this);return false;"
+                                        ]);
+                                    },
                                     'upgrade' => function ($url, $model, $key) {
                                         return Html::linkButton(['install', 'name' => $model->name, 'installData' => false], '更新配置', [
                                                 'onclick' => "upgrade(this);return false;"
@@ -209,6 +228,82 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
                     });
                 } else {
                     rfMsg(data.message);
+                }
+            }
+        });
+    }
+
+    function onLineUpgrade(that) {
+        var href = $(that).attr('href');
+        var name = $(that).data('name');
+        var title = '确认在线升级吗?';
+        var dialogText = '请注意先备份好服务器文件信息及数据库信息';
+
+        swal(title, {
+            buttons: {
+                cancel: "取消",
+                defeat: '确定'
+            },
+            title: title,
+            text: dialogText,
+            // icon: "warning",
+        }).then(function (value) {
+            switch (value) {
+                case "defeat":
+                    onLineUpgradeExecute(href, name);
+                    break;
+                default:
+            }
+        });
+    }
+
+    function onLineUpgradeExecute(href, name) {
+        swal({
+            title: '在线升级中...',
+            text: '请不要关闭窗口',
+            button: "确定",
+        });
+
+        $.ajax({
+            type: "get",
+            url: href,
+            dataType: "json",
+            success: function (data) {
+                if (parseInt(data.code) === 200) {
+                    swal(
+                        "更新配置中...",
+                        "请不要关闭窗口，等待更新配置",
+                    ).then((value) => {
+                    });
+
+                    var updateUrl = "<?= Url::to(['install', 'installData' => false])?>";
+                    updateUrl += '&name=' + name;
+                    $.ajax({
+                        type: "get",
+                        url: updateUrl,
+                        dataType: "json",
+                        success: function (data) {
+                            if (parseInt(data.code) === 200) {
+                                swal("升级成功", "小手一抖就打开了一个框", "success").then((value) => {
+                                    location.reload();
+                                });
+                            } else {
+                                swal({
+                                    title: '升级提示',
+                                    text: data.message,
+                                    button: "确定",
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    setTimeout(function () {
+                        swal({
+                            title: '升级提示',
+                            text: data.message,
+                            button: "确定",
+                        });
+                    }, 1000)
                 }
             }
         });

@@ -14,7 +14,7 @@ class ExecuteHelper
     /**
      * @param string $classPath 实例化类名路径
      * @param string $method 方法
-     * @param array $params 参数
+     * @param array|object $params 参数
      * @throws NotFoundHttpException
      */
     public static function map($classPath, $method, $params)

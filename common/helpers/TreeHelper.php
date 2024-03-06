@@ -14,7 +14,7 @@ class TreeHelper
      */
     public static function prefixTreeKey($id)
     {
-        return '-' . $id;
+        return  $id . '-';
     }
 
     /**
@@ -22,6 +22,6 @@ class TreeHelper
      */
     public static function defaultTreeKey()
     {
-        return '0';
+        return '0-';
     }
 }

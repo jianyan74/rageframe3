@@ -71,7 +71,11 @@ $prefix = !RegularHelper::verify('url', Yii::getAlias('@attachurl')) ? Yii::$app
                     </tr>
                     <tr>
                         <td>系统版本</td>
-                        <td><?= Yii::$app->services->base->version(); ?></td>
+                        <td>
+                            <?= Yii::$app->services->base->version(); ?>
+                            <span class="label label-default"><?= $sysVersion; ?></span>
+                            <small class="blue" onclick="onLineUpgrade(this);return false;">在线升级</small>
+                        </td>
                     </tr>
                     <tr>
                         <td>Yii2 版本</td>
@@ -192,3 +196,57 @@ $prefix = !RegularHelper::verify('url', Yii::getAlias('@attachurl')) ? Yii::$app
         </div>
     </div>
 </div>
+
+<script>
+    function onLineUpgrade(that) {
+        var href = "<?= \yii\helpers\Url::to(['/common/addons/on-line-upgrade'])?>";
+        var title = '确认在线升级吗?';
+        var dialogText = '请注意先备份好服务器文件信息及数据库信息';
+
+        swal(title, {
+            buttons: {
+                cancel: "取消",
+                defeat: '确定'
+            },
+            title: title,
+            text: dialogText,
+            // icon: "warning",
+        }).then(function (value) {
+            switch (value) {
+                case "defeat":
+                    onLineUpgradeExecute(href);
+                    break;
+                default:
+            }
+        });
+    }
+
+    function onLineUpgradeExecute(href) {
+        swal({
+            title: '在线升级中...',
+            text: '请不要关闭窗口',
+            button: "确定",
+        });
+
+        $.ajax({
+            type: "get",
+            url: href,
+            dataType: "json",
+            success: function (data) {
+                if (parseInt(data.code) === 200) {
+                    swal("升级成功", "小手一抖就打开了一个框", "success").then((value) => {
+                        location.reload();
+                    });
+                } else {
+                    setTimeout(function () {
+                        swal({
+                            title: '升级提示',
+                            text: data.message,
+                            button: "确定",
+                        });
+                    }, 1000)
+                }
+            }
+        });
+    }
+</script>

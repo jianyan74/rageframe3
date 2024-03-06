@@ -36,11 +36,6 @@ class Menu extends BaseModel
     use Tree;
 
     /**
-     * @var Menu
-     */
-    public $parent;
-
-    /**
      * {@inheritdoc}
      */
     public static function tableName()

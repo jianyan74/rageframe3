@@ -26,7 +26,7 @@ class m220227_143427_common_config_value extends Migration
 
         /* 表数据 */
         $this->insert('{{%common_config_value}}',['id'=>'1','app_id'=>'backend','config_id'=>'6','merchant_id'=>'0','store_id'=>'0','data'=>'']);
-        $this->insert('{{%common_config_value}}',['id'=>'2','app_id'=>'backend','config_id'=>'1','merchant_id'=>'0','store_id'=>'0','data'=>'Copyright © 2016-2023 RageFrame All Rights Reserved.']);
+        $this->insert('{{%common_config_value}}',['id'=>'2','app_id'=>'backend','config_id'=>'1','merchant_id'=>'0','store_id'=>'0','data'=>'Copyright © 2016-2024 RageFrame All Rights Reserved.']);
         $this->insert('{{%common_config_value}}',['id'=>'3','app_id'=>'backend','config_id'=>'60','merchant_id'=>'0','store_id'=>'0','data'=>'']);
         $this->insert('{{%common_config_value}}',['id'=>'4','app_id'=>'backend','config_id'=>'59','merchant_id'=>'0','store_id'=>'0','data'=>'']);
         $this->insert('{{%common_config_value}}',['id'=>'5','app_id'=>'backend','config_id'=>'4','merchant_id'=>'0','store_id'=>'0','data'=>'']);

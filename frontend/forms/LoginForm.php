@@ -26,7 +26,7 @@ class LoginForm extends \common\forms\LoginForm
     public function attributeLabels()
     {
         return [
-            'username' => '登录帐号',
+            'username' => '登录账号',
             'password' => '登录密码',
             'rememberMe' => '记住我',
         ];

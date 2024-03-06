@@ -14,6 +14,11 @@ $this->title = '消息配置';
                 <div class="box-header">
                     <i class="fa fa-circle rf-circle" style="font-size: 8px"></i>
                     <h3 class="box-title"><?= $datum['value'] ?></h3>
+                    <a href="<?= Url::to(['help-table', 'name' => $datum['name']])?>"
+                       data-toggle="modal"
+                       data-target="#ajaxModalLg">
+                        <i class="iconfont iconbaocuo help float-right" title="辅助说明"></i>
+                    </a>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">

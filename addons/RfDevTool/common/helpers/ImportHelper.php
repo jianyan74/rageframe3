@@ -33,11 +33,11 @@ class ImportHelper
         $command = Yii::$app->db->createCommand();
         foreach ($data as $datum) {
             $provinceId = (string)$datum['code'] . "0000";
-            $insertData[] = [$provinceId, $datum['name'], 0, 1, 'tr_0'];
+            $insertData[] = [$provinceId, $datum['name'], 0, 1, '0-'];
 
             foreach ($datum['children'] as $item) {
                 $cityId = (string)$item['code'] . "00";
-                $insertData[] = [$cityId, $item['name'], $provinceId, 2, 'tr_0 tr_' . $provinceId];
+                $insertData[] = [$cityId, $item['name'], $provinceId, 2, '0-' . $provinceId . '-'];
 
                 foreach ($item['children'] as $value) {
                     $insertData[] = [
@@ -45,7 +45,7 @@ class ImportHelper
                         $value['name'],
                         $cityId,
                         3,
-                        'tr_0 tr_' . $provinceId . ' tr_' . $cityId
+                        '0-' . $provinceId . '-' . $cityId . '-'
                     ];
                 }
             }
@@ -81,11 +81,11 @@ class ImportHelper
                 if ($datum[2] == "#") {
                     $pid = 0;
                     $level = 1;
-                    $tree = 'tr_0';
+                    $tree = '0-';
                 } else {
                     $pid = $allData[$datum[2]]['id'];
                     $level = $allData[$datum[2]]['level'] + 1;
-                    $tree = $allData[$datum[2]]['tree'] . ' tr_' . $allData[$datum[2]]['id'];
+                    $tree = $allData[$datum[2]]['tree'] . $allData[$datum[2]]['id'] . '-';
                 }
 
                 $tmp = [

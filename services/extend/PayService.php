@@ -2,6 +2,8 @@
 
 namespace services\extend;
 
+use Yansongda\Pay\Exception\InvalidResponseException;
+use Yansongda\Pay\Pay;
 use Yii;
 use yii\web\UnprocessableEntityHttpException;
 use common\enums\PayTypeEnum;
@@ -37,7 +39,7 @@ class PayService
             'out_trade_no' => $payLog->out_trade_no, // 订单号
             'description' => $payLog->body, // 内容
             'amount' => [
-                'total' => $payLog->total_fee * 100,
+                'total' => (int)($payLog->total_fee * 100),
             ],
             'notify_url' => $payLog->notify_url, // 通知地址
         ];
@@ -277,17 +279,17 @@ class PayService
                     $total_fee = $this->getTotalFeeByOutTradeNo($model->out_trade_no);
                     $info = [
                         'out_trade_no' => $model->out_trade_no,
-                        'transaction_id' => $model->transaction_id, //The wechat trade no
                         'out_refund_no' => $refund_sn,
                         'amount' => [
-                            'refund' => $total_fee * 100
+                            'refund' => $money * 100,
+                            'total' => (int) ($total_fee * 100),
+                            'currency' => 'CNY',
                         ],
-                        'refund_fee' => $money * 100, //=0.01
                     ];
-
                     $response = Yii::$app->pay->wechat->refund($info);
-                    if ($response['status'] != 'SUCCESS') {
-                        throw new UnprocessableEntityHttpException($response['err_code_des']);
+                    $response = $response->toArray();
+                    if (isset($response['code'])) {
+                        throw new UnprocessableEntityHttpException($response['message']);
                     }
 
                     break;
@@ -300,8 +302,9 @@ class PayService
                     ];
 
                     $response = Yii::$app->pay->alipay->refund($info);
-                    if ($response['alipay_trade_refund_response']['code'] != 10000) {
-                        throw new UnprocessableEntityHttpException($response['alipay_trade_refund_response']['sub_msg']);
+                    $response = $response->toArray();
+                    if (isset($response['code'])) {
+                        throw new UnprocessableEntityHttpException($response['message']);
                     }
 
                     break;
@@ -314,6 +317,10 @@ class PayService
                     ];
 
                     $response = Yii::$app->pay->unipay->refund($info);
+                    $response = $response->toArray();
+                    if (isset($response['code'])) {
+                        throw new UnprocessableEntityHttpException($response['message']);
+                    }
                     break;
             }
         }
@@ -406,6 +413,18 @@ class PayService
     }
 
     /**
+     * @param $outTradeNo
+     * @return array|null|\yii\db\ActiveRecord|PayLog
+     */
+    public function findOrderSnByOutTradeNo($outTradeNo)
+    {
+        return PayLog::find()
+            ->select(['order_sn'])
+            ->where(['out_trade_no' => $outTradeNo])
+            ->column();
+    }
+
+    /**
      * 获取订单总金额
      *
      * @param $outTradeNo
@@ -414,9 +433,9 @@ class PayService
     public function getTotalFeeByOutTradeNo($outTradeNo)
     {
         return PayLog::find()
-            ->select('total_fee')
+            ->select('pay_fee')
             ->where(['out_trade_no' => $outTradeNo])
-            ->orderBy('id asc')
+            ->orderBy('id desc')
             ->scalar();
     }
 

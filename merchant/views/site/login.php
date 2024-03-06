@@ -97,7 +97,7 @@ $this->title = Yii::$app->params['adminTitle'];
                         <?= Html::submitButton('立即登录', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
                     </div>
                     <?php ActiveForm::end(); ?>
-                    <div class="social-auth-links text-center">还没有帐号？<?= Html::a('申请入驻', ['register'], [
+                    <div class="social-auth-links text-center">还没有账号？<?= Html::a('申请入驻', ['register'], [
                             'class' => 'blue'
                         ]); ?></div>
                 </div>

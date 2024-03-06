@@ -2,6 +2,7 @@
 
 namespace oauth2\components;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Yii;
 use GuzzleHttp\Psr7\LazyOpenStream;
 
@@ -15,9 +16,9 @@ class ServerRequest extends \GuzzleHttp\Psr7\ServerRequest
     private $attributes = [];
 
     /**
-     * @return \GuzzleHttp\Psr7\ServerRequest|ServerRequest|\Psr\Http\Message\ServerRequestInterface
+     * @return \GuzzleHttp\Psr7\ServerRequest|ServerRequest|ServerRequestInterface
      */
-    public static function fromGlobals()
+    public static function fromGlobals(): ServerRequestInterface
     {
         $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
         $headers = getallheaders();
@@ -40,7 +41,7 @@ class ServerRequest extends \GuzzleHttp\Psr7\ServerRequest
     /**
      * {@inheritdoc}
      */
-    public function withAttribute($attribute, $value)
+    public function withAttribute($attribute, $value): ServerRequestInterface
     {
         $this->attributes[$attribute] = $value;
 
@@ -50,7 +51,7 @@ class ServerRequest extends \GuzzleHttp\Psr7\ServerRequest
     /**
      * {@inheritdoc}
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

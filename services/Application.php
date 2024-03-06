@@ -78,6 +78,7 @@ use common\components\Service;
  * @property \services\common\NotifyMemberService $notifyMember 用户消息
  * @property \services\common\NotifyAnnounceService $notifyAnnounce 公告
  * @property \services\common\LogService $log 全局日志
+ * @property \services\common\RageFrameService $rageFrame 系统核心
  *
  * RBAC
  * @property \services\rbac\AuthService $rbacAuth 权限辅助
@@ -156,6 +157,7 @@ class Application extends Service
             'queueSwitch' => false, // 是否丢进队列
             'exceptCode' => [403] // 除了数组内的状态码不记录，其他按照配置记录
         ],
+        'rageFrame' => 'services\common\RageFrameService',
         /** ------ 扩展部分 ------ **/
         'extendPay' => 'services\extend\PayService',
         'extendUpload' => 'services\extend\UploadService',

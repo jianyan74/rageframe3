@@ -26,6 +26,7 @@ return [
     'noAuthRoute' => [
         '/main/index', // 系统主页
         '/main/home', // 系统首页
+        '/main/clear-cache', // 清理缓存
         '/main/member-between-count',
         '/main/member-credits-log-between-count',
         '/personal/index',// 个人信息

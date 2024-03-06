@@ -2,9 +2,9 @@
 
 namespace services\store;
 
-use addons\TinyStore\common\models\store\Store;
-use common\enums\StatusEnum;
 use Yii;
+use common\enums\StatusEnum;
+use addons\TinyStore\common\models\store\Store;
 
 /**
  * Class StoreService

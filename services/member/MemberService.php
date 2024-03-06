@@ -312,7 +312,7 @@ class MemberService extends Service
 
     /**
      * @param $promoterCode
-     * @return array|\yii\db\ActiveRecord|null
+     * @return array|\yii\db\ActiveRecord|null|Member
      */
     public function findByPromoterCode($promoterCode)
     {

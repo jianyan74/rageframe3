@@ -13,6 +13,7 @@ use common\helpers\ExecuteHelper;
 use common\helpers\FileHelper;
 use common\interfaces\AddonWidget;
 use common\helpers\ResultHelper;
+use common\helpers\ArrayHelper;
 use backend\forms\AddonsForm;
 use backend\controllers\BaseController;
 use yii\web\UnprocessableEntityHttpException;
@@ -52,9 +53,25 @@ class AddonsController extends BaseController
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $models = $dataProvider->getModels();
+        $addons = [];
+        foreach ($models as $model) {
+            $addons[] = [
+                'name' => $model->name,
+                'version' => $model->version,
+            ];
+        }
+
+        try {
+            $newestVersion = Yii::$app->services->rageFrame->queryNewestByNames($addons);
+        } catch (\Exception $e) {
+            $newestVersion = [];
+        }
+
         return $this->render($this->action->id, [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'newestVersion' => ArrayHelper::map($newestVersion, 'version_name', 'version'),
             'addonsGroup' => Yii::$app->params['addonsGroup'],
         ]);
     }
@@ -85,6 +102,23 @@ class AddonsController extends BaseController
         }
 
         return $this->message('卸载成功', $this->redirect(['index']));
+    }
+
+    /**
+     * 在线升级
+     *
+     * @param $name
+     * @return array|mixed
+     */
+    public function actionOnLineUpgrade($name = 'Authority')
+    {
+        try {
+            Yii::$app->services->rageFrame->update($name);
+
+            return ResultHelper::json(200, '升级成功');
+        } catch (\Exception $e) {
+            return ResultHelper::json(422, $e->getMessage());
+        }
     }
 
     /**
@@ -221,12 +255,12 @@ class AddonsController extends BaseController
 
         $versions = $upgradeModel->versions;
         $count = count($versions);
+
         for ($i = 0; $i < $count; $i++) {
             // 验证版本号和更新
             if ($model->version == $versions[$i] && isset($versions[$i + 1])) {
                 // 开启事务
                 $transaction = Yii::$app->db->beginTransaction();
-
                 try {
                     $model->version = $versions[$i + 1];
                     $upgradeModel->run($model);

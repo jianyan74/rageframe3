@@ -317,6 +317,7 @@ class ExcelHelper
             if (isset($row[$item])) {
                 $row = $row[$item];
             } else {
+                $row = '';
                 break;
             }
         }

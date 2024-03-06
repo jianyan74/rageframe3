@@ -8,13 +8,16 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
 
+    /** ------ 系统授权秘钥 ------ **/
+    'secret_key' => 'open_source',
+
     /** ------ 总管理员配置 ------ **/
     // 系统管理员账号id
     'adminAccount' => [1],
     // 无需授权的路由别名
     'noAuthRoute' => [],
     // 开发模式
-    'devPattern' => 'b2c',
+    'devPattern' => 'b2b2c',
     // 多店铺 (saas、连锁)
     'multiShop' => false,
     // 请求全局唯一ID

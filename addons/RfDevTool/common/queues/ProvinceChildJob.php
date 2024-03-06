@@ -146,7 +146,7 @@ class ProvinceChildJob extends BaseObject implements JobInterface
 
             $datum['level'] = $this->parent['level'] + 1;
             $datum['pid'] = $this->parent['id'];
-            $datum['tree'] = $this->parent['tree'] . 'tr_' . $datum['pid'] . ' ';
+            $datum['tree'] = $this->parent['tree'] . $datum['pid'] . '-';
 
             // 写入数据库
             if (!($model = Provinces::findOne(['id' => $datum['id']]))) {
@@ -194,7 +194,7 @@ class ProvinceChildJob extends BaseObject implements JobInterface
             $datum['id'] = $datum['code'][1] . $codeSuffix;
             $datum['level'] = $this->parent['level'] + 1;
             $datum['pid'] = $this->parent['id'];
-            $datum['tree'] = $this->parent['tree'] . '-' . $datum['pid'];
+            $datum['tree'] = $this->parent['tree'] . $datum['pid'] . '-';
             $datum['chlidPrefix'] = $chlidPrefix;
             $datum['chlidLink'] = $this->baseUrl . $chlidPrefix . '/' . $datum['code'][1] . '.html';
 

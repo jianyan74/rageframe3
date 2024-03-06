@@ -80,7 +80,7 @@ class ConfigService extends BaseAddonConfigService
             }
         }
 
-        if (!empty($special = $config['special'])) {
+        if (isset($config['special']) && !empty($special = $config['special'])) {
             $defaultList = ArrayHelper::merge($defaultList, $special);
         }
 

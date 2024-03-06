@@ -494,6 +494,31 @@ class ArrayHelper extends BaseArrayHelper
     }
 
     /**
+     * 统计数组字段合计
+     *
+     * @param array $fields
+     * @param array $data
+     * @return array
+     */
+    public static function sumFieldData(array $fields, $data)
+    {
+        $data = self::toArray($data);
+
+        $array = [];
+        foreach ($fields as $field) {
+            $array[$field] = 0;
+        }
+
+        foreach ($data as $datum) {
+            foreach ($fields as $field) {
+                isset($datum[$field]) && $array[$field] = BcHelper::add($array[$field], $datum[$field]);
+            }
+        }
+
+        return $array;
+    }
+
+    /**
      * 数组内某字段转数组
      *
      * @param array $data

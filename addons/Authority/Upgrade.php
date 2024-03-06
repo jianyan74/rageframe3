@@ -7,6 +7,14 @@ use yii\db\Exception;
 use common\enums\AppEnum;
 use common\components\Migration;
 use common\interfaces\AddonWidget;
+use common\helpers\StringHelper;
+use common\models\common\Menu;
+use common\models\common\MenuCate;
+use common\models\common\Provinces;
+use common\models\common\AttachmentCate;
+use common\models\common\ConfigCate;
+use common\models\rbac\AuthRole;
+use common\models\rbac\AuthItem;
 
 /**
  * 升级数据库
@@ -20,9 +28,9 @@ class Upgrade extends Migration implements AddonWidget
      * @var array
      */
     public $versions = [
-        '3.0.0', // 默认版本
-        '3.0.3', '3.0.10', '3.0.12', '3.0.18', '3.0.25',
-        '3.1.39',
+        '3.0.0', '3.0.3', '3.0.10', '3.0.12', '3.0.18', '3.0.25',
+        '3.1.13', '3.1.16', '3.1.20', '3.1.21', '3.1.29', '3.1.30',
+        '3.1.35', '3.1.38', '3.1.39', '3.1.49',
     ];
 
     /**
@@ -33,6 +41,49 @@ class Upgrade extends Migration implements AddonWidget
     public function run($addon)
     {
         switch ($addon->version) {
+            case '3.1.49' :
+                // 替换菜单
+                $menus = Menu::find()->select(['id', 'tree'])->asArray()->all();
+                foreach ($menus as $menu) {
+                    $this->updateTree($menu['id'], $menu['tree'], Menu::class);
+                }
+
+                // 替换菜单分类
+                $menuCates = MenuCate::find()->select(['id', 'tree'])->asArray()->all();
+                foreach ($menuCates as $menuCate) {
+                    $this->updateTree($menuCate['id'], $menuCate['tree'], MenuCate::class);
+                }
+
+                // 替换省市区
+                $provinces = Provinces::find()->select(['id', 'tree'])->asArray()->all();
+                foreach ($provinces as $province) {
+                    $this->updateTree($province['id'], $province['tree'], Provinces::class);
+                }
+
+                // 替换角色
+                $authRoles = AuthRole::find()->select(['id', 'tree'])->asArray()->all();
+                foreach ($authRoles as $role) {
+                    $this->updateTree($role['id'], $role['tree'], AuthRole::class);
+                }
+
+                // 替换权限
+                $authItem = AuthItem::find()->select(['id', 'tree'])->asArray()->all();
+                foreach ($authItem as $item) {
+                    $this->updateTree($item['id'], $item['tree'], AuthItem::class);
+                }
+
+                // 素材分类
+                $attachmentCates = AttachmentCate::find()->select(['id', 'tree'])->asArray()->all();
+                foreach ($attachmentCates as $attachmentCate) {
+                    $this->updateTree($attachmentCate['id'], $attachmentCate['tree'], AttachmentCate::class);
+                }
+
+                // 配置分类
+                $configCates = ConfigCate::find()->select(['id', 'tree'])->asArray()->all();
+                foreach ($configCates as $configCate) {
+                    $this->updateTree($configCate['id'], $configCate['tree'], ConfigCate::class);
+                }
+                break;
             case '3.0.25' :
                 /* 创建表 */
                 $this->createTable('{{%common_theme}}', [
@@ -46,11 +97,11 @@ class Upgrade extends Migration implements AddonWidget
                     'status' => "tinyint(4) NULL DEFAULT '1' COMMENT '状态[-1:删除;0:禁用;1启用]'",
                     'created_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '添加时间'",
                     'updated_at' => "int(10) unsigned NULL DEFAULT '0' COMMENT '修改时间'",
-                    'PRIMARY KEY (`id`)'
+                    'PRIMARY KEY (`id`)',
                 ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='公用_用户主题'");
 
                 /* 索引设置 */
-                $this->createIndex('member_id','{{%common_theme}}','member_id',0);
+                $this->createIndex('member_id', '{{%common_theme}}', 'member_id', 0);
                 break;
             case '3.0.18' :
                 Yii::$app->services->config->findSaveByName('map_amap_code', AppEnum::BACKEND, [
@@ -69,6 +120,22 @@ class Upgrade extends Migration implements AddonWidget
                 break;
             case '3.0.0' :
                 break;
+        }
+    }
+
+    /**
+     * @param int $id
+     * @param string $tree
+     * @param $model
+     * @return void
+     */
+    protected function updateTree($id, $tree, $model)
+    {
+        $tree = StringHelper::replace(' ', '', $tree);
+        $endTree = substr($tree, strlen($tree) - 1);
+        if ($endTree != '-') {
+            $tree = $tree.'-';
+            $model::updateAll(['tree' => $tree], ['id' => $id]);
         }
     }
 }

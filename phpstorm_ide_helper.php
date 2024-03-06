@@ -29,8 +29,10 @@ class Yii
  * @property \addons\TinyShop\services\Application $tinyShopService 微商城
  * @property \addons\TinyStore\services\Application $tinyStoreService 门店(社区团购)
  * @property \addons\TinyDistribute\services\Application $tinyDistributeService 微分销
+ * @property \addons\TinyAgent\services\Application $tinyAgentService 代理
  * @property \addons\Wechat\services\Application $wechatService 微信公众号
  * @property \addons\WechatWork\services\Application $wechatWorkService 企业微信
+ * @property \addons\WechatMini\services\Application $wechatMiniService 微信小程序
  * @property \addons\TinyDoc\services\Application $tinyDocService 文档
  * @property \addons\TinyChat\services\Application $tinyChatService 微客服
  * @property \addons\TinyBlog\services\Application $tinyBlogService 博客文章
@@ -41,6 +43,7 @@ class Yii
  * @property \addons\ByteDanceThirdParty\services\Application $byteDanceThirdPartyService 字节跳动第三方平台
  * @property \addons\TikTokPlatform\services\Application $tikTokPlatformService 抖音开放平台
  * @property \addons\TikTokShop\services\Application $tikTokShopService 抖店
+ * @property \addons\Authority\services\Application $authorityService 系统更新
  * @property \Detection\MobileDetect $mobileDetect
  *
  * @author jianyan74 <751393839@qq.com>

@@ -122,10 +122,22 @@ class MainController extends BaseController
         // 附件大小
         $attachmentSize = FileHelper::getDirSize(Yii::getAlias('@attachment'));
 
+        $sysVersionStatus = false;
+        try {
+            $data = Yii::$app->services->rageFrame->queryNewest();
+            $sysVersion = 'newest ' . $data['version'];
+            $sysVersionStatus = true;
+        } catch (\Exception $e) {
+            // $sysVersion = $e->getMessage();
+            $sysVersion = '';
+        }
+
         return $this->render($this->action->id, [
             'mysqlSize' => Yii::$app->services->base->getDefaultDbSize(),
             'attachmentSize' => $attachmentSize ?? 0,
             'disableFunctions' => $disableFunctions,
+            'sysVersion' => $sysVersion,
+            'sysVersionStatus' => $sysVersionStatus,
         ]);
     }
 

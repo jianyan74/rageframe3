@@ -95,7 +95,7 @@ class MessageHistoryService
                         return '取消关注公众号';
                         break;
                     case WechatEnum::EVENT_SUBSCRIBE :
-                        return '通过二维码关注公众号 : ' . str_replace('qrscene_', '', $messgae['EventKey']);
+                        return '关注公众号 : ' . str_replace('qrscene_', '', $messgae['EventKey'] ?? '');
                         break;
                     case WechatEnum::EVENT_LOCATION :
                         return '被动发送位置: 经纬度【' . $messgae['Latitude'] . ',' . $messgae['Longitude'] . "】精度:" . $messgae['Precision'];

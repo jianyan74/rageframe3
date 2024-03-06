@@ -87,7 +87,7 @@ QQ群1：[655084090](https://jq.qq.com/?_wv=1027&k=4BeVA2r) (2000人快满)
 QQ群2：[1148015133](https://jq.qq.com/?_wv=1027&k=Wk663e9N) (新群)
 
 GitHub：https://github.com/jianyan74/rageframe3/issues  
-Gitee：https://gitee.com/jianyan94/rageframe3
+Gitee：https://gitee.com/jianyan94/rageframe3/issues
 
 ### 特别鸣谢
 
@@ -95,7 +95,7 @@ Gitee：https://gitee.com/jianyan94/rageframe3
 
 Yii：http://www.yiiframework.com
 
-EasyWechat：https://www.easywechat.com
+EasyWechat：https://easywechat.com
 
 Bootstrap：http://getbootstrap.com
 

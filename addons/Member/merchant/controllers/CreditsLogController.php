@@ -8,6 +8,7 @@ use common\models\member\CreditsLog;
 use common\enums\StatusEnum;
 use common\enums\MemberTypeEnum;
 use common\enums\CreditsLogTypeEnum;
+use common\helpers\ExcelHelper;
 
 /**
  * Class CreditsLogController
@@ -24,11 +25,15 @@ class CreditsLogController extends BaseController
      */
     public function actionConsume()
     {
-        list($dataProvider, $searchModel) = $this->getData(CreditsLogTypeEnum::CONSUME_MONEY);
+        list($dataProvider, $searchModel, $startTime, $endTime) = $this->getData(CreditsLogTypeEnum::CONSUME_MONEY);
 
         return $this->render('credit', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'startTime' => $startTime,
+            'endTime' => $endTime,
+            'action' => $this->action->id,
+            'type' => CreditsLogTypeEnum::CONSUME_MONEY,
             'title' => '消费日志'
         ]);
     }
@@ -41,11 +46,15 @@ class CreditsLogController extends BaseController
      */
     public function actionMoney()
     {
-        list($dataProvider, $searchModel) = $this->getData(CreditsLogTypeEnum::USER_MONEY);
+        list($dataProvider, $searchModel, $startTime, $endTime) = $this->getData(CreditsLogTypeEnum::USER_MONEY);
 
         return $this->render('credit', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'startTime' => $startTime,
+            'endTime' => $endTime,
+            'action' => $this->action->id,
+            'type' => CreditsLogTypeEnum::USER_MONEY,
             'title' => '余额日志'
         ]);
     }
@@ -58,11 +67,15 @@ class CreditsLogController extends BaseController
      */
     public function actionIntegral()
     {
-        list($dataProvider, $searchModel) = $this->getData(CreditsLogTypeEnum::USER_INTEGRAL);
+        list($dataProvider, $searchModel, $startTime, $endTime) = $this->getData(CreditsLogTypeEnum::USER_INTEGRAL);
 
         return $this->render('credit', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'startTime' => $startTime,
+            'endTime' => $endTime,
+            'action' => $this->action->id,
+            'type' => CreditsLogTypeEnum::USER_INTEGRAL,
             'title' => '积分日志'
         ]);
     }
@@ -75,11 +88,15 @@ class CreditsLogController extends BaseController
      */
     public function actionGrowth()
     {
-        list($dataProvider, $searchModel) = $this->getData(CreditsLogTypeEnum::USER_GROWTH);
+        list($dataProvider, $searchModel, $startTime, $endTime) = $this->getData(CreditsLogTypeEnum::USER_GROWTH);
 
         return $this->render('credit', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'startTime' => $startTime,
+            'endTime' => $endTime,
+            'action' => $this->action->id,
+            'type' => CreditsLogTypeEnum::USER_GROWTH,
             'title' => '成长值日志'
         ]);
     }
@@ -91,6 +108,9 @@ class CreditsLogController extends BaseController
      */
     protected function getData($type)
     {
+        $startTime = Yii::$app->request->get('start_time');
+        $endTime = Yii::$app->request->get('end_time');
+
         $searchModel = new SearchModel([
             'model' => CreditsLog::class,
             'scenario' => 'default',
@@ -107,8 +127,47 @@ class CreditsLogController extends BaseController
             ->andWhere(['>=', 'status', StatusEnum::DISABLED])
             ->andWhere(['type' => $type, 'member_type' => MemberTypeEnum::MEMBER])
             ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+            ->andFilterWhere(['between', 'created_at', !empty($startTime) ? strtotime($startTime) : '', !empty($endTime) ? strtotime($endTime) : ''])
             ->with(['member']);
 
-        return [$dataProvider, $searchModel];
+        return [$dataProvider, $searchModel, $startTime, $endTime];
+    }
+
+    /**
+     * @return bool
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
+    public function actionExport()
+    {
+        $data = Yii::$app->request->get('SearchModel');
+        $startTime = Yii::$app->request->get('start_time');
+        $endTime = Yii::$app->request->get('end_time');
+        $type = Yii::$app->request->get('type');
+
+        $list = CreditsLog::find()
+            ->where(['type' => $type, 'status' => StatusEnum::ENABLED])
+            ->andFilterWhere(['merchant_id' => Yii::$app->services->merchant->getId()])
+            ->andFilterWhere(['member_id' => $data['member_id']])
+            ->andFilterWhere(['num' => $data['num']])
+            ->andFilterWhere(['new_num' => $data['new_num']])
+            ->andFilterWhere(['like', 'remark', $data['remark']])
+            ->andFilterWhere(['between', 'created_at', !empty($startTime) ? strtotime($startTime) : '', !empty($endTime) ? strtotime($endTime) : ''])
+            ->with(['baseMember'])
+            ->orderBy('id desc')
+            ->asArray()
+            ->all();
+
+        $header = [
+            ['ID', 'id'],
+            ['会员ID', 'baseMember.id'],
+            ['会员', 'baseMember.nickname'],
+            ['变动数量', 'num'],
+            ['变动后数量', 'new_num'],
+            ['备注', 'remark'],
+            ['创建时间', 'created_at', 'date', 'Y-m-d H:i:s'],
+        ];
+
+        return ExcelHelper::exportData($list, $header, CreditsLogTypeEnum::getValue($type) . '_' . date('YmdHis'));
     }
 }

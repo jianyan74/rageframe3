@@ -70,8 +70,8 @@ class MerchantHelper
                         'url' => Url::to(['/merchant/select2']),
                         'dataType' => 'json',
                         'data' => new JsExpression('function(params) { 
-                                                return {q:params.term}; 
-                                        }'),
+                                return {q:params.term}; 
+                        }'),
                     ],
                     'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
                     'templateResult' => new JsExpression('function(city) { return city.text; }'),

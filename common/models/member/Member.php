@@ -125,7 +125,7 @@ class Member extends User
     {
         return [
             'id' => 'ID',
-            'username' => '帐号',
+            'username' => '账号',
             'password_hash' => '密码',
             'auth_key' => '授权令牌',
             'password_reset_token' => '密码重置令牌',

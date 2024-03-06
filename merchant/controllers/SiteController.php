@@ -36,15 +36,6 @@ class SiteController extends Controller
      */
     public $layout = "@backend/views/layouts/blank";
 
-    public function init()
-    {
-        if (!Yii::$app->has('merchantsService')) {
-            throw new UnauthorizedHttpException('未安装商户插件，请联系管理员');
-        }
-
-        parent::init();
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -107,6 +98,10 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        if (!Yii::$app->has('merchantsService')) {
+            throw new UnauthorizedHttpException('未安装商户插件，请联系管理员');
+        }
+
         if (!Yii::$app->user->isGuest) {
             // 记录行为日志
             Yii::$app->services->actionLog->create('login', '自动登录', 0, [], false);
@@ -139,6 +134,10 @@ class SiteController extends Controller
      */
     public function actionRegister()
     {
+        if (!Yii::$app->has('merchantsService')) {
+            throw new UnauthorizedHttpException('未安装商户插件，请联系管理员');
+        }
+
         /** @var SettingForm $setting */
         $setting = Yii::$app->merchantsService->config->setting();
         // 判断开放注册
@@ -173,6 +172,10 @@ class SiteController extends Controller
      */
     public function actionSmsCode()
     {
+        if (!Yii::$app->has('merchantsService')) {
+            throw new UnauthorizedHttpException('未安装商户插件，请联系管理员');
+        }
+
         $setting = Yii::$app->merchantsService->config->setting();
         // 判断开放注册
         if (empty($setting->register_apply)){
@@ -241,6 +244,10 @@ class SiteController extends Controller
      */
     public function actionWechatLogin($ticket)
     {
+        if (!Yii::$app->has('merchantsService')) {
+            throw new UnauthorizedHttpException('未安装商户插件，请联系管理员');
+        }
+
         $data = Yii::$app->wechatService->qrcode->findByWhere([
             'ticket' => $ticket
         ]);
@@ -279,6 +286,10 @@ class SiteController extends Controller
      */
     public function actionGetWechatLoginQr()
     {
+        if (!Yii::$app->has('merchantsService')) {
+            throw new UnauthorizedHttpException('未安装商户插件，请联系管理员');
+        }
+
         try {
             $data = Yii::$app->wechatService->qrcode->syncCreateByData([
                 'name' => '账号绑定',

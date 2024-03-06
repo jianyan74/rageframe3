@@ -4,6 +4,7 @@ use yii\grid\GridView;
 use common\helpers\Html;
 use common\helpers\ImageHelper;
 use common\helpers\MemberHelper;
+use kartik\daterange\DateRangePicker;
 
 $this->title = '会员信息';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
@@ -16,6 +17,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
             <div class="box-header">
                 <h3 class="box-title"><?= $this->title; ?></h3>
                 <div class="box-tools">
+                    <?= Html::linkButton(['import-member'], '导入会员', [
+                        'data-toggle' => 'modal',
+                        'data-target' => '#ajaxModal',
+                        'class' => 'btn btn-white',
+                    ]) ?>
                     <?= Html::create(['ajax-edit'], '创建', [
                         'data-toggle' => 'modal',
                         'data-target' => '#ajaxModal',
@@ -44,6 +50,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                                     'style' => 'width: 50px'
                                 ]
                             ),
+                            'footer' => '合计',
                         ],
                         [
                             'attribute' => 'head_portrait',
@@ -123,6 +130,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                                     "累计消费：" . abs($model->account->consume_money);
                             },
                             'format' => 'raw',
+                            'footer' => $pageAccountTotal['user_money'],
                         ],
                         [
                             'label' => '账户积分',
@@ -133,6 +141,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                                     "累计消费：" . abs($model->account->consume_integral);
                             },
                             'format' => 'raw',
+                            'footer' => $pageAccountTotal['user_integral'],
                         ],
                         [
                             'label' => '账户成长值',
@@ -142,10 +151,37 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                                     "累计：" . $model->account->accumulate_growth . '<br>';
                             },
                             'format' => 'raw',
+                            'footer' => $pageAccountTotal['user_growth'],
                         ],
                         [
-                            'label' => '最后登录',
-                            'filter' => false, //不显示搜索框
+                            'label' => '最后登录 / 注册时间',
+                            'filter' => DateRangePicker::widget([
+                                'language' => 'zh-CN',
+                                'name' => 'queryDate',
+                                'value' => (!empty($startTime) && !empty($endTime)) ? ($startTime . '-' . $endTime) : '',
+                                'readonly' => 'readonly',
+                                'useWithAddon' => false,
+                                'convertFormat' => true,
+                                'startAttribute' => 'start_time',
+                                'endAttribute' => 'end_time',
+                                'startInputOptions' => ['value' => $startTime],
+                                'endInputOptions' => ['value' => $endTime],
+                                'presetDropdown' => true,
+                                'containerTemplate' => <<< HTML
+        <div class="kv-drp-dropdown">
+            <span class="left-ind">{pickerIcon}</span>
+            <input type="text" readonly class="form-control range-value" value="{value}">
+        </div>
+        {input}
+HTML,
+                                'pluginOptions' => [
+                                    'locale' => ['format' => 'Y-m-d H:i:s'],
+                                    'timePicker' => true,
+                                    'timePicker24Hour' => true,
+                                    'timePickerSeconds' => true,
+                                    'timePickerIncrement' => 1
+                                ]
+                            ]),
                             'value' => function ($model) {
                                 return "最后访问IP：" . $model->last_ip . '<br>' .
                                     "最后访问：" . (!empty($model->last_time) ? Yii::$app->formatter->asDatetime($model->last_time) : '---') . '<br>' .
@@ -206,6 +242,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
                             ],
                         ],
                     ],
+                    'showFooter' => true,
                 ]); ?>
             </div>
         </div>

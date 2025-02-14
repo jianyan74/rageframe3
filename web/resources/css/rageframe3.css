@@ -916,6 +916,10 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-head
     border-bottom: 0;
 }
 
+.layout-fixed .main-sidebar-custom {
+    height: 100%;
+}
+
 .layout-fixed .main-sidebar-custom .sidebar {
     height: 100%;
 }

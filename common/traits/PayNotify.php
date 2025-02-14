@@ -106,7 +106,7 @@ trait PayNotify
         $response = Json::decode(file_get_contents('php://input'));
         $logPath = $this->getLogPath('byte-dance');
         FileHelper::writeLog($logPath, Json::encode($response));
-        if (!Yii::$app->extendPay->byteDance->isPaid($response)) {
+        if (!Yii::$app->pay->byteDance->isPaid($response)) {
             return false;
         }
 
